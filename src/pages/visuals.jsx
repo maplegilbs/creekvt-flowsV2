@@ -1,7 +1,10 @@
+//Components
+import Loader from "../components/loader"
+
 export default function Visuals(){
     return (
         <div>
-            Visuals
+            <Loader loader_text={"Visuals"}/>
         </div>
     )
 }

@@ -1,7 +1,10 @@
-export default function Forecasts(){
+//Components
+import Loader from "../components/loader"
+
+export default function Forecasts() {
     return (
         <div>
-            Forecasts
+            <Loader loader_text={"Forecasts"}/>
         </div>
     )
 }

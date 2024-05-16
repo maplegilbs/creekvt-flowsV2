@@ -1,7 +1,10 @@
+//Components
+import Loader from "../components/loader"
+
 export default function Rainfall(){
     return (
         <div>
-            Rainfall
+            <Loader loader_text={"Rainfall"}/>
         </div>
     )
 }
