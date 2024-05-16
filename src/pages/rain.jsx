@@ -4,7 +4,7 @@ import Loader from "../components/loader"
 export default function Rainfall(){
     return (
         <div>
-            <Loader loader_text={"Rainfall"}/>
+            <Loader bottom_text={"Loading Rainfall Info"}/>
         </div>
     )
 }
