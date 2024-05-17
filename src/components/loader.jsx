@@ -7,28 +7,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 export default function Loader({ loader_text, bottom_text }) {
     return (
         <>
-            <div className={`${styles["loader"]}`}>
+        <div className={`${styles["loader"]}`}>
                 {loader_text &&
                     <div className={`${styles["loading-text"]}`}>{loader_text}</div>
                 }
                 <div style={{ display: "flex", justifyContent: "space-evenly", width: "95%", height: "100%"}}>
                     <div className={`${styles['droplet']} ${styles["drip"]}`}>
-                        <FontAwesomeIcon icon={faDroplet} style={{ color: "#4e647b", }} />
+                        <FontAwesomeIcon icon={faDroplet} size="lg" style={{ color: "#4e647b", }} />
                     </div>
                     <div className={`${styles['droplet']} ${styles["drip2"]}`}>
-                        <FontAwesomeIcon icon={faDroplet} style={{ color: "#4e647b", }} />
+                        <FontAwesomeIcon icon={faDroplet} size="lg" style={{ color: "#4e647b", }} />
                     </div>
                     <div className={`${styles['droplet']} ${styles["drip3"]}`}>
-                        <FontAwesomeIcon icon={faDroplet} style={{ color: "#4e647b", }} />
+                        <FontAwesomeIcon icon={faDroplet} size="lg" style={{ color: "#4e647b", }} />
                     </div>
                     <div className={`${styles['droplet']} ${styles["drip4"]}`}>
-                        <FontAwesomeIcon icon={faDroplet} style={{ color: "#4e647b", }} />
+                        <FontAwesomeIcon icon={faDroplet} size="lg" style={{ color: "#4e647b", }} />
                     </div>
                     <div className={`${styles['droplet']} ${styles["drip5"]}`}>
-                        <FontAwesomeIcon icon={faDroplet} style={{ color: "#4e647b", }} />
+                        <FontAwesomeIcon icon={faDroplet} size="lg" style={{ color: "#4e647b", }} />
                     </div>
                     <div className={`${styles['droplet']} ${styles["drip6"]}`}>
-                        <FontAwesomeIcon icon={faDroplet} style={{ color: "#4e647b", }} />
+                        <FontAwesomeIcon icon={faDroplet} size="lg" style={{ color: "#4e647b", }} />
                     </div>
                 </div>
                 {bottom_text &&
