@@ -44,23 +44,28 @@
     z-index: 99;
 }
 .drip2 {
-    animation: drip-drip 1.65s ease-in 4.5s infinite;
+    // animation: drip-drip 1.65s ease-in 4.5s infinite;
+    animation: drip-drip 1.65s ease-in 1s infinite;
     z-index: 101;
 }
 .drip3 {
-    animation: drip-drip 1.85s ease-in 1.5s infinite;
+    // animation: drip-drip 1.85s ease-in 1.5s infinite;
+    animation: drip-drip 1.85s ease-in 1.2s infinite;
     z-index: 99;
 }
 .drip4 {
-    animation: drip-drip 2.05s ease-in 1s infinite;
+    // animation: drip-drip 2.05s ease-in 1s infinite;
+    animation: drip-drip 2.05s ease-in 1.5s infinite;
     z-index: 101;
 }
 .drip5 {
-    animation: drip-drip 1.53s ease-in 3.5s infinite;
+    // animation: drip-drip 1.53s ease-in 3.5s infinite;
+    animation: drip-drip 1.53s ease-in 1.75s infinite;
     z-index: 99;
 }
 .drip6 {
-    animation: drip-drip 1.45s ease-in .5s infinite;
+    // animation: drip-drip 1.45s ease-in .5s infinite;
+    animation: drip-drip 1.45s ease-in 1.2s infinite;
     z-index: 101;
 }
 
