@@ -68,7 +68,13 @@ export default function Gauges() {
                         <thead>
                             <tr>
                                 <th>River</th>
-                                <th>Discharge (CFS)<span className={`${styles["mobile-show"]}`}><br /><br />Max <hr /> Min</span></th>
+                                <th>Discharge (CFS)
+                                    <span className={`${styles["mobile-show"]}`}>
+                                        <br />
+                                        Max <hr />
+                                        Min
+                                    </span>
+                                </th>
                                 <th className={`${styles["mobile-hide"]} ${styles["header--small"]}`}>Maximum <hr /> Minimum</th>
                                 <th className={`${styles["mobile-hide"]}`}>Gauge(s)</th>
                                 <th className={`${styles["mobile-hide"]}`}>Gauge Updated</th>

@@ -27,20 +27,10 @@
         position: relative;
     }
 
-    tr:nth-child(even) {
-        background-color: rgba(188, 188, 188, .25);
-    }
-
-    td,
     th {
-        padding: 5px 5px;
         box-sizing: border-box;
         overflow: hidden;
         width: 20%;
-
-    }
-
-    th {
         padding: 12px;
         position: sticky;
         position: -webkit-sticky;
@@ -68,52 +58,6 @@
         margin: 2px auto;
     }
 
-    td {
-        div.flowBar {
-            display: flex;
-            justify-content: center;
-            box-sizing: border-box;
-            text-align: left;
-            flex-basis: 15px;
-            width: 15px;
-            height: 75px;
-            margin: 7px;
-            padding: 6px 0;
-            border: 1px solid black;
-            position: relative;
-        }
-    }
-
-    td.river-stats {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        align-items: flex-start;
-        justify-content: center;
-        text-align: left;
-
-        p {
-            margin: 0;
-        }
-
-    }
-    
-    a,
-    a:visited,
-    a:link {
-        text-decoration: underline;
-        color: #232323;
-        font-weight: 700;
-        font-size: .9rem;
-    }
-
-    .gaugeName {
-        a {
-            font-size: .7rem;
-        }
-    }
-
-
     .mobile-show {
         display: none;
     }
@@ -129,105 +73,6 @@
 }
 
 
-// .sectionLabel td {
-//     border-top: 2px solid white;
-//     position: sticky;
-//     position: -webkit-sticky;
-//     position: -moz-sticky;
-//     position: -ms-sticky;
-//     position: -o-sticky;
-//     top: 68px;
-//     margin-bottom: 5px;
-//     z-index: 1000;
-//     text-transform: uppercase;
-//     font-size: 1.2em;
-//     font-family: Montserrat, sans-serif;
-//     color: #222233;
-//     font-weight: 900;
-// }
-
-// .running td {
-//     background-image: linear-gradient(175deg, #88ee99 2%, #228833ee, #88ee99);
-// }
-
-// .high td {
-//     background-image: linear-gradient(175deg, #ee9999 2%, #d80000ee, #ee9999);
-// }
-
-// .low td {
-//     background-image: linear-gradient(175deg, #eeee99 2%, #ffad15ee, #eeee99);
-// }
-
-// .noInfo td {
-//     background-image: linear-gradient(175deg, #454545, #eeeeee);
-// }
-
-
-.diff {
-    font-weight: 600;
-    font-size: 12px;
-}
-
-.levelContainer {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-    align-items: center;
-}
-
-
-.curLvl {
-    font-weight: 700;
-    font-size: 12px;
-    text-shadow: 1px 1px white, -1px -1px white, 1px -1px white, -1px 1px white;
-    align-self: center;
-    padding: 1px;
-    border-radius: 5px;
-}
-
-.arrow {
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: block;
-    margin: 0 auto;
-    width: 8px;
-    height: 8px;
-}
-
-.up {
-    transform: rotate(225deg);
-    -webkit-transform: rotate(225deg);
-}
-
-.down {
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-}
-
-.top.arrow.down {
-    display: none;
-}
-
-.bottom.arrow.up {
-    display: none;
-}
-
-.noArrow {
-    display: none;
-}
-
-
-.gaugeName {
-    font-size: .8em;
-}
-
-.level,
-.river-stats {
-    font-size: 1.05em;
-    font-weight: 800;
-}
-
-
 /*---Media Queries---*/
 @media screen and (max-width: 640px) {
 
@@ -235,41 +80,25 @@
         display: none;
     }
 
-    .info_container {
+    .info__container {
         font-size: 10px;
         max-width: 96vw;
-        box-shadow: 2px 2px 4px 4px rgb(188 188 188);
     }
 
-    .flows_table {
+    .flows__table {
 
         th {
-            padding: 4px;
+            padding: 8px 4px;
             font-size: 1.25em;
             line-height: .8em;
-        }
-
-        td,
-        th {
             width: 34%;
         }
 
-
-        .level,
-        .river-stats {
-            font-size: 1.25em;
-        }
-
-        .gaugeName {
-            font-size: .75em;
-        }
-
         .mobile-show {
-            display: initial;
+            display: block;
         }
 
-        .mobile-show.gaugeInfo,
-        .gaugeName.mobile-show {
+        .mobile-show.gaugeInfo {
             display: table-cell;
             padding: 10px 8px;
             box-sizing: border-box;
@@ -279,19 +108,6 @@
 
         .mobile-hide {
             display: none;
-        }
-
-        .level .mobile-show {
-            font-size: .9em;
-            font-weight: 500;
-        }
-
-        .level .mobile-show hr {
-            margin: 1px auto;
-        }
-
-        .flowBar {
-            height: 60px;
         }
 
         span.mobile-show {
