@@ -30,12 +30,14 @@ function setLevelInfo(riverObj) {
     }
     else if (riverObj.gauge1Reading > riverObj.gauge1Min) {
         riverObj.levelStatus = "running"
-        riverObj.flowBarColor = 'green';
+        // riverObj.flowBarColor = 'green';
+        riverObj.flowBarColor = 'rgba(100,155,100,.75)';
         riverObj.flowBarPercent = Math.round((riverObj.gauge1Reading - riverObj.gauge1Min) / (riverObj.gauge1Max - riverObj.gauge1Min) * 100);
     }
     else if (riverObj.gauge1Reading < riverObj.gauge1Min) {
         riverObj.levelStatus = "too low"
-        riverObj.flowBarColor = '#ffa500';
+        // riverObj.flowBarColor = '#ffa500';
+        riverObj.flowBarColor = 'rgba(225,170,35,.6)';
         riverObj.flowBarPercent = Math.round((riverObj.gauge1Reading / riverObj.gauge1Min) * 100);
     }
 }

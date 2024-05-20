@@ -13,7 +13,7 @@ import { tempRiverData } from "../utils/tempGaugeObj";
 import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
 
 export default function Gauges() {
-    const [status, setStatus] = useState('success'); //pending, success, error
+    const [status, setStatus] = useState('pending'); //pending, success, error
     const [gaugeData, setGaugeData] = useState(null);
     const [riverData, setRiverData] = useState(null);
     const [updatedRiverData, setUpdatedRiverData] = useState(null)
@@ -82,7 +82,7 @@ export default function Gauges() {
                             </tr>
                         </thead>
                         <tbody>
-                            {updatedRiverData && updatedRiverData.map(river => <RiverFlowRow river={river} />)}
+                            {updatedRiverData && updatedRiverData.map((river, index) => <RiverFlowRow river={river} index={index} />)}
                         </tbody>
                     </table>
                 </div>

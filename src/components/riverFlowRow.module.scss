@@ -2,19 +2,21 @@
 .flow__table-row {
     background-color: #f0f0f0;
     position: relative;
+    margin: 0;
+    border-bottom: 1px solid #777;
+    height: 110px;
 
     &:nth-child(even) {
         background-color: rgba(188, 188, 188, .25);
     }
 
     td {
-        padding: 5px 5px;
+        padding: 5px;
+        padding-top: 1.4rem;
         box-sizing: border-box;
         overflow: hidden;
         width: 20%;
-    }
 
-    td {
         div.flowBar {
             display: flex;
             justify-content: center;
@@ -27,6 +29,39 @@
             padding: 6px 0;
             border: 1px solid black;
             position: relative;
+
+            .arrow {
+                border: solid black;
+                border-width: 0 3px 3px 0;
+                display: block;
+                margin: 0 auto;
+                width: 8px;
+                height: 8px;
+            }
+
+            .rising {
+                transform: rotate(225deg);
+                -webkit-transform: rotate(225deg);
+            }
+
+            .falling {
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+            }
+
+            .top.arrow.falling {
+                display: none;
+            }
+
+            .bottom.arrow.rising {
+                display: none;
+            }
+
+            .bottom.arrow.steady,
+            .top.arrow.steady {
+                display: none;
+            }
+
         }
     }
 
@@ -34,12 +69,21 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        align-items: flex-start;
+        align-items: space-evenly;
         justify-content: center;
         text-align: left;
 
+        .river__heading {
+            position: absolute;
+            top: .2rem;
+        }
+
         p {
             margin: 0;
+
+            &:nth-child(2) {
+                margin-top: .4rem;
+            }
         }
 
     }
@@ -53,7 +97,10 @@
         font-size: .9rem;
     }
 
-    .gaugeName {
+    .gaugeName,
+    .updateTime {
+        font-size: .65rem;
+
         a {
             font-size: .7rem;
         }
@@ -71,49 +118,13 @@
         overflow: hidden;
     }
 
-
-
-
-    // .sectionLabel td {
-    //     border-top: 2px solid white;
-    //     position: sticky;
-    //     position: -webkit-sticky;
-    //     position: -moz-sticky;
-    //     position: -ms-sticky;
-    //     position: -o-sticky;
-    //     top: 68px;
-    //     margin-bottom: 5px;
-    //     z-index: 1000;
-    //     text-transform: uppercase;
-    //     font-size: 1.2em;
-    //     font-family: Montserrat, sans-serif;
-    //     color: #222233;
-    //     font-weight: 900;
-    // }
-
-    // .running td {
-    //     background-image: linear-gradient(175deg, #88ee99 2%, #228833ee, #88ee99);
-    // }
-
-    // .high td {
-    //     background-image: linear-gradient(175deg, #ee9999 2%, #d80000ee, #ee9999);
-    // }
-
-    // .low td {
-    //     background-image: linear-gradient(175deg, #eeee99 2%, #ffad15ee, #eeee99);
-    // }
-
-    // .noInfo td {
-    //     background-image: linear-gradient(175deg, #454545, #eeeeee);
-    // }
-
-
-    .diff {
-        font-weight: 600;
-        font-size: 12px;
+    .stats {
+        font-weight: 500;
+        font-size: .8rem;
     }
 
     .levelContainer {
+        padding: 0 20%;
         display: flex;
         flex-wrap: nowrap;
         justify-content: space-around;
@@ -130,42 +141,6 @@
         border-radius: 5px;
     }
 
-    .arrow {
-        border: solid black;
-        border-width: 0 3px 3px 0;
-        display: block;
-        margin: 0 auto;
-        width: 8px;
-        height: 8px;
-    }
-
-    .up {
-        transform: rotate(225deg);
-        -webkit-transform: rotate(225deg);
-    }
-
-    .down {
-        transform: rotate(45deg);
-        -webkit-transform: rotate(45deg);
-    }
-
-    .top.arrow.down {
-        display: none;
-    }
-
-    .bottom.arrow.up {
-        display: none;
-    }
-
-    .noArrow {
-        display: none;
-    }
-
-
-    .gaugeName {
-        font-size: .8em;
-    }
-
     .level,
     .river-stats {
         font-size: 1.05em;
@@ -178,6 +153,8 @@
 @media screen and (max-width: 640px) {
 
     .flow__table-row {
+        font-size: .65rem;
+        ;
 
         .mobile-hide {
             display: none;
@@ -192,7 +169,6 @@
         td {
             width: 34%;
         }
-
 
         .level,
         .river-stats {
