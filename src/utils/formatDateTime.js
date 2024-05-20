@@ -25,7 +25,7 @@ export function formatDateTime(inputTime) {
     month++
     if (month < 10) { month = "0" + month.toString() }
     let year = inputTime.getFullYear();
-    let hour24 = inputTime.getHours() > 9 ? inputTime.getHours() : inputTime.getHours().toString().padStart(2 ,'0');
+    let hour24 = inputTime.getHours() > 9 ? inputTime.getHours() : inputTime.getHours().toString().padStart(2, '0');
     let hour = inputTime.getHours();
     let amPM = "am";
     if (hour24 == 12) { amPM = "pm" }
@@ -51,22 +51,22 @@ export function formatDateTime(inputTime) {
     )
 }
 
-export function convertTime (inputTime) {
+export function convertTime(inputTime) {
     let date = new Date();
-    date.setHours(inputTime.slice(0,2))
-    date.setMinutes(inputTime.slice(3,5))
+    date.setHours(inputTime.slice(0, 2))
+    date.setMinutes(inputTime.slice(3, 5))
     let outputTime = `${formatDateTime(date).time} ${formatDateTime(date).amPm}`
     return outputTime;
 }
 
-export function convertTimeToCompare (inputTime) {
+export function convertTimeToCompare(inputTime) {
     let date = new Date();
-    date.setHours(inputTime.slice(0,2))
-    date.setMinutes(inputTime.slice(3,5))
+    date.setHours(inputTime.slice(0, 2))
+    date.setMinutes(inputTime.slice(3, 5))
     return date;
 }
 
-export function stringTimeToSeconds (timeString) {
+export function stringTimeToSeconds(timeString) {
     let timeArray = timeString.split(":").reverse()
     let timeInSeconds = timeArray.reduce((accum, value, index) => {
         let curValInSeconds = Number(value) * 60 ** index
@@ -74,4 +74,21 @@ export function stringTimeToSeconds (timeString) {
         return accum
     }, 0)
     return timeInSeconds
+}
+
+export function formatUSGSDateTimeQueryString() {
+    let today = formatDateTime(new Date());
+    let startMonth = today.month;
+    let startDay = today.day - 1;
+    if (startDay === 0) {
+        if (startMonth === 3) {
+            startDay = 28;
+            startMonth = today.month - 1;
+        }
+        else {
+            startDay = 30;
+            startMonth = today.month - 1;
+        }
+    }
+    return (`&startDT=${today.year}-${startMonth}-${startDay}&endDT=${today.year}-${today.month}-${today.day}`);
 }
