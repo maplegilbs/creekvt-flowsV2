@@ -23,9 +23,11 @@
     // border-collapse: separate;
     border-spacing: 0px 8px;
 
-    tr {
-        background-color: #f0f0f0;
-        position: relative;
+    thead {
+        tr {
+            background-color: #f0f0f0;
+            position: relative;
+        }
     }
 
     th {

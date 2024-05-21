@@ -1,18 +1,19 @@
 /*Flows Table Styles*/
-.flow__table-row {
-    background-color: #f0f0f0;
+tr.flow__table-row {
+    background-color: white;
     position: relative;
-    margin: 0;
-    border-bottom: 1px solid #777;
-    height: 110px;
+    margin: 10px 0;
+    height: 120px;
+    border-bottom: 2px solid #333;
 
     &:nth-child(even) {
-        background-color: rgba(188, 188, 188, .25);
+        background-color: rgba(188, 188, 188, .15);
+        background-color: rgba(215, 225, 232, .95);
     }
 
     td {
         padding: 5px;
-        padding-top: 1.4rem;
+        // padding-top: 1.4rem;
         box-sizing: border-box;
         overflow: hidden;
         width: 20%;
@@ -69,17 +70,39 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        align-items: space-evenly;
+        align-items: flex-start;
         justify-content: center;
         text-align: left;
+        padding-top: 1.4rem;
 
         .river__heading {
             position: absolute;
+            display: flex;
+            justify-content: space-between;
             top: .2rem;
+            left: 0;
+            width: 100%;
+            height: max-content;
+            padding: 0 5px;
+
+            a {
+                font-size: 1rem;
+            }
+        }
+
+        span {
+            padding: 0 5px;
+            margin-top: 2px;
+            width: 100%;
+            font-size: .75rem;
         }
 
         p {
             margin: 0;
+            margin-top: 5px;
+            font-size: .7rem;
+            font-weight: 500;
+            text-transform: uppercase;
 
             &:nth-child(2) {
                 margin-top: .4rem;
@@ -99,7 +122,7 @@
 
     .gaugeName,
     .updateTime {
-        font-size: .65rem;
+        font-size: .85rem;
 
         a {
             font-size: .7rem;
@@ -131,6 +154,11 @@
         align-items: center;
     }
 
+    .levelInfo {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
 
     .curLvl {
         font-weight: 700;
@@ -152,7 +180,7 @@
 /*---Media Queries---*/
 @media screen and (max-width: 640px) {
 
-    .flow__table-row {
+    tr.flow__table-row {
         font-size: .65rem;
         ;
 
@@ -168,15 +196,25 @@
 
         td {
             width: 34%;
+            padding-top: 1.5rem;
+
         }
 
-        .level,
-        .river-stats {
+        td.level,
+        td.river-stats {
             font-size: 1.25em;
+
+            p {
+                margin-top: 12px;
+                line-height: normal;
+            }
         }
 
-        .gaugeName {
-            font-size: .75em;
+        .levelContainer {
+            padding: 0px;
+        }
+        .levelInfo {
+            font-size: 1.15em;
         }
 
         .mobile-show {
@@ -188,7 +226,6 @@
             display: table-cell;
             padding: 10px 8px;
             box-sizing: border-box;
-            /*width: 19%;*/
             overflow: hidden;
         }
 
@@ -213,6 +250,13 @@
             font-size: .9em;
         }
 
+        .gaugeName{
+            font-size: .65rem;
+
+            a {
+                font-size: .5rem;
+            }
+        }
     }
 
 }

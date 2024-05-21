@@ -20,12 +20,12 @@ function setCurMinMax(riverObj) {
 function setLevelInfo(riverObj) {
     if (!riverObj.gauge1Max || !riverObj.gauge1Min) {
         riverObj.levelStatus = null;
-        riverObj.flowBarColor = null;
+        riverObj.flowBarColor = 'transparent';
         riverObj.flowBarPercent = null;
     }
     else if (riverObj.gauge1Reading > riverObj.gauge1Max) {
         riverObj.levelStatus = "too high";
-        riverObj.flowBarColor = 'red';
+        riverObj.flowBarColor = 'rgba(180,65,65,.75)';
         riverObj.flowBarPercent = 100;
     }
     else if (riverObj.gauge1Reading > riverObj.gauge1Min) {

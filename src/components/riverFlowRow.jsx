@@ -5,12 +5,14 @@ import styles from "./riverFlowRow.module.scss"
 
 export default function RiverFlowRow({ river, index }) {
 
-    console.log(index)
 
     if (!river.gauge1ID || river.gauge1ID === 'error') {
         return (
             <tr className={`${styles["flow__table-row"]}`}>
-                <td className={`${styles["river-stats"]}`}><a href={`https://creekvt.com/riverguide/${river.url}`}>{river.name}</a>
+                <td className={`${styles["river-stats"]}`}>
+                    <a className={`${styles["river__heading"]}`}
+                        style={{ background: "linear-gradient(90deg, rgba(245,245,245,.3) 50%, transparent) 80%" }}
+                        href={`https://creekvt.com/riverguide/${river.url}`}>{river.name}</a>
                     <p className={`${styles["stats"]}`}>Class: {river.difficultyChar}</p>
                     <p className={`${styles["stats"]}`}>Quality: {river.quality}</p>
                 </td>
@@ -24,25 +26,35 @@ export default function RiverFlowRow({ river, index }) {
             </tr>
         )
     }
+
+
+
     else {
         let gauge1FormattedTime = `${formatDateTime(new Date(river.gauge1DateTime)).dow}, ${formatDateTime(new Date(river.gauge1DateTime)).date} @ ${formatDateTime(new Date(river.gauge1DateTime)).time} ${formatDateTime(new Date(river.gauge1DateTime)).amPm}`;
         return (
             <>
-                <tr className={`${styles["flow__table-row"]}`} style={{ background: `linear-gradient(90deg, ${river.flowBarColor} ${river.flowBarPercent}%, ${index%2 === 1? "rgba(188,188,188,.25)" : "white"} ${river.flowBarPercent + 5}%` }}>
+                <tr className={`${styles["flow__table-row"]}`} >
                     <td className={`${styles["river-stats"]}`} >
-                        <a className={`${styles["river__heading"]}`} href={`https://creekvt.com/riverguide/${river.url}`}>{river.name}</a>
+                        <div className={`${styles["river__heading"]}`}>
+                            <a href={`https://creekvt.com/riverguide/${river.url}`}>{river.name}</a>
+                        </div>
+                        <span style={{ background: `linear-gradient(90deg, ${river.flowBarColor} 50%, ${index % 2 === 1 ? "rgba(188,188,188,.0)" : "transparent"} 80%` }}
+                        >{`${river.levelStatus ? river.levelStatus.toUpperCase() : ""}`}</span>
+                        <p className={`${styles["stats"]}`}>5 miles Class V Steep Creek</p>
                         <p className={`${styles["stats"]}`}>Quality: {river.quality}</p>
-                        <p className={`${styles["stats"]}`}>Class: {river.difficultyChar}</p>
                     </td>
                     <td className={`${styles["level"]}`}>
-                        <div className={`${styles["levelContainer"]}` } style={{justifyContent: `${!river.gauge1Max ? "flex-start" : "space-between"}`}}>
-                            <div className={`${styles["levelInfo"]}`}>{river.gauge1Reading}<span className={`${styles["mobile-show"]}`}><br /><br />{river.gauge1Max ? river.gauge1Max : "-"} <hr /> {river.gauge1Min ? river.gauge1Min : "-"}</span>
+                        <div className={`${styles["levelContainer"]}`} style={{ justifyContent: `${!river.gauge1Max ? "flex-start" : "space-between"}` }}>
+                            <div className={`${styles["levelInfo"]}`}>
+                                {/* <span>{river.gauge1Reading} cfs</span> */}
+                                {river.gauge1Reading}
                             </div>
                             {river.gauge1Max &&
                                 <div className={`${styles["flowBar"]}`} style={{ backgroundImage: `linear-gradient(0deg, ${river.flowBarColor ? river.flowBarColor : "grey"} ${river.flowBarPercent ? river.flowBarPercent + "%" : "0%"}, white 1%` }}>
                                     <span className={`${styles["curLvl"]}`}><div className={`${styles["top"]} ${styles["arrow"]} ${river.gauge1Trend ? styles[river.gauge1Trend] : ""}`}></div>{typeof river.gauge1ChangePerHr == 'number' ? river.gauge1ChangePerHr : ""}/hr<br /><div className={`${styles["bottom"]} ${styles["arrow"]} ${river.gauge1Trend ? styles[river.gauge1Trend] : ""}`}></div></span>
                                 </div>
                             }
+                            {river.gauge1Max  && <div className={`${styles["mobile-show"]}`}>{river.gauge1Max ? river.gauge1Max : "-"} <hr /> {river.gauge1Min ? river.gauge1Min : "-"}</div>}
 
                         </div>
                     </td>
