@@ -99,7 +99,6 @@
     }
 
     .sort-header {
-        background-color: #3c5061;
         background: global_variables.$primary_gradient;
         position: sticky;
         position: -webkit-sticky;
@@ -115,12 +114,25 @@
         color: #222233;
         font-weight: 700;
         width: 100%;
-        border-top: 4px solid white;
-
+        
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0px;
+            width: 100%;
+            height: 3px;
+            background-color: black;
+            z-index: 2;
+        }
+        
+        
         td {
             text-align: center;
             color: white;
             text-shadow: 2px 2px black;
+            padding-bottom: 3px;
+            padding-top: 3px;
         }
     }
 }

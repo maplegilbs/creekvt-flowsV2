@@ -69,16 +69,25 @@ export default function Gauges() {
                     else if (a.levelStatus === "too low") return 1
                     if (a.name > b.name) return 1
                     else if (a.name < b.name) return -1
-
                     return 0
                 })
+                tempSort.unshift({ text: "Running", color: "linear-gradient(45deg, rgb(100,155,100) 70%, rgb(80,130,80))" });
+                tempSort.splice([tempSort.findIndex(riv => riv.levelStatus === "too high")],0,{ text: "Too High", color: "linear-gradient(45deg, rgb(160,45,45) 70%, rgba(150,35,35))" });
+                tempSort.splice([tempSort.findIndex(riv => riv.levelStatus === "too low")],0, { text: "Too Low", color: "linear-gradient(45deg, rgb(225,170,35) 70%, rgb(205,150,15))" });
+                tempSort.splice([tempSort.findIndex(riv => riv.levelStatus === null)],0, { text: "No Min/Max Established", color: "linear-gradient(45deg, rgb(170,170,170) 70%, rgb(120,120,120))" });
             }
             else if (sortedBy === 'riverName') { tempSort.sort((a, b) => a.name > b.name ? 1 : -1) }
             else if (sortedBy === 'difficulty') {
-                tempSort.sort((a, b) => a.difficultyNum - b.difficultyNum)
-                tempSort[0] = "Class III"
-                tempSort[tempSort.findIndex(riv => riv.difficultyNum > 8)] = "Class IV"
-                tempSort[tempSort.findIndex(riv => riv.difficultyNum > 12)] = "Class V"
+                tempSort.sort((a, b) => {
+                    if (a.difficultyNum > b.difficultyNum) return 1
+                    else if (a.difficultyNum < b.difficultyNum) return -1
+                    if (a.name > b.name) return 1
+                    else if (a.name < b.name) return -1
+                    return 0
+                })
+                tempSort.unshift({ text: "Class III", color: "linear-gradient(315deg, #4e647b, #293b46)" });
+                tempSort.splice([tempSort.findIndex(riv => riv.difficultyNum > 8)], 0, { text: "Class IV", color: "linear-gradient(315deg, #4e647b, #293b46)" });
+                tempSort.splice([tempSort.findIndex(riv => riv.difficultyNum > 11)], 0, { text: "Class V", color: "linear-gradient(315deg, #4e647b, #293b46)" });
             }
             setSortedRiverData(tempSort)
         }
@@ -115,8 +124,8 @@ export default function Gauges() {
                         <tbody>
                             {sortedRiverData && sortedRiverData.map((river, index) => {
                                 return (
-                                    typeof river === 'string' ?
-                                        <tr className={`${styles["sort-header"]}`}><td colSpan={"100%"}>{river}</td></tr> :
+                                    Object.keys(river).includes("text") ?
+                                        <tr className={`${styles["sort-header"]}`} style={{ background: `${river.color}` }}><td colSpan={"100%"}>{river.text}</td></tr> :
                                         <RiverFlowRow river={river} index={index} />
                                 )
                             })

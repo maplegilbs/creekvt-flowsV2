@@ -25,7 +25,7 @@ function setLevelInfo(riverObj) {
     }
     else if (riverObj.gauge1Reading > riverObj.gauge1Max) {
         riverObj.levelStatus = "too high";
-        riverObj.flowBarColor = 'rgba(180,65,65,.75)';
+        riverObj.flowBarColor = 'rgba(160,45,45,.85)';
         riverObj.flowBarPercent = 100;
     }
     else if (riverObj.gauge1Reading > riverObj.gauge1Min) {
