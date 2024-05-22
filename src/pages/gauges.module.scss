@@ -1,4 +1,4 @@
-/*Flows Table Styles*/
+@use '../styles/global_variables.scss';
 
 .info__container {
     display: inline-block;
@@ -20,13 +20,15 @@
     font-family: Montserrat, sans-serif;
     font-weight: 600;
     border-collapse: collapse;
-    // border-collapse: separate;
     border-spacing: 0px 8px;
+    position: relative;
 
     thead {
+
         tr {
             background-color: #f0f0f0;
             position: relative;
+
         }
     }
 
@@ -34,13 +36,13 @@
         box-sizing: border-box;
         overflow: hidden;
         width: 20%;
-        padding: 12px;
+        padding: 15px;
         position: sticky;
         position: -webkit-sticky;
         position: -moz-sticky;
         position: -ms-sticky;
         position: -o-sticky;
-        top: 0;
+        top: 0px;
         background-color: #3c5061;
         font-size: 1.1em;
         font-weight: 700;
@@ -48,8 +50,32 @@
         letter-spacing: initial;
         z-index: 1000;
         margin-bottom: 0;
+        margin-top: 5px;
         height: 58px;
-        border-top: 5px solid white;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0px;
+            width: 100%;
+            height: 5px;
+            background-color: white;
+            z-index: 2;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0px;
+            width: 100%;
+            height: 5px;
+            background-color: white;
+            z-index: 2;
+        }
+
+
     }
 
     .header--small {
@@ -72,7 +98,31 @@
         overflow: hidden;
     }
 
+    .sort-header {
+        background-color: #3c5061;
+        background: global_variables.$primary_gradient;
+        position: sticky;
+        position: -webkit-sticky;
+        position: -moz-sticky;
+        position: -ms-sticky;
+        position: -o-sticky;
+        top: 72px;
+        margin-bottom: 5px;
+        z-index: 1;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        font-family: Montserrat, sans-serif;
+        color: #222233;
+        font-weight: 700;
+        width: 100%;
+        border-top: 4px solid white;
 
+        td {
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px black;
+        }
+    }
 }
 
 
@@ -91,7 +141,7 @@
     .flows__table {
 
         th {
-            padding: 8px 4px;
+            padding: 15px 4px;
             font-size: 1.25em;
             line-height: .8em;
             width: 34%;
@@ -105,7 +155,6 @@
             display: table-cell;
             padding: 10px 8px;
             box-sizing: border-box;
-            /*width: 19%;*/
             overflow: hidden;
         }
 

@@ -97,7 +97,6 @@ export function updateRiverGaugeObj(riverInfo, gaugesInfo) {
                 }
             }
         }
-        console.log(riverCopy)
         return riverCopy;
     });
     return updatedData;

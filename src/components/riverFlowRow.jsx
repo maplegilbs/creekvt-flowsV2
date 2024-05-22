@@ -3,8 +3,7 @@ import { formatDateTime } from "../utils/formatDateTime";
 //Styles
 import styles from "./riverFlowRow.module.scss"
 
-export default function RiverFlowRow({ river, index }) {
-
+export default function RiverFlowRow({ river, index}) {
 
     if (!river.gauge1ID || river.gauge1ID === 'error') {
         return (

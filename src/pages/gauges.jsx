@@ -11,15 +11,17 @@ import styles from "./gauges.module.scss";
 //Temp import placeholder data
 import { tempRiverData } from "../utils/tempGaugeObj";
 import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
+import GaugesSortBar from "../components/gaugesSortBar";
 
 export default function Gauges() {
     const [status, setStatus] = useState('pending'); //pending, success, error
     const [gaugeData, setGaugeData] = useState(null);
     const [riverData, setRiverData] = useState(null);
-    const [updatedRiverData, setUpdatedRiverData] = useState(null)
+    const [updatedRiverData, setUpdatedRiverData] = useState(null);
+    const [sortedBy, setSortedBy] = useState('riverName'); //riverName, curLevel, difficulty, location, quality
+    const [sortedRiverData, setSortedRiverData] = useState(null);
 
-    console.log(gaugeData, riverData)
-
+    console.log(updatedRiverData)
     useEffect(() => {
         async function fetchGauges() {
             try {
@@ -54,6 +56,34 @@ export default function Gauges() {
         }
     }, [riverData, gaugeData])
 
+    useEffect(() => {
+        console.log(sortedBy)
+        if (updatedRiverData) {
+            let tempSort = [...updatedRiverData];
+            if (sortedBy === 'curLevel') {
+                tempSort.sort((a, b) => {
+                    if (!a.levelStatus && b.levelStatus) return 1
+                    else if (a.levelStatus && !b.levelStatus) return -1
+                    else if (a.levelStatus === "running" && b.levelStatus !== "running") return -1
+                    else if (a.levelStatus === "too high" && b.levelStatus !== "too high") return -1
+                    else if (a.levelStatus === "too low") return 1
+                    if (a.name > b.name) return 1
+                    else if (a.name < b.name) return -1
+
+                    return 0
+                })
+            }
+            else if (sortedBy === 'riverName') { tempSort.sort((a, b) => a.name > b.name ? 1 : -1) }
+            else if (sortedBy === 'difficulty') {
+                tempSort.sort((a, b) => a.difficultyNum - b.difficultyNum)
+                tempSort[0] = "Class III"
+                tempSort[tempSort.findIndex(riv => riv.difficultyNum > 8)] = "Class IV"
+                tempSort[tempSort.findIndex(riv => riv.difficultyNum > 12)] = "Class V"
+            }
+            setSortedRiverData(tempSort)
+        }
+
+    }, [updatedRiverData, sortedBy])
 
 
 
@@ -64,6 +94,7 @@ export default function Gauges() {
         <>
             {status === "success" &&
                 <div className={`${styles["info__container"]}`}>
+                    <GaugesSortBar setSortedBy={setSortedBy} />
                     <table className={`${styles["flows__table"]}`}>
                         <thead>
                             <tr>
@@ -82,7 +113,14 @@ export default function Gauges() {
                             </tr>
                         </thead>
                         <tbody>
-                            {updatedRiverData && updatedRiverData.map((river, index) => <RiverFlowRow river={river} index={index} />)}
+                            {sortedRiverData && sortedRiverData.map((river, index) => {
+                                return (
+                                    typeof river === 'string' ?
+                                        <tr className={`${styles["sort-header"]}`}><td colSpan={"100%"}>{river}</td></tr> :
+                                        <RiverFlowRow river={river} index={index} />
+                                )
+                            })
+                            }
                         </tbody>
                     </table>
                 </div>
