@@ -13,7 +13,6 @@ tr.flow__table-row {
 
     td {
         padding: 5px;
-        // padding-top: 1.4rem;
         box-sizing: border-box;
         overflow: hidden;
         width: 20%;
@@ -24,7 +23,7 @@ tr.flow__table-row {
             box-sizing: border-box;
             text-align: left;
             flex-basis: 15px;
-            width: 15px;
+            width: 18px;
             height: 75px;
             margin: 7px;
             padding: 6px 0;
@@ -152,22 +151,26 @@ tr.flow__table-row {
         flex-wrap: nowrap;
         justify-content: space-around;
         align-items: center;
+
+
+        .levelInfo {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+
+        .curLvl {
+            font-weight: 700;
+            font-size: 12px;
+            text-shadow: 1px 1px white, -1px -1px white, 1px -1px white, -1px 1px white;
+            align-self: center;
+            padding: 1px;
+            border-radius: 5px;
+        }
+
     }
 
-    .levelInfo {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-    }
 
-    .curLvl {
-        font-weight: 700;
-        font-size: 12px;
-        text-shadow: 1px 1px white, -1px -1px white, 1px -1px white, -1px 1px white;
-        align-self: center;
-        padding: 1px;
-        border-radius: 5px;
-    }
 
     .level,
     .river-stats {
@@ -187,6 +190,10 @@ tr.flow__table-row {
         .mobile-hide {
             display: none;
         }
+        
+        .mobile-show {
+            display: initial;
+        }
 
         .info_container {
             font-size: 10px;
@@ -205,53 +212,59 @@ tr.flow__table-row {
             font-size: 1.25em;
 
             p {
-                margin-top: 12px;
+                // margin-top: 12px;
                 line-height: normal;
+
+                &:nth-of-type(1) {
+                    margin-top: 12px;
+                }
             }
         }
+        
 
         .levelContainer {
             padding: 0px;
-        }
-        .levelInfo {
-            font-size: 1.15em;
+
+            >div {
+                width: 25%;
+            }
+
+            .levelInfo {
+                font-size: 1.15rem;
+            }
         }
 
-        .mobile-show {
-            display: initial;
-        }
 
         .mobile-show.gaugeInfo,
         .gaugeName.mobile-show {
             display: table-cell;
-            padding: 10px 8px;
+            // padding: 10px 8px;
             box-sizing: border-box;
             overflow: hidden;
         }
 
-        .mobile-hide {
-            display: none;
-        }
 
-        .level .mobile-show {
-            font-size: .9em;
-            font-weight: 500;
-        }
+        .level {
+            width: 45%;
 
-        .level .mobile-show hr {
-            margin: 1px auto;
+            .mobile-show {
+                font-size: .9em;
+                font-weight: 500;
+
+                hr {
+                    margin: 1px auto;
+                }
+            }
+
         }
 
         .flowBar {
             height: 60px;
         }
 
-        span.mobile-show {
-            font-size: .9em;
-        }
-
-        .gaugeName{
+        .gaugeName {
             font-size: .65rem;
+            padding-top: 1.6rem;
 
             a {
                 font-size: .5rem;
