@@ -1,0 +1,22 @@
+@use "../styles/global_variables.scss";
+
+.sort-options__container {
+    display: flex;
+
+    h3 {
+        font-size: .75rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: global_variables.$primary_dark;
+        font-family: global_variables.$primary_headers;
+        margin: 3px 8px;
+    }
+
+    select, option {
+        color: global_variables.$primary_dark;
+        font-family: global_variables.$primary_headers;
+        text-transform: uppercase;
+        font-size: .65rem;
+        font-weight: 600;
+    }
+}

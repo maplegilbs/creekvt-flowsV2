@@ -1,17 +1,17 @@
 //Components
 import Loader from "../components/loader";
 import RiverFlowRow from "../components/riverFlowRow";
+import GaugesSortBar from "../components/gaugesSortBar";
 //Hooks
 import { useEffect, useState } from "react";
 //Libraries
 import { formatDateTime, formatUSGSDateTimeQueryString } from "../utils/formatDateTime";
+import { sortByDifficulty, sortByLevel, sortByLocation, sortByQuality } from "../utils/sortingFunctions";
+import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
 //Styles
 import styles from "./gauges.module.scss";
-
 //Temp import placeholder data
 import { tempRiverData } from "../utils/tempGaugeObj";
-import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
-import GaugesSortBar from "../components/gaugesSortBar";
 
 export default function Gauges() {
     const [status, setStatus] = useState('pending'); //pending, success, error
@@ -60,35 +60,11 @@ export default function Gauges() {
         console.log(sortedBy)
         if (updatedRiverData) {
             let tempSort = [...updatedRiverData];
-            if (sortedBy === 'curLevel') {
-                tempSort.sort((a, b) => {
-                    if (!a.levelStatus && b.levelStatus) return 1
-                    else if (a.levelStatus && !b.levelStatus) return -1
-                    else if (a.levelStatus === "running" && b.levelStatus !== "running") return -1
-                    else if (a.levelStatus === "too high" && b.levelStatus !== "too high") return -1
-                    else if (a.levelStatus === "too low") return 1
-                    if (a.name > b.name) return 1
-                    else if (a.name < b.name) return -1
-                    return 0
-                })
-                tempSort.unshift({ text: "Running", color: "linear-gradient(45deg, rgb(100,155,100) 70%, rgb(80,130,80))" });
-                tempSort.splice([tempSort.findIndex(riv => riv.levelStatus === "too high")],0,{ text: "Too High", color: "linear-gradient(45deg, rgb(160,45,45) 70%, rgba(150,35,35))" });
-                tempSort.splice([tempSort.findIndex(riv => riv.levelStatus === "too low")],0, { text: "Too Low", color: "linear-gradient(45deg, rgb(225,170,35) 70%, rgb(205,150,15))" });
-                tempSort.splice([tempSort.findIndex(riv => riv.levelStatus === null)],0, { text: "No Min/Max Established", color: "linear-gradient(45deg, rgb(170,170,170) 70%, rgb(120,120,120))" });
-            }
-            else if (sortedBy === 'riverName') { tempSort.sort((a, b) => a.name > b.name ? 1 : -1) }
-            else if (sortedBy === 'difficulty') {
-                tempSort.sort((a, b) => {
-                    if (a.difficultyNum > b.difficultyNum) return 1
-                    else if (a.difficultyNum < b.difficultyNum) return -1
-                    if (a.name > b.name) return 1
-                    else if (a.name < b.name) return -1
-                    return 0
-                })
-                tempSort.unshift({ text: "Class III", color: "linear-gradient(315deg, #4e647b, #293b46)" });
-                tempSort.splice([tempSort.findIndex(riv => riv.difficultyNum > 8)], 0, { text: "Class IV", color: "linear-gradient(315deg, #4e647b, #293b46)" });
-                tempSort.splice([tempSort.findIndex(riv => riv.difficultyNum > 11)], 0, { text: "Class V", color: "linear-gradient(315deg, #4e647b, #293b46)" });
-            }
+            if (sortedBy === 'riverName') { tempSort.sort((a, b) => a.name > b.name ? 1 : -1) }
+            if (sortedBy === 'curLevel') {sortByLevel(tempSort)}
+            if (sortedBy === 'difficulty') {sortByDifficulty(tempSort)}
+            if (sortedBy === 'location') {sortByLocation(tempSort)}
+            if (sortedBy === 'quality') {sortByQuality(tempSort)}
             setSortedRiverData(tempSort)
         }
 
