@@ -2,10 +2,12 @@
 import Loader from "../components/loader";
 import RiverFlowRow from "../components/riverFlowRow";
 import GaugesSortBar from "../components/gaugesSortBar";
+//Contexts
+import { RiverContext } from "./innerLayout";
 //Hooks
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 //Libraries
-import { formatDateTime, formatUSGSDateTimeQueryString } from "../utils/formatDateTime";
+import {formatUSGSDateTimeQueryString } from "../utils/formatDateTime";
 import { sortByDifficulty, sortByLevel, sortByLocation, sortByQuality } from "../utils/sortingFunctions";
 import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
 //Styles
@@ -16,7 +18,7 @@ import { tempRiverData } from "../utils/tempGaugeObj";
 export default function Gauges() {
     const [status, setStatus] = useState('pending'); //pending, success, error
     const [gaugeData, setGaugeData] = useState(null);
-    const [riverData, setRiverData] = useState(null);
+    const riverData = useContext(RiverContext).riverData;
     const [updatedRiverData, setUpdatedRiverData] = useState(null);
     const [sortedBy, setSortedBy] = useState('riverName'); //riverName, curLevel, difficulty, location, quality
     const [sortedRiverData, setSortedRiverData] = useState(null);
@@ -32,13 +34,6 @@ export default function Gauges() {
                     throw new Error(`Gauge data fetch error to url: ${usgsURL}`)
                 }
                 let usgsData = await usgsResponse.json();
-                let riverInfoURL = 'http://localhost:3001/creekvt_flows/riverData'
-                let riversDBResponse = await fetch(riverInfoURL)
-                if (riversDBResponse.status < 200 || riversDBResponse.status > 299) {
-                    throw new Error(`River data fetch error to url: ${riverInfoURL}`)
-                }
-                let riversDBData = await riversDBResponse.json();
-                setRiverData(riversDBData);
                 setGaugeData(usgsData.value.timeSeries)
             } catch (error) {
                 console.log(`There was an error fetching gauge data: ${error}`)

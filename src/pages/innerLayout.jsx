@@ -1,11 +1,36 @@
 //Components
 import { NavLink, Outlet, useLocation } from "react-router-dom"
+//Hooks
+import { createContext, useEffect, useState } from "react";
 //Styles
 import styles from "../styles/innerLayout.module.scss"
 
+export const RiverContext = createContext();
+
 export default function InnerLayout() {
+    const [riverData, setRiverData] = useState(null);
+    const [status, setStatus] = useState("success") //success or error
     let curPath = useLocation();
-    console.log(curPath.pathname)
+
+    useEffect(() => {
+        async function fetchRiverInfo() {
+            try {
+                let riverInfoURL = 'http://localhost:3001/creekvt_flows/riverData'
+                let riversDBResponse = await fetch(riverInfoURL)
+                if (riversDBResponse.status < 200 || riversDBResponse.status > 299) {
+                    throw new Error(`River data fetch error to url: ${riverInfoURL}`)
+                }
+                let riversDBData = await riversDBResponse.json();
+                setRiverData(riversDBData);
+            } catch (error) {
+                console.log(`There was an error fetching gauge data: ${error}`)
+                setStatus('error')
+            }
+        }
+        fetchRiverInfo();
+    }, [])
+
+
     return (
         <div className={`${styles['page-wrapper']}`}>
             <div className={`${styles['nav-container']}`}>
@@ -26,9 +51,11 @@ export default function InnerLayout() {
                     </ul>
                 </nav>
             </div>
-            <div className={`${styles['content-container']}`}>
-                <Outlet />
-            </div>
+            <RiverContext.Provider value={{riverData, status}}>
+                <div className={`${styles['content-container']}`}>
+                    <Outlet />
+                </div>
+            </RiverContext.Provider>
         </div>
     )
 }

@@ -8,11 +8,6 @@ export default function RiverFlowRow({ river, index }) {
     if (!river.gauge1ID || river.gauge1ID === 'error') {
         return (
             <tr className={`${styles["flow__table-row"]}`}>
-                {/* <td className={`${styles["river-stats"]}`}>
-                    <a className={`${styles["river__heading"]}`} style={{ background: "linear-gradient(90deg, rgba(245,245,245,.3) 50%, transparent) 80%" }} href={`https://creekvt.com/riverguide/${river.url}`}>{river.name}</a>
-                    <p className={`${styles["stats"]}`}>Class: {river.difficultyChar}</p>
-                    <p className={`${styles["stats"]}`}>Quality: {river.quality}</p>
-                </td> */}
                 <td className={`${styles["river-stats"]}`} >
                     <div className={`${styles["river__heading"]}`}><a href={`https://creekvt.com/riverguide/${river.url}`}>{river.name}</a></div>
                     <br className="mobile-show" />
