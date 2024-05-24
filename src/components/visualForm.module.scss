@@ -1,0 +1,48 @@
+@use "../styles/global_variables.scss";
+
+.form__container {
+    width: 95%;
+    margin: 0 auto;
+    transition: visibility 2s ease-in, opacity 2s, max-height 2s;
+
+    .visual__form {
+
+        .form-item {
+            width: 85%;
+            margin: 0 auto;
+            padding: 5px 0;
+
+            label {
+                font-family: global_variables.$primary_headers;
+                font-weight: 700;
+            }
+
+            hr {
+                width: 25%;
+                margin: 0;
+            }
+
+            select,
+            input:not[type=radio] {
+                width: 100%;
+                margin: 8px 3px;
+                padding: 2px;
+                border-radius: 4px;
+                box-shadow: 1px 1px 2px 1px rgba(33, 33, 33, .5);
+                border: 1px solid black;
+            }
+
+            input[type=radio]{
+                margin: 5px;
+            }
+
+            .req {
+                font-weight: bold;
+                color: #8b0000;
+                font-style: normal;
+            }
+
+
+        }
+    }
+}

@@ -23,7 +23,6 @@ export default function Gauges() {
     const [sortedBy, setSortedBy] = useState('riverName'); //riverName, curLevel, difficulty, location, quality
     const [sortedRiverData, setSortedRiverData] = useState(null);
 
-    console.log(updatedRiverData)
     useEffect(() => {
         async function fetchGauges() {
             try {
