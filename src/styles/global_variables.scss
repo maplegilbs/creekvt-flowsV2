@@ -10,3 +10,25 @@ $prmary_text: 'Roboto', sans-serif;
 $primary_dark: #293b46;
 $primary_light: #4e647b;
 $primary_gradient: linear-gradient(110deg, #4e647b, #293b46);
+
+
+//Reused element styles
+@mixin buttonTheme($fontSize, $height) {
+    font-size: $fontSize;
+    height: $height;
+    text-decoration: none;
+    margin: .5rem auto;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(45deg, #e1eaf4, #4d7288);
+    color: white;
+    padding: 10px;
+    border: 2px solid rgb(118, 118, 118);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 5px #333;
+    border-radius: 3px;
+}

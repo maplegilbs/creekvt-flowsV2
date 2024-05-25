@@ -43,7 +43,7 @@ function setLevelInfo(riverObj) {
 }
 
 //input current and prior levels as numeric values-> return "rising, falling or steady"
-function trend(current, prior) {
+export function trend(current, prior) {
     let currentTrend;
     let trendPercent = (current - prior) / prior;
     switch (true) {

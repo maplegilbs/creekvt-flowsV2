@@ -76,8 +76,8 @@ export function stringTimeToSeconds(timeString) {
     return timeInSeconds
 }
 
-export function formatUSGSDateTimeQueryString() {
-    let today = formatDateTime(new Date());
+export function formatUSGSDateTimeQueryString(dateTime = new Date()) {
+    let today = formatDateTime(dateTime);
     let startMonth = today.month;
     let startDay = today.day - 1;
     if (startDay === 0) {

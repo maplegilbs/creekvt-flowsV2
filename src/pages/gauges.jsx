@@ -12,8 +12,6 @@ import { sortByDifficulty, sortByLevel, sortByLocation, sortByQuality } from "..
 import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
 //Styles
 import styles from "./gauges.module.scss";
-//Temp import placeholder data
-import { tempRiverData } from "../utils/tempGaugeObj";
 
 export default function Gauges() {
     const [status, setStatus] = useState('pending'); //pending, success, error
