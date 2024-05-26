@@ -1,0 +1,33 @@
+@use '../styles/global_variables.scss' as gv;
+.visual-table__container {
+    height: 1000px;
+    position: relative;
+    
+    table {
+        font-family: gv.$primary_headers;
+        width: 98%;
+        margin: 15px auto;
+        border-collapse: collapse;
+        position: relative;
+    }
+
+    thead {
+        font-size: 14px;
+        top: 570px;
+        background-color: rgb(43, 62, 73);
+        z-index: 9999;
+        position: sticky;
+        position: -webkit-sticky;
+        position: -moz-sticky;
+        position: -ms-sticky;
+        position: -o-sticky;
+        color: white;
+    }
+    
+    th {
+        text-align: center;
+        border: none;
+        font-weight: 700;
+        padding: 8px 0;
+    }
+}

@@ -220,6 +220,10 @@ p {
       display: block;
   }
 
+  th.mobile-show, td.mobile-show {
+    display: table-cell;
+  }
+
   .primary-heading {
       font-size: 2.75rem;
   }

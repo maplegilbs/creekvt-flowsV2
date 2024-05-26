@@ -1,6 +1,7 @@
 //Components
 import Loader from "../components/loader"
 import VisualForm from "../components/visualForm";
+import VisualTable from "../components/visualTable";
 //Hooks
 import { useState } from "react";
 //Icons
@@ -24,10 +25,15 @@ export default function Visuals() {
             {status === "pending" &&
                 < Loader bottom_text={"Loading Visuals"} />
             }
-            <button onClick={showVisualForm}><FontAwesomeIcon icon={faRulerVertical} />&nbsp;Report a Level&nbsp; <FontAwesomeIcon icon={faChevronRight} rotation={visualFormVisible? 90 : 0}/></button>
+            <button onClick={showVisualForm}><FontAwesomeIcon icon={faRulerVertical} />&nbsp;Report a Level&nbsp; <FontAwesomeIcon icon={faChevronRight} rotation={visualFormVisible ? 90 : 0} /></button>
             {status === "success" &&
                 <div className={`${styles["visual-form__container"]} ${visualFormVisible ? styles["visible"] : ""}`}>
                     <VisualForm />
+                </div>
+            }
+            {status === "success" &&
+                <div className={`${styles["visual-table__container"]}`}>
+                    <VisualTable />
                 </div>
             }
         </div>

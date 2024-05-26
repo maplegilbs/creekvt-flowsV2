@@ -105,13 +105,13 @@ export default function Gauges() {
             {
                 status === "pending" &&
                 <div>
-                    <Loader bottom_text={"Loading Gauges"} />
+                    <Loader type={'rain'} bottom_text={"Loading Gauges"} />
                 </div>
             }
             {
                 status === "error" &&
                 <div>
-                    <Loader bottom_text={"Loading Gauges ERROR"} />
+                    <Loader type={'rain'} bottom_text={"Loading Gauges ERROR"} />
                 </div>
             }
         </>
