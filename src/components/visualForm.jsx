@@ -1,16 +1,16 @@
 //Contexts
 import { RiverContext } from "../pages/innerLayout";
 //Hooks
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 //Libraries
 import { fetchGaugeDataForLevelReport } from "../utils/levelFetchingFunctions";
 import { formatDateTime } from "../utils/formatDateTime";
 //Styles
 import styles from "./visualForm.module.scss";
-import Loader from "./loader";
 
 
 const levelOpts = ['Too Low', 'Minimum', 'Low', 'Medium Low', 'Medium', 'Medium High', 'High', 'Too High'];
+
 function calcFeetIn(decimalInput = 0) {
     let feet = Math.floor(Number(decimalInput));
     let inches = Math.round((Number(decimalInput) - feet) * 12)
@@ -25,7 +25,6 @@ export default function VisualForm() {
     async function handleChange(e) {
         let updatedForm = { ...formData, [e.target.name]: e.target.value }
         if (updatedForm.level && updatedForm.riverName && updatedForm.tripDateTime && updatedForm.levelType) {
-            setStatus('fetching')
             updatedForm.gaugeReadings = null;
             let correlationGauges = [];
             riverData.forEach(river => {
@@ -56,16 +55,20 @@ export default function VisualForm() {
                 },
                 body: JSON.stringify(formData)
             })
-
-
+            response.status > 199 && response.status < 300 ? setStatus('success') : setStatus('failure')
         } catch (error) {
             setStatus('error')
         }
     }
 
+    async function resetForm() {
+        setFormData({})
+        setStatus('pending')
+    }
+
     return (
         <div className={`${styles["form__container"]}`}>
-            {riverData &&
+            {(riverData && status === 'pending') &&
                 <form className={`${styles["visual__form"]}`}>
                     <div className={`${styles["form-item"]}`}>
                         <label htmlFor="riverName">Run</label>
@@ -81,13 +84,13 @@ export default function VisualForm() {
                         <label> Level Type </label>
                         <span className={`${styles["req"]}`}>*</span>
                         <hr />
-                        <input type="radio" onChange={handleChange} id="subjective" value="subjective" name="levelType" />
+                        <input type="radio" onChange={handleChange} id="subjective" value="Subjective Opinion" name="levelType" />
                         <label htmlFor="subjective">Subjective Opinion</label>
                         <br />
-                        <input type="radio" onChange={handleChange} id="objective" value="objective" name="levelType" />
+                        <input type="radio" onChange={handleChange} id="objective" value="Painted Gauge" name="levelType" />
                         <label htmlFor="Painted">Painted Gauge</label>
                     </div>
-                    {formData.levelType === 'objective' &&
+                    {formData.levelType === 'Painted Gauge' &&
                         <div className={`${styles["form-item"]}`}>
                             <label htmlFor="level">Level</label>
                             <span className={`${styles["req"]}`}>*</span>
@@ -96,7 +99,7 @@ export default function VisualForm() {
                             <p className={`${styles["form-item__footer"]}`}>Equivalent if gauge is measured in ft & in: <span>{calcFeetIn(formData.level ? formData.level : 0)}</span> </p>
                         </div>
                     }
-                    {formData.levelType === 'subjective' &&
+                    {formData.levelType === 'Subjective Opinion' &&
                         <div className={`${styles["form-item"]}`}>
                             <label htmlFor="level">Level</label>
                             <span className={`${styles["req"]}`}>*</span>
@@ -116,12 +119,9 @@ export default function VisualForm() {
                     </div>
                 </form>
             }
-            {status === 'fetching' &&
-                <div className={`${styles["fetch-gauges__container"]}`}>
-                    <Loader />
-                </div>
-            }
-            {Object.keys(formData).includes('gaugeReadings') && Object.keys(formData.gaugeReadings).length > 0 &&
+
+
+            {(Object.keys(formData).includes('gaugeReadings') && Object.keys(formData.gaugeReadings).length > 0 && status === 'pending') &&
                 <div className={`${styles["fetch-gauges__container"]}`}>
                     <h3>Corresponding Gauge(s) Info</h3><hr />
                     <p>Gauge 1: <br /><span>{formData.gaugeReadings.gauge1Name}</span></p>
@@ -143,12 +143,67 @@ export default function VisualForm() {
                     <button onClick={handleSubmit} className={`${styles["form__button-submit"]}`}>Submit</button>
                 </div>
             }
-            {Object.keys(formData).includes('gaugeReadings') && Object.keys(formData.gaugeReadings).length == 0 &&
+
+            {(Object.keys(formData).includes('gaugeReadings') && Object.keys(formData.gaugeReadings).length == 0 && status === 'pending') &&
                 <div className={`${styles["fetch-gauges__container"]}`}>
-                    <h3>No gauge information could be fetched at this time, please submit anyway and gauge information retreival will be retryed later</h3>
+                    <h3>No gauge information could be fetched at this time, please submit anyway.</h3>
                     <button onClick={handleSubmit} className={`${styles["form__button-submit"]}`}>Submit</button>
                 </div>
             }
+            {status === 'success' &&
+                <div className={`${styles["fetch-gauges__container"]}`}>
+                    <div className={`${styles["submitted-report__container"]}`}>
+                        <h3>Thanks for the submission. Good river karma headed your way!</h3>
+                        <h6>River:</h6>
+                        <p>{formData.riverName}</p>
+                        <h6>Level Report Type:</h6>
+                        <p>{formData.levelType}</p>
+                        <h6>Reported Level:</h6>
+                        <p>{formData.levelType === 'Subjective Opinion' ? levelOpts[formData.level - 1] : formData.level}</p>
+                        <h6>Report Date Time:</h6>
+                        <p>{formatDateTime(formData.tripDateTime).fullDate} {formatDateTime(formData.tripDateTime).time} {formatDateTime(formData.tripDateTime).amPm}</p>
+                        {('gaugeReadings' in formData && 'gauge1Name' in formData.gaugeReadings) &&
+                            <>
+                                <br />
+                                <hr />
+                                <h3>Gauge Info</h3>
+                                <div className={`${styles["gauge-reading__container"]}`}>
+                                    <div className={`${styles["gauge-reading-details"]}`}>
+                                        <h6>Gauge 1:</h6>
+                                        <p>{formData.gaugeReadings.gauge1Name}</p>
+                                        <h6>Gauge 1 Level:</h6>
+                                        <p>{formData.gaugeReadings.gauge1Level}</p>
+                                        <h6>Gauge 1 Reading Time:</h6>
+                                        <p>{formatDateTime(formData.gaugeReadings.gauge1ReadingTime).fullDate} {formatDateTime(formData.gaugeReadings.gauge1ReadingTime).time} {formatDateTime(formData.gaugeReadings.gauge1ReadingTime).amPm}</p>
+
+                                    </div>
+                                    {('gaugeReadings' in formData && 'gauge2Name' in formData.gaugeReadings) &&
+                                        <div className={`${styles["gauge-reading-details"]}`}>
+                                            <h6>Gauge 2:</h6>
+                                            <p>{formData.gaugeReadings.gauge2Name}</p>
+                                            <h6>Gauge 2 Level:</h6>
+                                            <p>{formData.gaugeReadings.gauge2Level}</p>
+                                            <h6>Gauge 2 Reading Time:</h6>
+                                            <p>{formatDateTime(formData.gaugeReadings.gauge2ReadingTime).fullDate} {formatDateTime(formData.gaugeReadings.gauge1ReadingTime).time} {formatDateTime(formData.gaugeReadings.gauge1ReadingTime).amPm}</p>
+
+                                        </div>
+                                    }
+                                </div>
+                            </>
+                        }
+                        <br />
+                        <button onClick={resetForm} className={`${styles["form__button-submit"]}`}>Reset Form</button>
+                    </div>
+                </div>
+            }
+            {status === 'failure' &&
+                <div className={`${styles["fetch-gauges__container"]}`}>
+                    <h6>There was an error submitting the data.  <br/><br/>Please <a href="https://creekvt.com/contact">contact Us</a> to report the issue</h6>
+                    <br/>
+                    <button onClick={resetForm} className={`${styles["form__button-submit"]}`}>Reset Form</button>
+                </div>
+            }
+
         </div>
     )
 }

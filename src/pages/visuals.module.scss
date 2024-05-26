@@ -1,0 +1,25 @@
+@use '../styles/global_variables.scss' as gv;
+
+.visuals-page {
+
+    div.visual-form__container {
+        max-height: 0;
+        padding: 10px;
+        overflow: hidden;
+        transition: all 5s linear;
+    }
+
+    div.visible {
+        max-height: 10000px;
+    }
+
+    button {
+        margin: 5%;
+        font-family: gv.$primary_headers;
+        border: 0px;
+        border-bottom: 2px solid #333;
+        font-weight: 800;
+        font-size: 1rem;
+        color: #333;
+    }
+}

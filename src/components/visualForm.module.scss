@@ -93,11 +93,52 @@
         margin: 0;
     }
 
+    a {
+        // text-decoration: none;
+        color: #333;
+    }
     span {
         font-weight: 700;
     }
 
     .form__button-submit {
         @include global_variables.buttonTheme(1.05rem, 2rem);
+    }
+
+    .submitted-report__container {
+
+        h3 {
+            font-size: 1rem;
+            line-height: initial;
+        }
+
+        h6 {
+            margin: 0;
+            text-align: left;
+        }
+
+        p {
+            margin-bottom: 10px;
+            line-height: initial;
+        }
+    }
+
+    .submitted-report__container {
+        hr {
+            width: 50%;
+            margin: 20px auto;
+        }
+    }
+
+    .gauge-reading__container {
+        display: flex;
+
+        .gauge-reading-details {
+            width: 50%;
+            p, h6 {
+                font-size: .8rem;
+                margin-bottom: 5px;
+            }
+        }
     }
 }
