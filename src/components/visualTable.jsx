@@ -1,5 +1,8 @@
 //Components
 import Loader from './loader'
+//Context
+import { useContext } from 'react'
+import { RiverContext } from '../pages/innerLayout'
 //Hooks
 import { useState, useEffect } from 'react'
 //Icons
@@ -11,10 +14,10 @@ import VisualTableRow from './visualTableRow'
 
 export default function VisualTable({ reportSubmitted }) {
     const [status, setStatus] = useState('pending') //pending, success, failure
-    const [filters, setFilters] = useState({ limit: 8 }) //riverName, limit
+    const [filters, setFilters] = useState({ limit: 5 }) //riverName, limit
     const [levelReports, setLevelReports] = useState(null)
-
-    console.log(levelReports)
+    const riverData = useContext(RiverContext).riverData;
+    console.log(filters, riverData)
 
     function buildQueryString() {
         if (Object.keys(filters).length < 1) return null;
@@ -25,8 +28,8 @@ export default function VisualTable({ reportSubmitted }) {
         return ("?").concat(queryStrings.join("&"))
     }
 
-    useEffect(() => {
-        async function getFlows() {
+    async function getFlows() {
+        try {
             let queryString = buildQueryString();
             let response = await fetch(`http://localhost:3001/creekvt_flows/flowReports${queryString ? queryString : ''}`)
             if (response.status > 199 && response.status < 300) {
@@ -36,13 +39,27 @@ export default function VisualTable({ reportSubmitted }) {
             }
             else setStatus('failure')
         }
-        try {
-            getFlows()
-        } catch (error) {
+        catch (error) {
             setStatus('failure')
             console.log(error)
         }
-    }, [filters, reportSubmitted])
+    }
+
+    useEffect(() => {
+        getFlows();
+    }, [reportSubmitted])
+
+    function updateFilters(e) {
+        if (e.target.value.toLowerCase() === 'all') {
+            setFilters(prev => {
+                delete prev[e.target.name]
+                return prev;
+            })
+        }
+        else {
+            setFilters(prev => { return { ...prev, [e.target.name]: e.target.value } })
+        }
+    }
 
     return (
         <div className={`${styles["component__container"]}`}>
@@ -58,24 +75,28 @@ export default function VisualTable({ reportSubmitted }) {
                             <h6>Filter Options</h6>
                         </div>
                         <div className={`${styles["filter__row"]}`}>
-                        <label htmlFor='riverName'>River</label>
-                        <select id="riverName" name="riverName">
-                            <option>All</option>
-                            <option>The Big Branch of Otter Creek</option>
-                            <option>50</option>
-                            <option>All</option>
-                        </select>
+                            <label htmlFor='riverName'>River</label>
+                            <select onChange={updateFilters} id="riverName" name="riverName">
+                                <option value={'all'}>All</option>
+                                {riverData ?
+                                    riverData.map(river => <option value={river.name}>{river.name}</option>)
+                                    :
+                                    <></>
+                                }
+                            </select>
                         </div>
                         <div className={`${styles["filter__row"]}`}>
-                        <label htmlFor='limit'>Limit To</label>
-                        <select id="limit" name="limit">
-                            <option>10</option>
-                            <option>25</option>
-                            <option>50</option>
-                            <option>All</option>
-                        </select>
+                            <label htmlFor='limit'>Limit To</label>
+                            <select onChange={(e) => updateFilters(e)} id="limit" name="limit">
+                                <option value={5}>5</option>
+                                <option value={10}>10</option>
+                                <option value={25}>25</option>
+                                <option value={50}>50</option>
+                                <option value={'all'}>All</option>
+                            </select>
                         </div>
-
+                        <button onClick={getFlows} className={`${styles["update-filters__button"]}`}>Update</button>
+                        <hr />
                     </div>
                     <div className={`${styles["visual-table__container"]}`}>
                         <h3 className={`${styles["table-title"]}`}>Level Reports</h3>
@@ -83,11 +104,11 @@ export default function VisualTable({ reportSubmitted }) {
                         <table>
                             <thead>
                                 <tr className={`mobile-hide`}>
-                                    <th colspan={3}></th>
-                                    <th colspan={2}>Level Type</th>
-                                    <th colspan={5}>Gauge 1</th>
-                                    <th colspan={5}>Gauge 2</th>
-                                    <th colspan={1}></th>
+                                    <th colSpan={3}></th>
+                                    <th colSpan={2}>Level Type</th>
+                                    <th colSpan={5}>Gauge 1</th>
+                                    <th colSpan={5}>Gauge 2</th>
+                                    <th colSpan={1}></th>
                                 </tr>
                                 <tr>
                                     <th>Date of Report</th>
@@ -110,7 +131,13 @@ export default function VisualTable({ reportSubmitted }) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {levelReports.map(levelReport => <VisualTableRow key={levelReport.id} levelReport={levelReport} />)}
+                                {(levelReports && levelReports.length > 0) ?
+                                    levelReports.map(levelReport => <VisualTableRow key={levelReport.id} levelReport={levelReport} />)
+                                    :
+                                    <tr>
+                                        <td colSpan={15}>No results available for selected filters.  Please update and try again.</td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>

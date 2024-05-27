@@ -27,7 +27,7 @@ export default function Visuals({ initialState }) {
         if(initialState === 'table'){
             setFormVisible(false);
             setTableVisible(true);
-            tableRef.current.scrollIntoView({behavior: 'smooth'})
+            tableRef.current.scrollIntoView({behavior: 'smooth', block: 'center'})
             setCamsVisible(false)
         }
         else if(initialState === 'cams'){
@@ -55,7 +55,7 @@ export default function Visuals({ initialState }) {
             <div ref={formRef} className={`${styles["visual-form__container"]} ${formVisible ? styles["visible"] : ""}`}>
                 <VisualForm reportSubmitted={reportSubmitted} setReportSubmitted={setReportSubmitted} />
             </div>
-            <button onClick={() => { if (!tableVisible) { tableRef.current.scrollIntoView({ behavior: 'smooth' }) }; setTableVisible(prev => !prev); }}><FontAwesomeIcon icon={faChevronRight} rotation={tableVisible ? 90 : 0} />&nbsp;View Level Reports&nbsp; <FontAwesomeIcon icon={faTable} /></button>
+            <button onClick={() => { if (!tableVisible) { tableRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' }) }; setTableVisible(prev => !prev); }}><FontAwesomeIcon icon={faChevronRight} rotation={tableVisible ? 90 : 0} />&nbsp;View Level Reports&nbsp; <FontAwesomeIcon icon={faTable} /></button>
             <div ref={tableRef} className={`${styles["visual-table__container"]} ${tableVisible ? styles["table-visible"] : ""}`} >
                 <VisualTable reportSubmitted={reportSubmitted} />
             </div>

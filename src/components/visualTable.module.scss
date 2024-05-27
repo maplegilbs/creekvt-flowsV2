@@ -6,13 +6,14 @@
     transition: visibility 2s ease-in, opacity 2s, max-height 2s;
     background: rgba(100, 100, 100, .1);
     border-radius: 5px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 
     .filter__container {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         width: 100%;
-        border-bottom: 2px solid rgba(33, 33, 33, .5);
         margin-bottom: 8px;
 
         .filter__row {
@@ -31,8 +32,25 @@
             margin: 0 5px;
         }
 
+        h6 {
+            text-decoration: underline;
+        }
+
         select {
-            padding: 5px;
+            padding: 2px 6px;
+            border: 1px solid black;
+            border-radius: 3px;
+            font-size: .7rem;
+        }
+
+        hr {
+            width: 75%;
+            margin: 8px auto;
+        }
+
+        .update-filters__button{
+            @include gv.buttonTheme(.85rem, 1.7rem);
+            margin-left: 4%;
         }
     }
 
