@@ -18,7 +18,7 @@ const router = createBrowserRouter([
       path: "",
       element: <InnerLayout />,
       children: [
-        {path: "/forecasts",
+        {path: "forecasts",
           element: <Forecasts />
         },
         {path: "gauges",
@@ -28,7 +28,21 @@ const router = createBrowserRouter([
           element: <Rainfall />
         },
         {path: "visuals",
-          element: <Visuals />
+          // element: <Visuals />,
+          children: [
+            {path: "",
+              element: <Visuals initialState={'form'}/>
+            },
+            {path: "addReport",
+              element: <Visuals initialState={'form'}/>
+            },
+            {path: "levelsTable",
+              element: <Visuals initialState={'table'}/>
+            },
+            {path: "cams",
+              element: <Visuals initialState={'cams'}/>
+            },
+          ]
         },
       ]
     }]

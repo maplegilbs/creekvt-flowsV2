@@ -1,5 +1,5 @@
 //Components
-import { NavLink, Outlet, useLocation } from "react-router-dom"
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom"
 //Hooks
 import { createContext, useEffect, useState } from "react";
 //Styles
@@ -39,7 +39,7 @@ export default function InnerLayout() {
                         <li className={curPath.pathname === '/gauges' ? `${styles['active']}` : ""}>
                             <NavLink to="/gauges">Gauges</NavLink>
                         </li>
-                        <li className={curPath.pathname === '/visuals' ? `${styles['active']}` : ""}>
+                        <li className={curPath.pathname.includes('visuals') ? `${styles['active']}` : ""}>
                             <NavLink to="/visuals">Visuals</NavLink>
                         </li>
                         <li className={curPath.pathname === '/rain' ? `${styles['active']}` : ""}>
