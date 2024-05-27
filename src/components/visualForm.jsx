@@ -69,7 +69,7 @@ export default function VisualForm({ reportSubmitted, setReportSubmitted }) {
     }
 
     return (
-        <div className={`${styles["form__container"]}`}>
+        <div className={`${styles["component__container"]}`}>
             {(riverData && status === 'pending') &&
                 <form className={`${styles["visual__form"]}`}>
                     <div className={`${styles["form-item"]}`}>

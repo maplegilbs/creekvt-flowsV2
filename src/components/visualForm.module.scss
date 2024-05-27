@@ -1,9 +1,13 @@
 @use "../styles/global_variables.scss";
 
-.form__container {
+.component__container {
     width: 95%;
     margin: 0 auto;
     transition: visibility 2s ease-in, opacity 2s, max-height 2s;
+    background: rgba(100, 100, 100, .1);
+    border-radius: 5px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 
     label {
         font-family: global_variables.$primary_headers;

@@ -1,63 +1,114 @@
 @use '../styles/global_variables.scss' as gv;
-.visual-table__container {
-    position: relative;
 
-    .table-title{
-        font-size: 1rem;
-        margin: 1% 0 0 1%;
-        padding: 5px;
-        color: white;
-        border-radius: 0px 4px 0 0;
-        text-align: left;
-        width: max-content;
-        font-weight: 700;
-        font-family: gv.$primary_headers;
-        background-color: rgb(43, 62, 73);
+.component__container {
+    width: 95%;
+    margin: 0 auto;
+    transition: visibility 2s ease-in, opacity 2s, max-height 2s;
+    background: rgba(100, 100, 100, .1);
+    border-radius: 5px;
+
+    .filter__container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        border-bottom: 2px solid rgba(33, 33, 33, .5);
+        margin-bottom: 8px;
+
+        .filter__row {
+            display: flex;
+            align-items: center;
+            margin: 7px 1%;
+        }
+
+        h6,
+        select,
+        label {
+            font-size: .8rem;
+            color: rgb(43, 62, 73);
+            font-family: gv.$primary_headers;
+            font-weight: 700;
+            margin: 0 5px;
+        }
+
+        select {
+            padding: 5px;
+        }
     }
-    
-    table {
-        font-family: gv.$primary_headers;
-        width: 98%;
-        margin: 5px auto;
-        margin-top: 0;
-        border-collapse: collapse;
+
+    .visual-table__container {
         position: relative;
-        border-bottom: 2px solid #333;
-        border-left: 2px solid #333;
-        border-right: 2px solid #333;
-    }
 
-    thead {
-        font-size: 14px;
-        top: 0px;
-        background-color: rgb(43, 62, 73);
-        z-index: 9999;
-        position: sticky;
-        position: -webkit-sticky;
-        position: -moz-sticky;
-        position: -ms-sticky;
-        position: -o-sticky;
-        color: white;
-    }
-    
-    th {
-        text-align: center;
-        border: none;
-        font-weight: 700;
-        padding: 8px 4px;
-    }
+        >p {
+            position: absolute;
+            top: 0;
+            right: 8px;
+            font-size: .7rem;
+            color: rgb(43, 62, 73);
+            font-family: gv.$primary_headers;
+            font-weight: 700;
+        }
 
-    td {
-        text-align: center;
-        font-size: .8rem;
-        font-weight: 700;
-    }
-    
-    tbody {
-        tr:nth-child(even){
-            background-color: gv.$table_row;
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
+        .table-title {
+            font-size: 1rem;
+            margin: 1% 0 0 1%;
+            padding: 5px;
+            color: white;
+            border-radius: 0px 4px 0 0;
+            text-align: left;
+            width: max-content;
+            font-weight: 700;
+            font-family: gv.$primary_headers;
+            background-color: rgb(43, 62, 73);
+        }
+
+        table {
+            font-family: gv.$primary_headers;
+            width: 98%;
+            margin: 5px auto;
+            margin-top: 0;
+            border-collapse: collapse;
+            position: relative;
+            border-bottom: 2px solid #333;
+            border-left: 2px solid #333;
+            border-right: 2px solid #333;
+        }
+
+        thead {
+            font-size: 14px;
+            top: 0px;
+            background-color: rgb(43, 62, 73);
+            z-index: 9999;
+            position: sticky;
+            position: -webkit-sticky;
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+            color: white;
+        }
+
+        th {
+            text-align: center;
+            border: none;
+            font-weight: 700;
+            padding: 8px 4px;
+        }
+
+        td {
+            text-align: center;
+            font-size: .8rem;
+            font-weight: 700;
+        }
+
+        tbody {
+            tr:nth-child(odd) {
+                background-color: white;
+            }
+            tr:nth-child(even) {
+                background-color: gv.$table_row;
+                border-top: 1px solid black;
+                border-bottom: 1px solid black;
+            }
         }
     }
 }

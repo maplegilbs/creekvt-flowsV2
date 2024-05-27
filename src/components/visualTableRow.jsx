@@ -12,9 +12,9 @@ const isRecent = (new Date() - new Date(levelReport.tripDateTime)) < (24 * 60 * 
 
     return (
         <tr className={`${styles["visuals-row"]}`}>
-            <td className={`mobile-show ${styles["date-cell"]}`} style={isRecent ? {textAlign: 'right'} : {textAlign: 'center', justifyContent:'center'}}>
+            <td className={`mobile-show ${styles["date-cell"]}`} style={isRecent ? {display: 'flex', alignItems: 'center'} : {textAlign: 'center'}}>
                 { isRecent?
-                    <span className={`${styles["alert-icon"]}`}><FontAwesomeIcon icon={faBell} size='lg' color="black"/></span>
+                    <span className={`${styles["alert-icon"]}`}><FontAwesomeIcon icon={faBell} size="sm" color=" rgb(43, 62, 73)"/></span>
                     :
                     <></>
                 }
