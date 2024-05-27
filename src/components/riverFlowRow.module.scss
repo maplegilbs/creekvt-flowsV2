@@ -1,3 +1,5 @@
+@use '../styles/global_variables.scss' as gv;
+
 /*Flows Table Styles*/
 tr.flow__table-row {
     background-color: white;
@@ -7,8 +9,7 @@ tr.flow__table-row {
     border-bottom: 2px solid #333;
 
     &:nth-child(even) {
-        background-color: rgba(188, 188, 188, .15);
-        background-color: rgba(215, 225, 232, .95);
+        background-color: gv.$table_row;
     }
 
 
@@ -17,6 +18,7 @@ tr.flow__table-row {
         box-sizing: border-box;
         overflow: hidden;
         width: 20%;
+
 
         div.flowBar {
             display: flex;

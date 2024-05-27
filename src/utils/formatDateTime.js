@@ -20,9 +20,11 @@ export function formatDateTime(inputTime) {
     let dow = weekdays[inputTime.getDay()];
     let monthString = months[inputTime.getMonth()]
     let day = inputTime.getDate();
+    let unPadDay = day;
     if (day < 10) { day = "0" + day.toString() }
     let month = inputTime.getMonth();
     month++
+    let unPadMonth = month;
     if (month < 10) { month = "0" + month.toString() }
     let year = inputTime.getFullYear();
     let hour24 = inputTime.getHours() > 9 ? inputTime.getHours() : inputTime.getHours().toString().padStart(2, '0');
@@ -43,6 +45,7 @@ export function formatDateTime(inputTime) {
             time: `${hour}:${minute}`,
             time24Hr: `${hour24}:${minute}`,
             amPm: amPM,
+            numericDate: `${unPadMonth}/${unPadDay}/${year.toString().slice(2)}`,
             fullDate: `${monthString} ${day}, ${year}`,
             htmlDateTime: `${year}-${month}-${day}T${hour24}:${minute}`,
             htmlDate: `${year}-${month}-${day}`,

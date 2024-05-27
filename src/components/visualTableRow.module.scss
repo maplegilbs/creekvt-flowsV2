@@ -1,0 +1,16 @@
+tr.visuals-row {
+
+    td {
+        position: relative;
+        padding: 5px;
+        font-size: .65rem;
+
+        &.date-cell {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: right;
+        }
+
+    }
+}

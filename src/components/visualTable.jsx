@@ -1,13 +1,14 @@
 //Components
 import Loader from './loader'
 //Hooks
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 //Styles
 import styles from './visualTable.module.scss'
+import VisualTableRow from './visualTableRow'
 
-export default function VisualTable() {
+export default function VisualTable({reportSubmitted}) {
     const [status, setStatus] = useState('pending') //pending, success, failure
-    const [filters, setFilters] = useState({riverName: 'RIdley BrooK'})
+    const [filters, setFilters] = useState({ limit: 8 }) //riverName, limit
     const [levelReports, setLevelReports] = useState(null)
 
     console.log(levelReports)
@@ -21,13 +22,13 @@ export default function VisualTable() {
         return ("?").concat(queryStrings.join("&"))
     }
 
-    useState(() => {
+    useEffect(() => {
         async function getFlows() {
             let queryString = buildQueryString();
-            let response = await fetch(`http://localhost:3001/creekvt_flows/flowReports${queryString? queryString: ''}`)
+            let response = await fetch(`http://localhost:3001/creekvt_flows/flowReports${queryString ? queryString : ''}`)
             if (response.status > 199 && response.status < 300) {
                 let flowInfo = await response.json();
-                setStatus('success')
+                setTimeout(() => setStatus('success'), 150)
                 setLevelReports(flowInfo)
             }
             else setStatus('failure')
@@ -38,17 +39,18 @@ export default function VisualTable() {
             setStatus('failure')
             console.log(error)
         }
-    }, [filters])
+    }, [filters, reportSubmitted])
 
     return (
         <>
             {(status === 'pending') &&
                 <div className={`${styles["visual-table__container"]}`}>
-                    <Loader type={'spinner'} />
+                    <Loader type={'spinner'} text={'Loading flow reports...'} />
                 </div>
             }
             {(status === 'success') &&
                 <div className={`${styles["visual-table__container"]}`}>
+                    <h3 className={`${styles["table-title"]}`}>Level Reports</h3>
                     <table>
                         <thead>
                             <tr className={`mobile-hide`}>
@@ -78,9 +80,9 @@ export default function VisualTable() {
                                 <th className={`mobile-hide ${styles[""]}`}>Trend</th>
                             </tr>
                         </thead>
-<tbody>
-
-</tbody>
+                        <tbody>
+                            {levelReports.map(levelReport => <VisualTableRow key={levelReport.id} levelReport={levelReport} />)}
+                        </tbody>
                     </table>
                 </div>
             }

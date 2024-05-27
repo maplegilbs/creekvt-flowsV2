@@ -17,7 +17,7 @@ function calcFeetIn(decimalInput = 0) {
     return `${feet}' ${inches}"`
 }
 
-export default function VisualForm() {
+export default function VisualForm({ reportSubmitted, setReportSubmitted }) {
     const riverData = useContext(RiverContext).riverData;
     const [formData, setFormData] = useState({})
     const [status, setStatus] = useState('pending') //pending, fetching, success, error
@@ -56,6 +56,7 @@ export default function VisualForm() {
                 body: JSON.stringify(formData)
             })
             response.status > 199 && response.status < 300 ? setStatus('success') : setStatus('failure')
+            setTimeout(()=>setReportSubmitted(true),1750)
         } catch (error) {
             setStatus('error')
         }
@@ -63,6 +64,7 @@ export default function VisualForm() {
 
     async function resetForm() {
         setFormData({})
+        setReportSubmitted(false)
         setStatus('pending')
     }
 
@@ -198,8 +200,8 @@ export default function VisualForm() {
             }
             {status === 'failure' &&
                 <div className={`${styles["fetch-gauges__container"]}`}>
-                    <h6>There was an error submitting the data.  <br/><br/>Please <a href="https://creekvt.com/contact">contact Us</a> to report the issue</h6>
-                    <br/>
+                    <h6>There was an error submitting the data.  <br /><br />Please <a href="https://creekvt.com/contact">contact Us</a> to report the issue</h6>
+                    <br />
                     <button onClick={resetForm} className={`${styles["form__button-submit"]}`}>Reset Form</button>
                 </div>
             }
