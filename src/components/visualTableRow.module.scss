@@ -9,5 +9,10 @@ tr.visuals-row {
         .alert-icon{
             padding-right: 5px;
         }
+
+        &.gauge-cell {
+            font-weight: 500;
+            font-size: .8rem;
+        }
     }
 }

@@ -108,7 +108,6 @@ export default function VisualTable({ reportSubmitted }) {
                                     <th colSpan={2}>Level Type</th>
                                     <th colSpan={5}>Gauge 1</th>
                                     <th colSpan={5}>Gauge 2</th>
-                                    <th colSpan={1}></th>
                                 </tr>
                                 <tr>
                                     <th>Date of Report</th>

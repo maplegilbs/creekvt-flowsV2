@@ -51,6 +51,9 @@
         .update-filters__button{
             @include gv.buttonTheme(.85rem, 1.7rem);
             margin-left: 4%;
+
+            &:active {
+                box-shadow:  2px -2px 1px white inset;            }
         }
     }
 
@@ -81,6 +84,7 @@
         }
 
         table {
+            overflow-y: scroll;
             font-family: gv.$primary_headers;
             width: 98%;
             margin: 5px auto;
