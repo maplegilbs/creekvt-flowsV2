@@ -53,12 +53,15 @@
             margin-left: 4%;
 
             &:active {
-                box-shadow:  2px -2px 1px white inset;            }
+                box-shadow:  2px -2px 1px white inset;            
+            }
         }
     }
 
     .visual-table__container {
         position: relative;
+        overflow-x: scroll;
+        padding: 10px;
 
         >p {
             position: absolute;
@@ -84,7 +87,7 @@
         }
 
         table {
-            overflow-y: scroll;
+            overflow: scroll;
             font-family: gv.$primary_headers;
             width: 98%;
             margin: 5px auto;
