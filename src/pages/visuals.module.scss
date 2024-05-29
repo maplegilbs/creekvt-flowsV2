@@ -2,7 +2,7 @@
 
 .visuals-page {
 
-    div.visual-form__container, div.visual-table__container {
+    div.visual-form__container, div.visual-table__container, div.visual-cams__container {
         max-height: 0;
         box-sizing: border-box;
         overflow: hidden;
@@ -18,6 +18,10 @@
     
     div.table-visible{
         // max-height: 3000px;
+        max-height: max-content;
+    }
+
+    div.cams-visible {
         max-height: max-content;
     }
 

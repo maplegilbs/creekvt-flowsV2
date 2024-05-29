@@ -16,6 +16,7 @@ export default function GaugesSortBar({ setSortedBy }) {
                 <option value="difficulty">Difficulty</option>
                 <option value="quality">Quality</option>
                 <option value="location">Location</option>
+                <option value="changePerHr">Trend</option>
             </select>
         </div>
     )

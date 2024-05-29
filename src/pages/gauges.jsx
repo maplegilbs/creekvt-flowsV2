@@ -8,7 +8,7 @@ import { RiverContext } from "./innerLayout";
 import { useContext, useEffect, useState } from "react";
 //Libraries
 import {formatUSGSDateTimeQueryString } from "../utils/formatDateTime";
-import { sortByDifficulty, sortByLevel, sortByLocation, sortByQuality } from "../utils/sortingFunctions";
+import { sortByChange, sortByDifficulty, sortByLevel, sortByLocation, sortByQuality } from "../utils/sortingFunctions";
 import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
 //Styles
 import styles from "./gauges.module.scss";
@@ -52,11 +52,13 @@ export default function Gauges() {
         console.log(sortedBy)
         if (updatedRiverData) {
             let tempSort = [...updatedRiverData];
+            console.log(tempSort == updatedRiverData)
             if (sortedBy === 'riverName') { tempSort.sort((a, b) => a.name > b.name ? 1 : -1) }
             if (sortedBy === 'curLevel') {sortByLevel(tempSort)}
             if (sortedBy === 'difficulty') {sortByDifficulty(tempSort)}
             if (sortedBy === 'location') {sortByLocation(tempSort)}
             if (sortedBy === 'quality') {sortByQuality(tempSort)}
+            if (sortedBy === 'changePerHr') {sortByChange(tempSort)}
             setSortedRiverData(tempSort)
         }
 

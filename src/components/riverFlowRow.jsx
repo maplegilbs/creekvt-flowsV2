@@ -41,10 +41,16 @@ export default function RiverFlowRow({ river, index }) {
                             <div className={`${styles["levelInfo"]}`}>{river.gauge1Reading}</div>
                             {river.gauge1Max &&
                                 <div className={`${styles["flowBar"]}`} style={{ backgroundImage: `linear-gradient(0deg, ${river.flowBarColor ? river.flowBarColor : "grey"} ${river.flowBarPercent ? river.flowBarPercent + "%" : "0%"}, white 1%` }}>
-                                    <span className={`${styles["curLvl"]}`}><div className={`${styles["top"]} ${styles["arrow"]} ${river.gauge1Trend ? styles[river.gauge1Trend] : ""}`}></div>{typeof river.gauge1ChangePerHr == 'number' ? river.gauge1ChangePerHr > 0 ? `+${river.gauge1ChangePerHr}` : river.gauge1ChangePerHr : ""}/hr<br /><div className={`${styles["bottom"]} ${styles["arrow"]} ${river.gauge1Trend ? styles[river.gauge1Trend] : ""}`}></div></span>
+                                    <span className={`${styles["curLvl"]}`}><div className={`${styles["top"]} ${styles["arrow"]} ${river.gauge1Trend ? styles[river.gauge1Trend] : ""}`}></div>
+                                        <span style={{display: 'inline-block', width: 'max-content'}}>
+                                            {`${typeof river.gauge1ChangePerHr == 'number' ? river.gauge1ChangePerHr > 0 ? `+${river.gauge1ChangePerHr}` : river.gauge1ChangePerHr : ""}/hr`}<br />
+                                        </span>
+                                        <div className={`${styles["bottom"]} ${styles["arrow"]} ${river.gauge1Trend ? styles[river.gauge1Trend] : ""}`}></div>
+                                    </span>
                                 </div>
                             }
                             {river.gauge1Max && <div className={`${styles["mobile-show"]}`}>{river.gauge1Max ? river.gauge1Max : "-"} <hr /> {river.gauge1Min ? river.gauge1Min : "-"}</div>}
+                            {!river.gauge1Max && <div style={{display: 'inline-block', width: 'max-content', margin: '0 15%'}}>{`${typeof river.gauge1ChangePerHr == 'number' ? river.gauge1ChangePerHr > 0 ? `+${river.gauge1ChangePerHr}` : river.gauge1ChangePerHr : ""}/hr`}</div>}
                         </div>
                     </td>
                     <td className={`${styles["mobile-hide"]}`}>{river.gauge1Max ? river.gauge1Max : "-"} <hr /> {river.gauge1Min ? river.gauge1Min : "-"}</td>
