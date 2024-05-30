@@ -14,7 +14,6 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight
 
 
 export default function Visuals({ initialState }) {
-    console.log(initialState)
     const formRef = useRef();
     const tableRef = useRef();
     const camsRef = useRef();
@@ -40,7 +39,7 @@ export default function Visuals({ initialState }) {
             setFormVisible(true);
             formRef.current.scrollIntoView({behavior: 'smooth', block: 'center'})
             setTableVisible(false);
-            setCamsVisible(false)
+            setCamsVisible(true)
         }
     }, [])
 

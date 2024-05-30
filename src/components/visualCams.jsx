@@ -1,5 +1,6 @@
 //Components
 import Loader from './loader'
+import CamContainer from './camContainer'
 //Context
 import { useContext } from 'react'
 //Hooks
@@ -10,6 +11,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from './visualCams.module.scss'
 
 export default function VisualCams() {
+    const [camsInfo, setCamsInfo] = useState(null)
+    const [status, setStatus] = useState('pending') //pending, success, failure
+
+    useEffect(() => {
+        async function getCamsInfo() {
+            let fetchUrl = `http://localhost:3001/creekvt_cams/photos/camInfo`;
+            let response = await fetch(fetchUrl);
+            if (response.status > 299 || response.status < 200) throw new Error(`Fetch to ${fetchUrl} failed`)
+            let camData = await response.json();
+            setCamsInfo(camData)
+        }
+        try {
+            getCamsInfo()
+        } catch (error) {
+            setStatus('failure')
+        }
+    }, [])
+
 
     return (
         <div className={`${styles["component__container"]}`}>
@@ -18,6 +37,9 @@ export default function VisualCams() {
                 <br /><br />
                 Issues with these images? Contact us at <a href="mailto:gopaddling@creekvt.com">gopaddling@creekvt.com</a>
             </p>
+            {camsInfo &&
+                <CamContainer camsInfo={camsInfo} camName={'New Haven (Ledges)'} />
+            }
 
         </div>
     )
