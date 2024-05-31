@@ -15,7 +15,7 @@ export default function InnerLayout() {
     useEffect(() => {
         async function fetchRiverInfo() {
             try {
-                let riverInfoURL = 'http://localhost:3001/creekvt_flows/riverData'
+                let riverInfoURL = `${process.env.REACT_APP_SERVER}/creekvt_flows/riverData`
                 let riversDBResponse = await fetch(riverInfoURL)
                 if (riversDBResponse.status < 200 || riversDBResponse.status > 299) {
                     throw new Error(`River data fetch error to url: ${riverInfoURL}`)

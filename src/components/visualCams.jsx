@@ -16,7 +16,7 @@ export default function VisualCams() {
 
     useEffect(() => {
         async function getCamsInfo() {
-            let fetchUrl = `http://localhost:3001/creekvt_cams/photos/camInfo`;
+            let fetchUrl = `${process.env.REACT_APP_SERVER}/creekvt_cams/photos/camInfo`;
             let response = await fetch(fetchUrl);
             if (response.status > 299 || response.status < 200) throw new Error(`Fetch to ${fetchUrl} failed`)
             let camData = await response.json();

@@ -48,7 +48,7 @@ export default function VisualForm({ reportSubmitted, setReportSubmitted }) {
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            let response = await fetch(`http://localhost:3001/creekvt_flows/levelsubmit`, {
+            let response = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/levelsubmit`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -1,5 +1,6 @@
 //Components
 import Loader from './loader'
+import VisualTableRow from './visualTableRow'
 //Context
 import { useContext } from 'react'
 import { RiverContext } from '../pages/innerLayout'
@@ -10,7 +11,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell } from '@fortawesome/free-solid-svg-icons'
 //Styles
 import styles from './visualTable.module.scss'
-import VisualTableRow from './visualTableRow'
 
 export default function VisualTable({ reportSubmitted }) {
     const [status, setStatus] = useState('pending') //pending, success, failure
@@ -31,7 +31,7 @@ export default function VisualTable({ reportSubmitted }) {
     async function getFlows() {
         try {
             let queryString = buildQueryString();
-            let response = await fetch(`http://localhost:3001/creekvt_flows/flowReports${queryString ? queryString : ''}`)
+            let response = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/flowReports${queryString ? queryString : ''}`)
             if (response.status > 199 && response.status < 300) {
                 let flowInfo = await response.json();
                 setTimeout(() => setStatus('success'), 150)

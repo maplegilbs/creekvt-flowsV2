@@ -7,7 +7,7 @@ import VisualCams from "../components/visualCams";
 import { useEffect, useState, useRef } from "react";
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowAltCircleDown, faArrowRight, faArrowRightToBracket, faCamera, faPlay, faRulerVertical, faTable } from "@fortawesome/free-solid-svg-icons";
+import {faCamera, faRulerVertical, faTable } from "@fortawesome/free-solid-svg-icons";
 //Styles
 import styles from "./visuals.module.scss";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
@@ -39,7 +39,7 @@ export default function Visuals({ initialState }) {
             setFormVisible(true);
             formRef.current.scrollIntoView({behavior: 'smooth', block: 'center'})
             setTableVisible(false);
-            setCamsVisible(true)
+            setCamsVisible(false)
         }
     }, [])
 
