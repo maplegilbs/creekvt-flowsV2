@@ -10,12 +10,31 @@ import Visuals from './pages/visuals';
 //Styles
 import "./App.css"
 
+import { useRouteError } from 'react-router-dom';
+
+const ErrorElement = () => {
+  const error = useRouteError();
+  
+  // Log the error to the console
+  console.error('Error:', error);
+
+  return (
+    <div>
+      <h1>Oops!</h1>
+      <p>Sorry, an unexpected error has occurred.</p>
+      <pre>{error.statusText || error.message}</pre>
+    </div>
+  );
+};
+
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <ErrorElement />,
     children: [{
-      path: "",
+      path: "/flowsV2/",
       element: <InnerLayout />,
       children: [
         {path: "forecasts",
@@ -46,8 +65,8 @@ const router = createBrowserRouter([
         },
       ]
     }]
-
-  }
+  },
+  {basename: "/flowsV2"}
 ])
 
 function App() {

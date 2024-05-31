@@ -11,6 +11,7 @@ export default function InnerLayout() {
     const [riverData, setRiverData] = useState(null);
     const [status, setStatus] = useState("success") //success or error
     let curPath = useLocation();
+    console.log(curPath)
 
     useEffect(() => {
         async function fetchRiverInfo() {
@@ -37,16 +38,16 @@ export default function InnerLayout() {
                 <nav>
                     <ul>
                         <li className={curPath.pathname === '/gauges' ? `${styles['active']}` : ""}>
-                            <NavLink to="/gauges">Gauges</NavLink>
+                            <NavLink to="./gauges">Gauges</NavLink>
                         </li>
                         <li className={curPath.pathname.includes('visuals') ? `${styles['active']}` : ""}>
-                            <NavLink to="/visuals">Visuals</NavLink>
+                            <NavLink to="./visuals">Visuals</NavLink>
                         </li>
                         <li className={curPath.pathname === '/rain' ? `${styles['active']}` : ""}>
-                            <NavLink to="/rain">Rainfall</NavLink>
+                            <NavLink to="./rain">Rainfall</NavLink>
                         </li>
                         <li className={curPath.pathname === '/forecasts' ? `${styles['active']}` : ""}>
-                            <NavLink to="/forecasts">Forecasts</NavLink>
+                            <NavLink to="./forecasts">Forecasts</NavLink>
                         </li>
                     </ul>
                 </nav>
