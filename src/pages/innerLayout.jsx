@@ -37,16 +37,16 @@ export default function InnerLayout() {
             <div className={`${styles['nav-container']}`}>
                 <nav>
                     <ul>
-                        <li className={curPath.pathname === '/gauges' ? `${styles['active']}` : ""}>
+                        <li className={curPath.pathname.includes('gauges') ? `${styles['active']}` : ""}>
                             <NavLink to="./gauges">Gauges</NavLink>
                         </li>
                         <li className={curPath.pathname.includes('visuals') ? `${styles['active']}` : ""}>
                             <NavLink to="./visuals">Visuals</NavLink>
                         </li>
-                        <li className={curPath.pathname === '/rain' ? `${styles['active']}` : ""}>
+                        <li className={curPath.pathname.includes('rain') ? `${styles['active']}` : ""}>
                             <NavLink to="./rain">Rainfall</NavLink>
                         </li>
-                        <li className={curPath.pathname === '/forecasts' ? `${styles['active']}` : ""}>
+                        <li className={curPath.pathname.includes('forecasts') ? `${styles['active']}` : ""}>
                             <NavLink to="./forecasts">Forecasts</NavLink>
                         </li>
                     </ul>

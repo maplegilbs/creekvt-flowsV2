@@ -1,16 +1,10 @@
-@use "../styles/global_variables.scss";
+@use "../styles/global_variables.scss" as gv;
 
 .component__container {
-    width: 95%;
-    margin: 0 auto;
-    transition: visibility 2s ease-in, opacity 2s, max-height 2s;
-    background: rgba(100, 100, 100, 0.1);
-    border-radius: 5px;
-    padding-bottom: 10px;
-    padding-top: 10px;
+@include gv.componentContainerTheme;
 
     label {
-        font-family: global_variables.$primary_headers;
+        font-family: gv.$primary_headers;
         font-weight: 700;
     }
 
@@ -71,7 +65,7 @@
     box-shadow: 1px 1px 3px 2px rgba(33, 33, 33, .5);
 
     h3 {
-        font-family: global_variables.$primary_headers;
+        font-family: gv.$primary_headers;
         font-size: 22px;
         line-height: 35px;
         font-style: normal;
@@ -106,7 +100,7 @@
     }
 
     .form__button-submit {
-        @include global_variables.buttonTheme(1.05rem, 2rem);
+        @include gv.buttonTheme(1.05rem, 2rem);
     }
 
     .submitted-report__container {

@@ -17,7 +17,7 @@ export default function VisualTable({ reportSubmitted }) {
     const [filters, setFilters] = useState({ limit: 5 }) //riverName, limit
     const [levelReports, setLevelReports] = useState(null)
     const riverData = useContext(RiverContext).riverData;
-    console.log(filters, riverData)
+    // console.log(filters, riverData)
 
     function buildQueryString() {
         if (Object.keys(filters).length < 1) return null;

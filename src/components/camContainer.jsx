@@ -21,8 +21,10 @@ export default function CamContainer({ camName, camsInfo }) {
     const [status, setStatus] = useState('pending') //pending, success, failure
     const [camInfo, setCamInfo] = useState(null)
     const [imageURLS, setImageURLS] = useState([])
-    const [overlayOpacity, setOverlayOpacity] = useState(1);
+    const [overlayOpacity, setOverlayOpacity] = useState(.5);
     const [overlayURL, setOverlayURL] = useState('')
+
+    console.log(camName, camInfo)
 
     useEffect(() => {
         let matchedCam = camsInfo.find(cam => cam.riverName === camName)
@@ -63,6 +65,12 @@ export default function CamContainer({ camName, camsInfo }) {
                     <div className={`${styles["overlay-controls__container"]}`}>
                         <h6>Overlay Reference Images</h6>
                         <div className={`${styles["overlay-radios"]}`}>
+                            {camInfo.refImgMin &&
+                                <div className={`${styles["radio-group"]}`}>
+                                    <label htmlFor="refImgMin">Min</label>
+                                    <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id="refImgMin" name="refImageRadio" value="refImgMin" />
+                                </div>
+                            }
                             {camInfo.refImgLow &&
                                 <div className={`${styles["radio-group"]}`}>
                                     <label htmlFor="refImgLow">Low</label>
@@ -71,7 +79,7 @@ export default function CamContainer({ camName, camsInfo }) {
                             }
                             {camInfo.refImgMed &&
                                 <div className={`${styles["radio-group"]}`}>
-                                    <label htmlFor="refImgMed">Medium</label>
+                                    <label htmlFor="refImgMed">Med</label>
                                     <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id="refImgMed" name="refImageRadio" value="refImgMed" />
                                 </div>
                             }
@@ -81,12 +89,20 @@ export default function CamContainer({ camName, camsInfo }) {
                                     <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id="refImgHigh" name="refImageRadio" value="refImgHigh" />
                                 </div>
                             }
+                            {camInfo.refImgMax &&
+                                <div className={`${styles["radio-group"]}`}>
+                                    <label htmlFor="refImgMax">Max</label>
+                                    <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id="refImgMax" name="refImageRadio" value="refImgMax" />
+                                </div>
+                            }
                         </div>
+                        {overlayURL && 
                         <div className={`${styles["slider__container"]}`}>
                             <label htmlFor="opacitySlider">Current</label>
                             <input className={`${styles["opacity-slider"]}`} name="opacitySlider" id="opacitySlider" onChange={(e) => setOverlayOpacity(e.target.value)} value={overlayOpacity} type="range" min={0} max={1} step={.02} />
                             <label htmlFor="opacitySlider">Reference</label>
                         </div>
+                        }
                     </div>
                     {imageURLS &&
                         <div className={`${styles["live-images__container"]}`}>
@@ -96,6 +112,7 @@ export default function CamContainer({ camName, camsInfo }) {
                     }
                 </>
             }
+            <hr/>
         </div>
     )
 }

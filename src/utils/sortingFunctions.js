@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faStar } from "@fortawesome/free-solid-svg-icons"
+import { faArrowRight, faArrowTrendDown, faArrowTrendUp, faStar } from "@fortawesome/free-solid-svg-icons"
 
 
 export function sortByLevel(sortArray) {
@@ -40,13 +40,13 @@ export function sortByChange(sortArray) {
     })
     console.log(sortArray[0].gauge1Trend)
     if (sortArray.findIndex(riv => riv.gauge1Trend === "rising") !== -1) {
-        sortArray.unshift({ text: "Rising", color: "linear-gradient(315deg, #4e647b, #293b46)" });
+        sortArray.unshift({ text:  <>Rising <FontAwesomeIcon className={`drop-shadow`} icon={faArrowTrendUp} size="lg" /></>, color: "linear-gradient(315deg, #4e647b, #293b46)" });
     }
     if (sortArray.findIndex(riv => riv.gauge1Trend === "steady") !== -1) {
-        sortArray.splice([sortArray.findIndex(riv => riv.gauge1Trend === "steady")], 0, { text: "Steady", color: "linear-gradient(315deg, #4e647b, #293b46)" });
+        sortArray.splice([sortArray.findIndex(riv => riv.gauge1Trend === "steady")], 0, { text: <>Steady <FontAwesomeIcon className={`drop-shadow`} icon={faArrowRight} size="lg" /></>, color: "linear-gradient(315deg, #4e647b, #293b46)" });
     }
     if (sortArray.findIndex(riv => riv.gauge1Trend === "falling") !== -1) {
-        sortArray.splice([sortArray.findIndex(riv => riv.gauge1Trend === "falling")], 0, { text: "Falling", color: "linear-gradient(315deg, #4e647b, #293b46)" });
+        sortArray.splice([sortArray.findIndex(riv => riv.gauge1Trend === "falling")], 0, { text: <>Falling <FontAwesomeIcon className={`drop-shadow`} icon={faArrowTrendDown} size="lg"/></>, color: "linear-gradient(315deg, #4e647b, #293b46)" });
     }
 }
 

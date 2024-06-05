@@ -7,7 +7,7 @@
         box-sizing: border-box;
         overflow: hidden;
         transition: max-height 1s ease;
-        margin: 5px;
+        margin: 5px auto 20px auto;
     }
 
 
@@ -27,7 +27,7 @@
 
     button {
         background-color: transparent;
-        margin: 5% 5% 0 5%;
+        margin: 1rem 5% 0 5%;
         text-transform: uppercase;
         font-family: gv.$primary_headers;
         border: 0px;

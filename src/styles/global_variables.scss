@@ -11,6 +11,7 @@ $primary_dark: #293b46;
 $primary_light: #4e647b;
 $primary_gradient: linear-gradient(110deg, #4e647b, #293b46);
 $table_row:  rgba(215, 225, 232, .95);
+$lt_blue_bckgrd:  rgba(215, 225, 232, .95);
 
 
 //Reused element styles
@@ -33,4 +34,13 @@ $table_row:  rgba(215, 225, 232, .95);
     text-transform: uppercase;
     text-shadow: 1px 1px 5px #333;
     border-radius: 3px;
+}
+
+@mixin componentContainerTheme(){
+    background-color: $lt_blue_bckgrd;
+    background: rgba(100, 100, 100, .2);
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 5px;
+    padding: 2%;
 }

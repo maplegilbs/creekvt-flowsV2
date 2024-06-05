@@ -1,12 +1,6 @@
 @use "../styles/global_variables.scss" as gv;
 .component__container {
-    width: 95%;
-    margin: 0 auto;
-    transition: visibility 2s ease-in, opacity 2s, max-height 2s;
-    background: rgba(100, 100, 100, 0.1);
-    border-radius: 5px;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    @include gv.componentContainerTheme;
 
     p {
         padding: 8px;
@@ -15,4 +9,13 @@
         font-weight: 600;
         line-height: 1rem;
     }
+}
+
+@media screen and (min-width: 640px) {
+    .component__container {
+        p{
+            font-size: .8rem;
+        }
+    }
+    
 }
