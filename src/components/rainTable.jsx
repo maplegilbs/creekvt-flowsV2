@@ -1,14 +1,40 @@
+//Hooks
+import { useState, useEffect } from "react"
 //Styles
 import styles from "./rainTable.module.scss"
 
 export default function RainTable() {
+    const [rainData, setRainData] = useState(null);
+    const [rainStations, setRainStations] = useState(null)
+    const [status, setStatus] = useState('pending') //pending, success, failure
+
+    console.log(rainStations)
+    useEffect(() => {
+        async function getRainData() {
+            try {
+                let response = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/rain/rainStations`)
+                if (response.status > 199 && response.status < 300) {
+                    let rainStationsJson = await response.json();
+                    setTimeout(() => setStatus('success'), 150)
+                    setRainStations(rainStationsJson)
+                }
+                else setStatus('failure')
+            }
+            catch (error) {
+                setStatus('failure')
+                console.log(error)
+            }
+        }
+        getRainData();
+    }, [])
+
 
     return (
         <div className={`${styles["component__container"]}`}>
             <table className={`${styles[""]}`}>
                 <thead>
                     <tr>
-                        <th rowSpan={2}>Location<br /><span style={{fontSize: ".7rem" }}>Report Time</span></th>
+                        <th rowSpan={2}>Location<br /><span style={{ fontSize: ".7rem" }}>Report Time</span></th>
                         <th rowSpan={2}>Source</th>
                         <th colSpan={5}>Rain Accumulation</th>
                     </tr>
@@ -19,7 +45,6 @@ export default function RainTable() {
                         <th>12hr</th>
                         <th className={"mobile-hide"}>24hr</th>
                     </tr>
-
                 </thead>
                 <tbody>
                 </tbody>

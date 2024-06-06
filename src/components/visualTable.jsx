@@ -31,7 +31,7 @@ export default function VisualTable({ reportSubmitted }) {
     async function getFlows() {
         try {
             let queryString = buildQueryString();
-            let response = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/flowReports${queryString ? queryString : ''}`)
+            let response = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/levels/flowReports${queryString ? queryString : ''}`)
             if (response.status > 199 && response.status < 300) {
                 let flowInfo = await response.json();
                 setTimeout(() => setStatus('success'), 150)
