@@ -1,0 +1,22 @@
+@use "../styles/global_variables.scss" as gv;
+
+.component__container {
+    @include gv.componentContainerTheme;
+
+    table {
+        @include gv.tableTheme();
+    }
+
+    thead {
+        @include gv.tableHeadTheme();
+    }
+
+    th {
+        @include gv.tableHeadCellTheme();
+    }
+
+    td {
+        @include gv.tableCellTheme();
+    }
+
+}

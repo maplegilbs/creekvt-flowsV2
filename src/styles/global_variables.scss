@@ -10,8 +10,8 @@ $primary_text: 'Roboto', sans-serif;
 $primary_dark: #293b46;
 $primary_light: #4e647b;
 $primary_gradient: linear-gradient(110deg, #4e647b, #293b46);
-$table_row:  rgba(215, 225, 232, .95);
-$lt_blue_bckgrd:  rgba(215, 225, 232, .95);
+$table_row: rgba(215, 225, 232, .95);
+$lt_blue_bckgrd: rgba(215, 225, 232, .95);
 
 
 //Reused element styles
@@ -36,11 +36,54 @@ $lt_blue_bckgrd:  rgba(215, 225, 232, .95);
     border-radius: 3px;
 }
 
-@mixin componentContainerTheme(){
+@mixin componentContainerTheme() {
     background-color: $lt_blue_bckgrd;
     background: rgba(100, 100, 100, .2);
     width: 95%;
     margin: 0 auto;
     border-radius: 5px;
     padding: 2%;
+}
+
+@mixin pageContainerTheme() {
+    padding: 10px;
+}
+
+@mixin tableTheme() {
+    overflow: scroll;
+    font-family: $primary_headers;
+    width: 98%;
+    margin: 5px auto;
+    margin-top: 0;
+    border-collapse: collapse;
+    position: relative;
+    border-bottom: 2px solid #333;
+    border-left: 2px solid #333;
+    border-right: 2px solid #333;
+}
+
+@mixin tableHeadTheme() {
+    font-size: 14px;
+    top: 0px;
+    background-color: rgb(43, 62, 73);
+    z-index: 9999;
+    position: sticky;
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -ms-sticky;
+    position: -o-sticky;
+    color: white;
+}
+
+@mixin tableHeadCellTheme() {
+    text-align: center;
+    border: none;
+    font-weight: 700;
+    padding: 8px 4px;
+}
+
+@mixin tableCellTheme() {
+    text-align: center;
+    font-size: .8rem;
+    font-weight: 700;
 }
