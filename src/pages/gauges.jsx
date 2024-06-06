@@ -49,10 +49,8 @@ export default function Gauges() {
     }, [riverData, gaugeData])
 
     useEffect(() => {
-        console.log(sortedBy)
         if (updatedRiverData) {
             let tempSort = [...updatedRiverData];
-            console.log(tempSort == updatedRiverData)
             if (sortedBy === 'riverName') { tempSort.sort((a, b) => a.name > b.name ? 1 : -1) }
             if (sortedBy === 'curLevel') {sortByLevel(tempSort)}
             if (sortedBy === 'difficulty') {sortByDifficulty(tempSort)}

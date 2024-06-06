@@ -33,12 +33,17 @@ export function sortByLevel(sortArray) {
 
 export function sortByChange(sortArray) {
     sortArray.sort((a, b) => {
-        if(!a.gauge1ChangePerHr) return 1
-        if (a.gauge1ChangePerHr > b.gauge1ChangePerHr) return -1
+        if(!a.gauge1Trend) return 1
+        if(a.gauge1Trend === 'rising' && b.gauge1Trend !== 'rising') return -1
+        else if(a.gauge1Trend !== 'rising' && b.gauge1Trend === 'rising') return 1
+        else if(a.gauge1Trend === 'steady' && b.gauge1Trend !== 'steady') return -1
+        else if(a.gauge1Trend === 'falling' && b.gauge1Trend !== 'falling') return 1;
+        if(a.gauge1ChangePerHr == null) return 1
+        else if (a.gauge1ChangePerHr > b.gauge1ChangePerHr) return -1
         else if (a.gauge1ChangePerHr < b.gauge1ChangePerHr) return 1
         else return 0;
     })
-    console.log(sortArray[0].gauge1Trend)
+    console.log(sortArray)
     if (sortArray.findIndex(riv => riv.gauge1Trend === "rising") !== -1) {
         sortArray.unshift({ text:  <>Rising <FontAwesomeIcon className={`drop-shadow`} icon={faArrowTrendUp} size="lg" /></>, color: "linear-gradient(315deg, #4e647b, #293b46)" });
     }

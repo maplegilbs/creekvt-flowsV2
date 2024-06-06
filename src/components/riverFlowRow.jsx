@@ -37,7 +37,7 @@ export default function RiverFlowRow({ river, index }) {
                         <p className={`${styles["stats"]}`}>{<>{river.location}<br />Class {river.difficultyChar}</>}</p>
                     </td>
                     <td className={`${styles["level"]}`}>
-                        <div className={`${styles["levelContainer"]}`} style={{ justifyContent: `${!river.gauge1Max ? "center" : "space-between"}` }}>
+                        <div className={`${styles["levelContainer"]}`} style={{ justifyContent: `${!river.gauge1Max ? "space-between" : "space-between"}` }}>
                             <div className={`${styles["levelInfo"]}`}>{river.gauge1Reading}</div>
                             {river.gauge1Max &&
                                 <div className={`${styles["flowBar"]}`} style={{ backgroundImage: `linear-gradient(0deg, ${river.flowBarColor ? river.flowBarColor : "grey"} ${river.flowBarPercent ? river.flowBarPercent + "%" : "0%"}, white 1%` }}>
@@ -50,7 +50,7 @@ export default function RiverFlowRow({ river, index }) {
                                 </div>
                             }
                             {river.gauge1Max && <div className={`${styles["mobile-show"]}`}>{river.gauge1Max ? river.gauge1Max : "-"} <hr /> {river.gauge1Min ? river.gauge1Min : "-"}</div>}
-                            {!river.gauge1Max && <div style={{display: 'inline-block', width: 'max-content', margin: '0 15%'}}>{`${typeof river.gauge1ChangePerHr == 'number' ? river.gauge1ChangePerHr > 0 ? `+${river.gauge1ChangePerHr}` : river.gauge1ChangePerHr : ""}/hr`}</div>}
+                            {!river.gauge1Max && <div style={{display: 'inline-block', width: 'max-content'}}>{`${typeof river.gauge1ChangePerHr == 'number' ? river.gauge1ChangePerHr > 0 ? `+${river.gauge1ChangePerHr}` : river.gauge1ChangePerHr : ""}/hr`}</div>}
                         </div>
                     </td>
                     <td className={`${styles["mobile-hide"]}`}>{river.gauge1Max ? river.gauge1Max : "-"} <hr /> {river.gauge1Min ? river.gauge1Min : "-"}</td>
