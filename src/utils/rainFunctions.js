@@ -2,7 +2,6 @@
 import { formatDateTime } from "./formatDateTime";
 
 //Global variables
-let rainData = [];
 
 //Fetching function
 async function getRainFallJSON(url) {
@@ -58,8 +57,10 @@ const rainColors = function (rainfallTotal) {
 
 //Create object containing an object for each station's accumulated rainfall for the past 1,3,6,12,24 hrs
 function addUSGSStationsToRainDataObj(stationData) {
+    let rainData = [];
     let stations = stationData["value"]["timeSeries"]
-    stations.forEach(station => {
+    for(let station of stations) {
+        if(station.values[0].qualifier.find(qualifier => qualifier.qualifierCode.toLowerCase() === 'ssn')) continue;
         let parentObj = {};
         let dataObj = {};
         let stationName = station["sourceInfo"]["siteName"];
@@ -106,7 +107,8 @@ function addUSGSStationsToRainDataObj(stationData) {
         parentObj.metadata.icon = "https://creekvt.com/FlowsPageAssets/Images/usgsLogo.png";
         parentObj.data = dataObj;
         rainData.push(parentObj)
-    })
+    }
+    return rainData;
 }
 
 //Build URL for USGS API call (single call for multiple stations)
@@ -123,6 +125,7 @@ export async function compile(stations) {
     let usgsUrl = usgsAPIURL(stations);
     let usgsData = await getRainFallJSON(usgsUrl);
     console.log(usgsData)
-    await addUSGSStationsToRainDataObj(usgsData);
+    let rainData = await addUSGSStationsToRainDataObj(usgsData);
+    console.log(rainData)
     return (rainData)
 }

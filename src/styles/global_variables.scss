@@ -46,7 +46,7 @@ $lt_blue_bckgrd: rgba(215, 225, 232, .95);
 }
 
 @mixin pageContainerTheme() {
-    padding: 10px;
+    padding: 10px 0;
 }
 
 @mixin tableTheme() {
