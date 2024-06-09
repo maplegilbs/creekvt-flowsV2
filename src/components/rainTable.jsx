@@ -1,14 +1,17 @@
 //Hooks
 import { useState, useEffect } from "react"
+//Libraries
+import { compile } from "../utils/rainFunctions.js"
 //Styles
 import styles from "./rainTable.module.scss"
+import RainRow from "./rainRow.jsx";
 
 export default function RainTable() {
     const [rainData, setRainData] = useState(null);
     const [rainStations, setRainStations] = useState(null)
     const [status, setStatus] = useState('pending') //pending, success, failure
 
-    console.log(rainStations)
+    console.log(rainData)
     useEffect(() => {
         async function getRainData() {
             try {
@@ -27,6 +30,21 @@ export default function RainTable() {
         }
         getRainData();
     }, [])
+
+    useEffect(() => {
+        async function fetchAndFormatRainData() {
+            if (rainStations) {
+                try {
+                    let fetchedRainData = await compile(rainStations)
+                    setRainData(fetchedRainData)
+                } catch (error) {
+                    console.error(`There was an error fetching rain data: ${error}`)
+                    setRainData(null)
+                }
+            }
+        }
+        fetchAndFormatRainData();
+    }, [rainStations])
 
 
     return (
@@ -47,6 +65,8 @@ export default function RainTable() {
                     </tr>
                 </thead>
                 <tbody>
+                    {rainData && 
+                    rainData.map(record=> <RainRow rainRecord={record}/>)}
                 </tbody>
             </table>
         </div>
