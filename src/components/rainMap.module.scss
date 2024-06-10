@@ -1,0 +1,46 @@
+@use '../styles/global_variables.scss' as gv;
+
+.component__container {
+    @include gv.componentContainerTheme;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+    position: relative;
+
+    .radar-info {
+        display: block;
+        z-index: 999;
+        position: absolute;
+        top: 2%;
+        left: 5%;
+        background-color: white;
+        padding: 2px 4px;
+        border: 1px solid #333;
+        border-radius: 3px;
+        font-weight: 500;
+        }
+        
+        .radar-controls {
+            position: absolute;
+            text-align: center;
+            bottom: 4%;
+            left: 25%;
+            justify-content: space-evenly;
+            width: 50%;
+            display: flex;
+            z-index: 999;
+
+        button {
+            display: block;
+            margin: 0 auto;
+            font-weight: 800;
+        }
+    }
+
+}
+
+
+.map {
+    border: 2px solid black;
+    width: 100%;
+    height: 80vh;
+}

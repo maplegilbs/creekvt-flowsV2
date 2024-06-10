@@ -1,6 +1,7 @@
 //Components
 import Loader from "../components/loader"
 import RainTable from "../components/rainTable";
+import RainMap from "../components/rainMap";
 //Hooks
 import { useState } from "react";
 //Styles
@@ -17,6 +18,7 @@ export default function Rainfall() {
             {status === 'success' &&
                 <RainTable />
             }
+            <RainMap />
         </div>
     )
 }

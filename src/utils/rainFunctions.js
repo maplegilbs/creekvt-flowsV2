@@ -114,7 +114,6 @@ function addUSGSStationsToRainDataObj(stationData) {
 //Build URL for USGS API call (single call for multiple stations)
 function usgsAPIURL(stations) {
     let usgsSiteIds = stations.filter(station => station.source.toLowerCase() === 'usgs').map(station => station.id).join(",");
-    console.log(usgsSiteIds)
     let url = `https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=${usgsSiteIds}&parameterCd=00045&period=P2D`;
     return url;
 }
@@ -124,8 +123,6 @@ function usgsAPIURL(stations) {
 export async function compile(stations) {
     let usgsUrl = usgsAPIURL(stations);
     let usgsData = await getRainFallJSON(usgsUrl);
-    console.log(usgsData)
     let rainData = await addUSGSStationsToRainDataObj(usgsData);
-    console.log(rainData)
     return (rainData)
 }

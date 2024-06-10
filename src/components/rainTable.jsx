@@ -11,7 +11,6 @@ export default function RainTable() {
     const [rainStations, setRainStations] = useState(null)
     const [status, setStatus] = useState('pending') //pending, success, failure
 
-    console.log(rainData)
     useEffect(() => {
         async function getRainData() {
             try {
