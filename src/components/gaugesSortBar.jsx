@@ -11,12 +11,12 @@ export default function GaugesSortBar({ setSortedBy }) {
         <div className={`${styles['sort-options__container']}`}>
             <h3>Sort By</h3>
             <select onChange={handleChange}>
-                <option value="riverName">Name</option>
                 <option value="curLevel">Current Level</option>
+                <option value="riverName">Name</option>
+                <option value="changePerHr">Trend</option>
                 <option value="difficulty">Difficulty</option>
                 <option value="quality">Quality</option>
                 <option value="location">Location</option>
-                <option value="changePerHr">Trend</option>
             </select>
         </div>
     )
