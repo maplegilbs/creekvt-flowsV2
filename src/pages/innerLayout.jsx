@@ -11,7 +11,6 @@ export default function InnerLayout() {
     const [riverData, setRiverData] = useState(null);
     const [status, setStatus] = useState("success") //success or error
     let curPath = useLocation();
-    console.log(curPath)
 
     useEffect(() => {
         async function fetchRiverInfo() {

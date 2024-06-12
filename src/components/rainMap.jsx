@@ -4,7 +4,7 @@ import { Wrapper } from "@googlemaps/react-wrapper";
 import { useState, useEffect, useRef } from "react";
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faForwardStep, faBackwardStep } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faForwardStep, faBackwardStep, faPause } from "@fortawesome/free-solid-svg-icons";
 //Libraries
 import { formatDateTime } from "../utils/formatDateTime";
 //Styles
@@ -13,13 +13,39 @@ import styles from "./rainMap.module.scss"
 function MyMapComponent({ selectedMapLocation }) {
     const [myMap, setMyMap] = useState();
     const [tiles, setTiles] = useState(null);
-    const ref = useRef();
+    const [activeTile, setActiveTile] = useState(null)
+    const [isAnimationActive, setIsAnimationActive] = useState(false)
+    const mapRef = useRef();
+    const intervalRef = useRef();
+    const timeStampRef = useRef();
 
-    console.log(myMap)
+    
+    function toggleAnimateRadar() {
+        //first toggle the animation status - this is queued so the code below will run before this is updated
+        setIsAnimationActive(prev => !prev)
+        //find the index of the active tile or set it to 0;
+        let activeTileIndex = activeTile? tiles.timeStampArray.indexOf(activeTile.timeStamp) : 0;
+        //if the animation is NOT active (aka it is paused) play the animation
+        if (!isAnimationActive) {
+            intervalRef.current = setInterval(() => {
+                tiles.tilesArray[activeTileIndex].setOpacity(0);
+                //if the active tile is the last in the array, set the new activeTileIndex to 0, else increment by 1
+                activeTileIndex = activeTileIndex === tiles.tilesArray.length - 1 ? 0 : activeTileIndex + 1;
+                tiles.tilesArray[activeTileIndex].setOpacity(1);
+                setActiveTile({tile: tiles.tilesArray[activeTileIndex], timeStamp: tiles.timeStampArray[activeTileIndex]})
+            }, 1000)
+        }
+        //if the animation is active pause the animation
+        else {
+            clearInterval(intervalRef.current)
+            setActiveTile({tile: tiles.tilesArray[activeTileIndex], timeStamp: tiles.timeStampArray[activeTileIndex]})
+        }
+    }
+
 
     useEffect(() => {
         const buildMap = async () => {
-            const newMap = new window.google.maps.Map(ref.current, {
+            const newMap = new window.google.maps.Map(mapRef.current, {
                 center: { lat: 44, lng: -72.75 },
                 zoom: 7,
                 mapTypeId: "terrain",
@@ -37,7 +63,6 @@ function MyMapComponent({ selectedMapLocation }) {
             });
 
             newMap.addListener('click', (e) => console.log(e.latLng.lat(), e.latLng.lng()))
-            // let bounds = new window.google.maps.LatLngBounds()
             //Setting UP KML Layers
             let riversKml = new window.google.maps.KmlLayer({
                 url: "https://creekvt.com/FlowsPageAssets/all_rivers_colorless.kml",
@@ -55,7 +80,7 @@ function MyMapComponent({ selectedMapLocation }) {
 
             //fill newMap.overlayMapTypes array with tiles and display first tile by setting opacity to 1
             let fetchedRadarData = await getRadarData();
-            let timestampArray = [];
+            let timeStampArray = [];
             let tilesArray = [];
             let totalTilesPast = Object.keys(fetchedRadarData['radar']['past']).length
             let j = 0;
@@ -71,32 +96,49 @@ function MyMapComponent({ selectedMapLocation }) {
                     opacity: 0
                 });
                 newMap.overlayMapTypes.push(radarTile);
-                timestampArray.push(currentTime);
+                timeStampArray.push(currentTime);
                 j++
             }
-            // radarInfo.innerHTML = formatDate(timestampArray[j - 1]);
-            // radarInfo.style.display = "initial";
             tilesArray = newMap.overlayMapTypes[Object.keys(newMap.overlayMapTypes)[0]];
             tilesArray[j - 1].setOpacity(1);
-            setTiles({ tilesArray, timestampArray })
+            setTiles({ tilesArray, timeStampArray })
             setMyMap(newMap)
         }
         buildMap()
     }, []);
 
+    useEffect(() => {
+        if (tiles) {
+            setActiveTile({ tile: tiles.tilesArray[tiles.tilesArray.length - 1], timeStamp: tiles.timeStampArray[tiles.timeStampArray.length - 1] })
+        }
+    }, [tiles])
+
 
     return (
         <div className={`${styles["map__container"]}`}>
-            <div className={`${styles["map"]}`} ref={ref} id="map"></div>
+            <div className={`${styles["map"]}`} ref={mapRef} id="map"></div>
             <div className={`${styles["radar-info"]}`}>
-                {tiles &&
-                    <>{`${formatDateTime(tiles.timestampArray[tiles.timestampArray.length - 1]).fullDate} ${formatDateTime(tiles.timestampArray[tiles.timestampArray.length - 1]).time} ${formatDateTime(tiles.timestampArray[tiles.timestampArray.length - 1]).amPm}`}</>
+                {activeTile &&
+                    <>{`${formatDateTime(activeTile.timeStamp).fullDate} ${formatDateTime(activeTile.timeStamp).time} ${formatDateTime(activeTile.timeStamp).amPm}`}</>
                 }
             </div>
             <div className={`${styles["radar-controls"]}`}>
-                <button><FontAwesomeIcon icon={faBackwardStep}/></button>
-                <button><FontAwesomeIcon icon={faPlay}/></button>
-                <button><FontAwesomeIcon icon={faForwardStep}/></button>
+                {!isAnimationActive &&
+                    <button><FontAwesomeIcon icon={faBackwardStep} size="xl" /></button>
+                }
+                <button onClick={() => {
+                    toggleAnimateRadar()
+                }}>
+                    {!isAnimationActive ?
+                        <FontAwesomeIcon icon={faPlay} size="xl" />
+                        :
+                        <FontAwesomeIcon icon={faPause} size="xl" />
+
+                    }
+                </button>
+                {!isAnimationActive &&
+                    <button><FontAwesomeIcon icon={faForwardStep} size="xl" /></button>
+                }
             </div>
         </div>
     )
