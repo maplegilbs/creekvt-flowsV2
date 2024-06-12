@@ -95,3 +95,20 @@ export function formatUSGSDateTimeQueryString(dateTime = new Date()) {
     }
     return (`&startDT=${today.year}-${startMonth}-${startDay}&endDT=${today.year}-${today.month}-${today.day}`);
 }
+
+//Adjusting UTC time to EDT time - note this is only good for March through November (local times change at 2:00 a.m. EST to 3:00 a.m. EDT on the second Sunday in March, and return from 2:00 a.m. EDT to 1:00 a.m. EST on the first Sunday in November)
+export function adjUTCtoEDT(timeToConvert){
+    timeToConvert = new Date(timeToConvert)
+    let currentHours = timeToConvert.getUTCHours();
+    let hourDiff = 4;
+    timeToConvert.setUTCHours(currentHours-hourDiff);
+    return timeToConvert;
+    }
+    
+    export function adjEDTtoUTC(timeToConvert){
+    timeToConvert = new Date(timeToConvert)
+    let currentHours = timeToConvert.getUTCHours();
+    let hourDiff = 4;
+    timeToConvert.setUTCHours(currentHours+hourDiff);
+    return timeToConvert;
+}

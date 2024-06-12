@@ -3,9 +3,7 @@
     .station-info {
         margin: auto;
         padding: 3px 8px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        vertical-align: middle;
     }
 
     .station__heading {
@@ -29,6 +27,8 @@
 
         img {
             width: 70%;
+            max-width: 60px;
+            max-height: 60px;
         }
     }
 
@@ -38,18 +38,30 @@
 }
 
 @media screen and (min-width: 640px) {
-    .rain-info {
-        padding: 5px 15px;
-    }
 
-    .station__heading {
-        font-size: .8rem;
-    }
+    .rain__row {
 
-    .source-icon__img {
+        .station-info {
 
-        img {
-            width: 40%;
+            .station__heading {
+                font-size: .8rem;
+                text-align: center;
+            }
+
+            .station-stats {
+                text-align: center;
+            }
+        }
+
+        .rain-info {
+            padding: 5px 15px;
+        }
+
+        .source-icon__img {
+
+            img {
+                width: 40%;
+            }
         }
     }
 
