@@ -42,6 +42,22 @@ function MyMapComponent({ selectedMapLocation }) {
         }
     }
 
+    function stepForwards(){
+        let activeTileIndex = activeTile? tiles.timeStampArray.indexOf(activeTile.timeStamp) : 0;
+        tiles.tilesArray[activeTileIndex].setOpacity(0);
+        activeTileIndex = activeTileIndex === tiles.tilesArray.length - 1 ? 0 : activeTileIndex + 1;
+        tiles.tilesArray[activeTileIndex].setOpacity(1);
+        setActiveTile({tile: tiles.tilesArray[activeTileIndex], timeStamp: tiles.timeStampArray[activeTileIndex]})
+    }
+    
+    function stepBackwards(){
+        let activeTileIndex = activeTile? tiles.timeStampArray.indexOf(activeTile.timeStamp) : 0;
+        tiles.tilesArray[activeTileIndex].setOpacity(0);
+        activeTileIndex = activeTileIndex === 0 ? tiles.tilesArray.length - 1 : activeTileIndex - 1;
+        tiles.tilesArray[activeTileIndex].setOpacity(1);
+        setActiveTile({tile: tiles.tilesArray[activeTileIndex], timeStamp: tiles.timeStampArray[activeTileIndex]})
+    }
+
 
     useEffect(() => {
         const buildMap = async () => {
@@ -124,7 +140,7 @@ function MyMapComponent({ selectedMapLocation }) {
             </div>
             <div className={`${styles["radar-controls"]}`}>
                 {!isAnimationActive &&
-                    <button><FontAwesomeIcon icon={faBackwardStep} size="xl" /></button>
+                    <button onClick={stepBackwards}><FontAwesomeIcon icon={faBackwardStep} size="xl" /></button>
                 }
                 <button onClick={() => {
                     toggleAnimateRadar()
@@ -137,7 +153,7 @@ function MyMapComponent({ selectedMapLocation }) {
                     }
                 </button>
                 {!isAnimationActive &&
-                    <button><FontAwesomeIcon icon={faForwardStep} size="xl" /></button>
+                    <button onClick={stepForwards}><FontAwesomeIcon icon={faForwardStep} size="xl" /></button>
                 }
             </div>
         </div>
