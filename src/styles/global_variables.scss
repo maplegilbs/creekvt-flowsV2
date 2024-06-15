@@ -87,3 +87,18 @@ $lt_blue_bckgrd: rgba(215, 225, 232, .95);
     font-size: .8rem;
     font-weight: 700;
 }
+
+@mixin sectionHRTheme() {
+    width: 35%;
+    overflow: hidden;
+    border-bottom: 2px solid #333;
+    opacity: 1;
+}
+
+@mixin innerSectionHeaderTheme(){
+    text-align: left;
+	margin: 10px auto;
+	text-transform: uppercase;
+	font-family: $primary_headers;
+	font-weight: bold;
+}

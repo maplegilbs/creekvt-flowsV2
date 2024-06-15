@@ -1,0 +1,104 @@
+@use "../styles/global_variables.scss" as gv;
+
+.component__container {
+    @include gv.componentContainerTheme;
+
+    .inner__container {
+        background-color: white;
+        border-radius: 5px;
+        padding: 1rem 2%;
+
+        .section__header {
+            @include gv.innerSectionHeaderTheme;
+        }
+
+        hr {
+            @include gv.sectionHRTheme;
+            width: 50%;
+        }
+
+        .primary__img {
+            background-image: url("https://www.weather.gov/images/nerfc/ops/qpf_total_a.png");
+            width: 70%;
+            max-height: 50vh;
+            width: auto;
+            aspect-ratio: 1.3;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            border: 2px solid black;
+            box-shadow: 2px 2px 2px #333;
+            margin: 2% auto 50px auto;
+        }
+
+        .sixhr-imgs__container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-content: center;
+            width: 100%;
+
+            a {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .sixhr__img {
+            padding: 3px;
+            width: 80%;
+            aspect-ratio: 1.3;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            margin: .5rem auto;
+            margin-bottom: 1rem;
+            border: 2px solid black;
+            box-shadow: 2px 3px 1px #333;
+        }
+
+        a:nth-child(1) .sixhr__img {
+            background-image: url("https://creekvt.com/FlowsPageAssets/Images/QPF_Backgrounds/QPF_forBackground_1.png"), url("https://www.weather.gov/images/nerfc/ops/qpf_006a.png");
+        }
+
+        a:nth-child(2) .sixhr__img {
+            background-image: url("https://creekvt.com/FlowsPageAssets/Images/QPF_Backgrounds/QPF_forBackground_2.png"), url("https://www.weather.gov/images/nerfc/ops/qpf_012a.png");
+        }
+
+        a:nth-child(3) .sixhr__img {
+            background-image: url("https://creekvt.com/FlowsPageAssets/Images/QPF_Backgrounds/QPF_forBackground_3.png"), url("https://www.weather.gov/images/nerfc/ops/qpf_018a.png");
+        }
+
+        a:nth-child(4) .sixhr__img {
+            background-image: url("https://creekvt.com/FlowsPageAssets/Images/QPF_Backgrounds/QPF_forBackground_4.png"), url("https://www.weather.gov/images/nerfc/ops/qpf_024a.png");
+        }
+
+        a:nth-child(5) .sixhr__img {
+            background-image: url("https://creekvt.com/FlowsPageAssets/Images/QPF_Backgrounds/QPF_forBackground_5.png"), url("https://www.weather.gov/images/nerfc/ops/qpf_030a.png");
+        }
+
+        a:nth-child(6) .sixhr__img {
+            background-image: url("https://creekvt.com/FlowsPageAssets/Images/QPF_Backgrounds/QPF_forBackground_6.png"), url("https://www.weather.gov/images/nerfc/ops/qpf_036a.png");
+        }
+
+    }
+}
+
+@media screen and (min-width: 640px) {
+    .component__container {
+
+        hr {
+            width: 35%;
+        }
+
+        .inner__container {
+            .sixhr-imgs__container {
+
+                a {
+                    width: 30%;
+                }
+            }
+        }
+    }
+
+}

@@ -7,10 +7,9 @@ import VisualCams from "../components/visualCams";
 import { useEffect, useState, useRef } from "react";
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faCamera, faRulerVertical, faTable } from "@fortawesome/free-solid-svg-icons";
+import {faCamera, faRulerVertical, faTable, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 //Styles
 import styles from "./visuals.module.scss";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
 
 
 export default function Visuals({ initialState }) {
