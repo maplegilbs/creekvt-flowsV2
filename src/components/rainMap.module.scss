@@ -2,9 +2,7 @@
 
 .component__container {
     @include gv.componentContainerTheme;
-    margin-top: 2.5%;
-    margin-bottom: 2.5%;
-    position: relative;
+    
 
     .map__container {
         position: relative;

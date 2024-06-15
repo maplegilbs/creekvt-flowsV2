@@ -43,6 +43,9 @@ $lt_blue_bckgrd: rgba(215, 225, 232, .95);
     margin: 0 auto;
     border-radius: 5px;
     padding: 2%;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+    position: relative;
 }
 
 @mixin pageContainerTheme() {
