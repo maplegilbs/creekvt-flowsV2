@@ -5,6 +5,7 @@ import { compile } from "../utils/rainFunctions.js"
 //Styles
 import styles from "./rainTable.module.scss"
 import RainRow from "./rainRow.jsx";
+import Loader from "./loader.jsx";
 
 export default function RainTable() {
     const [rainData, setRainData] = useState(null);
@@ -17,7 +18,7 @@ export default function RainTable() {
                 let response = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/rain/rainStations`)
                 if (response.status > 199 && response.status < 300) {
                     let rainStationsJson = await response.json();
-                    setTimeout(() => setStatus('success'), 150)
+                    setTimeout(() => setStatus('success'), 750)
                     setRainStations(rainStationsJson)
                 }
                 else setStatus('failure')
@@ -52,26 +53,31 @@ export default function RainTable() {
                 <h2 className={`${styles["section__header"]}`}>Rainfall Totals</h2>
                 <hr />
 
-                <table className={`${styles[""]}`}>
-                    <thead>
-                        <tr>
-                            <th rowSpan={2}>Location<br /><span style={{ fontSize: ".7rem" }}>Report Time</span></th>
-                            <th rowSpan={2}>Source</th>
-                            <th colSpan={5}>Rain Accumulation</th>
-                        </tr>
-                        <tr>
-                            <th className={"mobile-hide"}>1hr</th>
-                            <th>3hr</th>
-                            <th>6hr</th>
-                            <th>12hr</th>
-                            <th className={"mobile-hide"}>24hr</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rainData &&
-                            rainData.map(record => <RainRow rainRecord={record} />)}
-                    </tbody>
-                </table>
+                {status === "success" &&
+                    <table>
+                        <thead>
+                            <tr>
+                                <th rowSpan={2}>Location<br /><span style={{ fontSize: ".7rem" }}>Report Time</span></th>
+                                <th rowSpan={2}>Source</th>
+                                <th colSpan={5}>Rain Accumulation</th>
+                            </tr>
+                            <tr>
+                                <th className={"mobile-hide"}>1hr</th>
+                                <th>3hr</th>
+                                <th>6hr</th>
+                                <th>12hr</th>
+                                <th className={"mobile-hide"}>24hr</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rainData &&
+                                rainData.map(record => <RainRow rainRecord={record} />)}
+                        </tbody>
+                    </table>
+                }
+                {status === "pending" &&
+                    <Loader bottom_text={"Fetching rainfall totals"} type={"spinner"} />
+                }
             </div>
         </div>
     )
