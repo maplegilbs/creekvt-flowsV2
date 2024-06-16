@@ -8,7 +8,7 @@ export default function Loader({ loader_text, bottom_text, type }) {
     return (
         <>
             {type === 'spinner' &&
-                <div className={`${styles["loader"]}`}>
+                <div className={`${styles["loader"]} ${styles["spinner"]}`}>
                     {loader_text &&
                         <div className={`${styles["loading-text"]}`}>{loader_text}</div>
                     }
@@ -19,7 +19,7 @@ export default function Loader({ loader_text, bottom_text, type }) {
                 </div>
             }
             {type === 'rain' &&
-                <div className={`${styles["loader"]}`}>
+                <div className={`${styles["loader"]} ${styles["rain"]}`}>
                     {loader_text &&
                         <div className={`${styles["loading-text"]}`}>{loader_text}</div>
                     }

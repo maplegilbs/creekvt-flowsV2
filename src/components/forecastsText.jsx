@@ -1,3 +1,5 @@
+//Components
+import Loader from "./loader"
 //Hooks
 import { useState, useEffect } from "react"
 //Styles
@@ -24,12 +26,25 @@ export default function ForecastText() {
                 setStatus('failure')
             }
         }
-        getForecastData();
+        // getForecastData();
     }, [selectedLocation])
 
     return (
         <div className={`${styles["component__container"]}`}>
-
+            <div className={`${styles["inner__container"]}`}>
+                <h2 className={`${styles["section__header"]}`}>Forecast</h2>
+                <hr />
+                {status === 'pending' &&
+                <Loader bottom_text={"Getting forecast data"} type={"spinner"}/>
+                }
+                {status === 'success' &&
+                    <div className={`${styles["current-weather__container"]}`}>
+                    </div>
+                }
+                {status === 'failure' &&
+                    <div>Error</div>
+                }
+            </div>
         </div>
     )
 }
