@@ -15,9 +15,7 @@ export default function ForecastText() {
         let longitude = -72.86118841260061;
         async function getForecastData() {
             try {
-                // let forecastResponse = await fetch(`https://api.weather.gov/points/${latitude},${longitude}`);
-                // let forecastResponse = await fetch(`https://api.weather.gov/gridpoints/BTV/104,36/forecast/hourly`);
-                let forecastResponse = await fetch(`https://api.weather.gov/gridpoints/BTV/104,36/forecast`);
+                let forecastResponse = await fetch(`${process.env.REACT_APP_SERVER}/weather/forecast?source=openWeather&lat=43.9951&long=-72.8708`);
                 let forecastJSON = await forecastResponse.json();
                 setForecastData(forecastJSON)
                 setStatus('success')

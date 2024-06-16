@@ -3,32 +3,47 @@
 .component__container {
     @include gv.componentContainerTheme;
 
-    table {
-        @include gv.tableTheme();
-    }
+    .inner__container {
+        border-radius: 5px;
+        padding: 1rem 2%;
 
-    thead {
-        @include gv.tableHeadTheme();
-    }
-
-    th {
-        @include gv.tableHeadCellTheme();
-    }
-
-    td {
-        @include gv.tableCellTheme();
-    }
-
-    tbody {
-        tr:nth-child(odd) {
-            background-color: white;
+        .section__header {
+            @include gv.innerSectionHeaderTheme;
         }
 
-        tr:nth-child(even) {
-            background-color: gv.$table_row;
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
+        hr {
+            @include gv.sectionHRTheme;
+            width: 50%;
         }
     }
 
-}
+        table {
+            @include gv.tableTheme();
+        }
+
+        thead {
+            @include gv.tableHeadTheme();
+            position: relative;
+        }
+
+        th {
+            @include gv.tableHeadCellTheme();
+        }
+
+        td {
+            @include gv.tableCellTheme();
+        }
+
+        tbody {
+            tr:nth-child(odd) {
+                background-color: white;
+            }
+
+            tr:nth-child(even) {
+                background-color: gv.$table_row;
+                border-top: 1px solid black;
+                border-bottom: 1px solid black;
+            }
+        }
+
+    }

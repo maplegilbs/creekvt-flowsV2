@@ -19,12 +19,12 @@ function MyMapComponent({ selectedMapLocation }) {
     const intervalRef = useRef();
     const timeStampRef = useRef();
 
-    
+
     function toggleAnimateRadar() {
         //first toggle the animation status - this is queued so the code below will run before this is updated
         setIsAnimationActive(prev => !prev)
         //find the index of the active tile or set it to 0;
-        let activeTileIndex = activeTile? tiles.timeStampArray.indexOf(activeTile.timeStamp) : 0;
+        let activeTileIndex = activeTile ? tiles.timeStampArray.indexOf(activeTile.timeStamp) : 0;
         //if the animation is NOT active (aka it is paused) play the animation
         if (!isAnimationActive) {
             intervalRef.current = setInterval(() => {
@@ -32,30 +32,30 @@ function MyMapComponent({ selectedMapLocation }) {
                 //if the active tile is the last in the array, set the new activeTileIndex to 0, else increment by 1
                 activeTileIndex = activeTileIndex === tiles.tilesArray.length - 1 ? 0 : activeTileIndex + 1;
                 tiles.tilesArray[activeTileIndex].setOpacity(1);
-                setActiveTile({tile: tiles.tilesArray[activeTileIndex], timeStamp: tiles.timeStampArray[activeTileIndex]})
+                setActiveTile({ tile: tiles.tilesArray[activeTileIndex], timeStamp: tiles.timeStampArray[activeTileIndex] })
             }, 1000)
         }
         //if the animation is active pause the animation
         else {
             clearInterval(intervalRef.current)
-            setActiveTile({tile: tiles.tilesArray[activeTileIndex], timeStamp: tiles.timeStampArray[activeTileIndex]})
+            setActiveTile({ tile: tiles.tilesArray[activeTileIndex], timeStamp: tiles.timeStampArray[activeTileIndex] })
         }
     }
 
-    function stepForwards(){
-        let activeTileIndex = activeTile? tiles.timeStampArray.indexOf(activeTile.timeStamp) : 0;
+    function stepForwards() {
+        let activeTileIndex = activeTile ? tiles.timeStampArray.indexOf(activeTile.timeStamp) : 0;
         tiles.tilesArray[activeTileIndex].setOpacity(0);
         activeTileIndex = activeTileIndex === tiles.tilesArray.length - 1 ? 0 : activeTileIndex + 1;
         tiles.tilesArray[activeTileIndex].setOpacity(1);
-        setActiveTile({tile: tiles.tilesArray[activeTileIndex], timeStamp: tiles.timeStampArray[activeTileIndex]})
+        setActiveTile({ tile: tiles.tilesArray[activeTileIndex], timeStamp: tiles.timeStampArray[activeTileIndex] })
     }
-    
-    function stepBackwards(){
-        let activeTileIndex = activeTile? tiles.timeStampArray.indexOf(activeTile.timeStamp) : 0;
+
+    function stepBackwards() {
+        let activeTileIndex = activeTile ? tiles.timeStampArray.indexOf(activeTile.timeStamp) : 0;
         tiles.tilesArray[activeTileIndex].setOpacity(0);
         activeTileIndex = activeTileIndex === 0 ? tiles.tilesArray.length - 1 : activeTileIndex - 1;
         tiles.tilesArray[activeTileIndex].setOpacity(1);
-        setActiveTile({tile: tiles.tilesArray[activeTileIndex], timeStamp: tiles.timeStampArray[activeTileIndex]})
+        setActiveTile({ tile: tiles.tilesArray[activeTileIndex], timeStamp: tiles.timeStampArray[activeTileIndex] })
     }
 
 
@@ -131,30 +131,35 @@ function MyMapComponent({ selectedMapLocation }) {
 
 
     return (
-        <div className={`${styles["map__container"]}`}>
-            <div className={`${styles["map"]}`} ref={mapRef} id="map"></div>
-            <div className={`${styles["radar-info"]}`}>
-                {activeTile &&
-                    <>{`${formatDateTime(activeTile.timeStamp).fullDate} ${formatDateTime(activeTile.timeStamp).time} ${formatDateTime(activeTile.timeStamp).amPm}`}</>
-                }
-            </div>
-            <div className={`${styles["radar-controls"]}`}>
-                {!isAnimationActive &&
-                    <button onClick={stepBackwards}><FontAwesomeIcon icon={faBackwardStep} size="xl" /></button>
-                }
-                <button onClick={() => {
-                    toggleAnimateRadar()
-                }}>
-                    {!isAnimationActive ?
-                        <FontAwesomeIcon icon={faPlay} size="xl" />
-                        :
-                        <FontAwesomeIcon icon={faPause} size="xl" />
+        <div className={`${styles["inner__container"]}`}>
+                <h2 className={`${styles["section__header"]}`}>Current Radar</h2>
+                <hr />
+                <div className={`${styles["map__container"]}`}>
 
+                <div className={`${styles["map"]}`} ref={mapRef} id="map"></div>
+                <div className={`${styles["radar-info"]}`}>
+                    {activeTile &&
+                        <>{`${formatDateTime(activeTile.timeStamp).fullDate} ${formatDateTime(activeTile.timeStamp).time} ${formatDateTime(activeTile.timeStamp).amPm}`}</>
                     }
-                </button>
-                {!isAnimationActive &&
-                    <button onClick={stepForwards}><FontAwesomeIcon icon={faForwardStep} size="xl" /></button>
-                }
+                </div>
+                <div className={`${styles["radar-controls"]}`}>
+                    {!isAnimationActive &&
+                        <button onClick={stepBackwards}><FontAwesomeIcon icon={faBackwardStep} size="xl" /></button>
+                    }
+                    <button onClick={() => {
+                        toggleAnimateRadar()
+                    }}>
+                        {!isAnimationActive ?
+                            <FontAwesomeIcon icon={faPlay} size="xl" />
+                            :
+                            <FontAwesomeIcon icon={faPause} size="xl" />
+
+                        }
+                    </button>
+                    {!isAnimationActive &&
+                        <button onClick={stepForwards}><FontAwesomeIcon icon={faForwardStep} size="xl" /></button>
+                    }
+                </div>
             </div>
         </div>
     )

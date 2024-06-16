@@ -2,7 +2,21 @@
 
 .component__container {
     @include gv.componentContainerTheme;
-    
+
+    .inner__container {
+        border-radius: 5px;
+        padding: 1rem 2%;
+        position: static;
+
+        .section__header {
+            @include gv.innerSectionHeaderTheme;
+        }
+
+        hr {
+            @include gv.sectionHRTheme;
+            width: 50%;
+        }
+    }
 
     .map__container {
         position: relative;
