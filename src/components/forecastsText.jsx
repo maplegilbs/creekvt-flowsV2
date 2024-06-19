@@ -600,6 +600,17 @@ let placeHolderWeather = {
     }
 }
 
+function getTextDirection(degree){
+    const directions = [
+        'N', 'NNE', 'NE', 'ENE',
+        'E', 'ESE', 'SE', 'SSE',
+        'S', 'SSW', 'SW', 'WSW',
+        'W', 'WNW', 'NW', 'NNW'
+    ];
+    const index = Math.round(degree / 22.5) % 16;
+    return directions[index];
+}
+
 export default function ForecastText() {
     const [status, setStatus] = useState('success') //pending, success, failure
     const [forecastData, setForecastData] = useState(placeHolderWeather);
@@ -612,7 +623,6 @@ export default function ForecastText() {
     }
 
     useEffect(() => {
-
         async function getWeatherData() {
             try {
                 let pointResponse = await fetch(`https://api.weather.gov/points/${selectedLocation[0]},${selectedLocation[1]}`)
@@ -649,7 +659,7 @@ export default function ForecastText() {
                 setStatus('failure')
             }
         }
-        // setTimeout(()=>getWeatherData(), 750);
+        setTimeout(()=>getWeatherData(), 750);
     }, [selectedLocation])
 
     return (
@@ -663,23 +673,28 @@ export default function ForecastText() {
                 {status === 'success' &&
                     <>
                         <div className={`${styles["current-weather__container"]}`}>
+                            <h3 className={`${styles["weather__heading"]}`}>Current Conditions</h3>
+                            <h3>Station: {forecastData.current.station}</h3>
                             <h3>{` ${formatDateTime(new Date(currentData.timestamp)).dow} ${formatDateTime(new Date(currentData.timestamp)).fullDate} @ ${formatDateTime(new Date(currentData.timestamp)).time} ${formatDateTime(new Date(currentData.timestamp)).amPm}`}</h3>
-                            <h3>NOAA Station: {forecastData.current.station}</h3>
                             <img src={currentData.icon} />
                             <div className={`${styles["current-weather-details"]}`}>
                                 <p>{currentData.textDescription}</p>
-                                <p>Temperature: {Math.round(Number(currentData.temperature.value) * 9 / 5 + 32)}&deg; F / {Math.round(Number(currentData.temperature.value))}&deg; C </p>
-                                <p>Winds: {Math.round(currentData.windSpeed.value / 1.6)} mph {currentData.windDirection.value}</p>
+                                <p>{Math.round(Number(currentData.temperature.value) * 9 / 5 + 32)}&deg; F / {Math.round(Number(currentData.temperature.value))}&deg; C </p>
+                                <p><span className={`${styles["detail-cat"]}`}>Winds:</span> {getTextDirection(currentData.windDirection.value)? getTextDirection(currentData.windDirection.value) : ""} @ {Math.round(currentData.windSpeed.value / 1.6)} mph </p>
                                 {currentData.barometricPressure.value &&
-                                    <p>Barometer: {currentData.barometricPressure.value} in</p>
+                                    <p><span className={`${styles["detail-cat"]}`}>Barometer:</span> {(Number(currentData.barometricPressure.value) * 0.00029530).toFixed(2)} in</p>
                                 }
                             </div>
                         </div>
                         <div className={`${styles["forecast__container"]}`}>
-                            <h3 className={`${styles["forecast__heading"]}`}>Seven-Day Forecast</h3>
+                            <h3 className={`${styles["weather__heading"]}`}>Seven-Day Forecast</h3>
                             {forecastData.forecast.properties.periods.length > 0 &&
                                 forecastData.forecast.properties.periods.map(periodData => <ForecastRow periodData={periodData} />)
                             }
+                            <div className={`${styles["forecast-source"]}`}>
+                                <img src={`https://creekvt.com/FlowsPageAssets/Images/NOAALogo1.png`} />
+                                <p>All weather data courtesy of the National Weather Service / National Oceanic and Atmospheric Administration </p>
+                            </div>
                         </div>
                     </>
                 }
