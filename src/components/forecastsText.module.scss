@@ -5,6 +5,7 @@
 
     .inner__container {
         background-color: rgba(255, 255, 255, .95);
+        box-shadow: 2px 2px 3px #444;
         border-radius: 5px;
         padding: 1rem 2%;
 
@@ -32,13 +33,15 @@
             }
 
             img {
-                margin-top: 15px;;
+                margin-top: 15px;
+                ;
                 grid-column: 1 / 2;
                 width: 100%;
             }
-            
+
             .current-weather-details {
-                margin-top: 15px;;
+                margin-top: 15px;
+                ;
                 grid-column: 2/5;
                 display: flex;
                 flex-direction: column;
@@ -52,6 +55,20 @@
                     padding: 0;
                     line-height: 1.1rem;
                 }
+            }
+        }
+
+        .forecast__container {
+            margin-top: 1rem;
+
+            .forecast__heading {
+                text-transform: uppercase;
+                font-family: gv.$primary-headers;
+                font-size: .9rem;
+                font-weight: 800;
+                margin: 1.5rem 0 .5rem 0;
+                background: rgba(100, 100, 100, .2);
+                padding: 2px;
             }
         }
     }

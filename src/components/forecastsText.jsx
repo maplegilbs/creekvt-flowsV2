@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 //Styles
 import styles from "./forecastsText.module.scss"
 import { formatDateTime } from "../utils/formatDateTime"
+import ForecastRow from "./forecastRow"
 
 let placeHolderWeather = {
     "current": {
@@ -660,21 +661,27 @@ export default function ForecastText() {
                     <Loader bottom_text={"Getting forecast data"} type={"spinner"} />
                 }
                 {status === 'success' &&
-                    <div className={`${styles["current-weather__container"]}`}>
-                        <h3>{` ${formatDateTime(new Date(currentData.timestamp)).dow} ${formatDateTime(new Date(currentData.timestamp)).fullDate} @ ${formatDateTime(new Date(currentData.timestamp)).time} ${formatDateTime(new Date(currentData.timestamp)).amPm}`}</h3>
-                        {/* <h3>{`${selectedLocation[0]}, ${selectedLocation[1]}`}</h3> */}
-                        <h3>NOAA Station: {forecastData.current.station}</h3>
-                        <img src={currentData.icon} />
-                        <div className={`${styles["current-weather-details"]}`}>
-                            <p>{currentData.textDescription}</p>
-                            <p>Temperature: {Math.round(Number(currentData.temperature.value) * 9 / 5 + 32)}&deg; F / {Math.round(Number(currentData.temperature.value))}&deg; C </p>
-                            <p>Winds: {Math.round(currentData.windSpeed.value / 1.6)} mph {currentData.windDirection.value}</p>
-                            {currentData.barometricPressure.value &&
-                                <p>Barometer: {currentData.barometricPressure.value} in</p>
-                            }
-
+                    <>
+                        <div className={`${styles["current-weather__container"]}`}>
+                            <h3>{` ${formatDateTime(new Date(currentData.timestamp)).dow} ${formatDateTime(new Date(currentData.timestamp)).fullDate} @ ${formatDateTime(new Date(currentData.timestamp)).time} ${formatDateTime(new Date(currentData.timestamp)).amPm}`}</h3>
+                            <h3>NOAA Station: {forecastData.current.station}</h3>
+                            <img src={currentData.icon} />
+                            <div className={`${styles["current-weather-details"]}`}>
+                                <p>{currentData.textDescription}</p>
+                                <p>Temperature: {Math.round(Number(currentData.temperature.value) * 9 / 5 + 32)}&deg; F / {Math.round(Number(currentData.temperature.value))}&deg; C </p>
+                                <p>Winds: {Math.round(currentData.windSpeed.value / 1.6)} mph {currentData.windDirection.value}</p>
+                                {currentData.barometricPressure.value &&
+                                    <p>Barometer: {currentData.barometricPressure.value} in</p>
+                                }
+                            </div>
                         </div>
-                    </div>
+                        <div className={`${styles["forecast__container"]}`}>
+                            <h3 className={`${styles["forecast__heading"]}`}>Seven-Day Forecast</h3>
+                            {forecastData.forecast.properties.periods.length > 0 &&
+                                forecastData.forecast.properties.periods.map(periodData => <ForecastRow periodData={periodData} />)
+                            }
+                        </div>
+                    </>
                 }
                 {status === 'failure' &&
                     <div>Error</div>

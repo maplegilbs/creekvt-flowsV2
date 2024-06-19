@@ -1,0 +1,53 @@
+@use "../styles/global_variables.scss" as gv;
+
+.forecast-row {
+    padding: .5rem 0;
+    display: grid;
+    grid-template: auto / repeat(4, 1fr);
+    gap: .5rem;
+    border-bottom: 1px solid #79a;
+
+    .row__heading {
+        grid-column: 1/5;
+        text-align: left;
+        font-size: .9rem;
+        font-weight: 800;
+        margin-bottom: -.15rem;
+    }
+
+    .row__sub-heading {
+        grid-column: 1/5;
+        text-align: left;
+        font-size: .75rem;
+        margin-bottom: 0;
+    }
+
+    p,
+    h3 {
+        font-family: gv.$primary-headers;
+        line-height: .9rem;
+    }
+
+    .row-inner__container{
+        margin-top: .8rem;
+    }
+
+    .icon__container {
+        grid-column: 1/2;
+        padding-top: 4px;
+
+        img {
+            width: 95%;
+        }
+    }
+
+    .text__container {
+        grid-column: 2/5;
+
+        P {
+            font-size: .7rem;
+        }
+    }
+
+
+}
