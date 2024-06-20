@@ -38,29 +38,74 @@
 }
 
 @media screen and (min-width: 640px) {
-
+    
     .rain__row {
-
+        
+        td{
+            font-size: 1rem;
+            margin: .25rem 2rem;
+        }
+        
         .station-info {
+            
+            .station__heading {
+                font-size: .9rem;
+                text-align: center;
+            }
+            
+            .station-stats {
+                text-align: center;
+                font-size: .8rem;
+                margin: .25rem auto;
+            }
+        }
+        
+        .rain-info {
+            padding: 5px 2.25rem;
+        }
+        
+        .source-icon__img {
 
+            img {
+                width: 80%;
+                max-width: 100px;
+            }
+        }
+    }
+    
+}
+
+@media screen and (min-width: 1500px) {
+    .rain__row {
+        
+        td{
+            font-size: 1rem;
+            margin: .25rem 2rem;
+        }
+        
+        .station-info {
+            
             .station__heading {
                 font-size: .8rem;
                 text-align: center;
             }
-
+            
             .station-stats {
                 text-align: center;
+                font-size: .7rem;
+                margin: .25rem auto;
             }
         }
-
+        
         .rain-info {
-            padding: 5px 15px;
+            padding: 5px 1.5rem;
         }
-
+        
         .source-icon__img {
 
             img {
-                width: 40%;
+                width: 90%;
+                max-width: 100px;
             }
         }
     }

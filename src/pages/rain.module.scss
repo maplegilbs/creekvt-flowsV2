@@ -3,3 +3,21 @@
 .page__container {
     @include gv.pageContainerTheme();
 }
+
+@media screen and (min-width: 1500px) {
+    .page__container{
+        display: flex;
+    
+        
+        &>div:nth-child(1){
+            order: 2;
+            width: 48%
+        }
+        
+        &>div:nth-child(2){
+            order: 1;
+            width: 48%
+        }
+    }
+    
+}
