@@ -659,7 +659,7 @@ export default function ForecastText() {
                 setStatus('failure')
             }
         }
-        setTimeout(()=>getWeatherData(), 750);
+        // setTimeout(()=>getWeatherData(), 750);
     }, [selectedLocation])
 
     return (
