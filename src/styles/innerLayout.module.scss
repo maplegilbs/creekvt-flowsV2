@@ -1,4 +1,4 @@
-@use './global_variables.scss';
+@use './global_variables.scss' as gv;
 
 
 .page-wrapper {
@@ -35,7 +35,10 @@
                     a {
                         text-decoration: none;
                         color: white;
-                        font-weight: 500;
+                        font-weight: 700;
+                        text-transform: uppercase;
+                        font-size: 1.05rem;
+                        font-family: gv.$primary-headers;
                     }
 
                     &.active {
