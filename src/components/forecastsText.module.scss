@@ -16,16 +16,25 @@
         .weather__heading {
             text-transform: uppercase;
             font-family: gv.$primary-headers;
-            font-size: .9rem;
+            font-size: .95rem;
             font-weight: 800;
-            margin: 1.5rem 0 .5rem 0;
+            margin: .5rem 0 .5rem 0;
             background: rgba(100, 100, 100, .2);
             padding: 2px;
+            grid-column: 1 / 5;
         }
-
+        
         hr {
             @include gv.sectionHRTheme;
             width: 50%;
+        }
+        
+        .river-select__container{
+            font-family: gv.$primary-headers;
+            font-size: .75rem;
+            font-weight: 800;
+            margin: 1.5rem 0 .5rem 0;
+
         }
 
         .current-weather__container {
@@ -33,21 +42,15 @@
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: auto;
 
-            h3 {
+            h3:not(.weather__heading) {
                 font-family: gv.$primary-headers;
                 text-align: left;
-                font-size: .7rem;
+                font-size: .75rem;
+                font-weight: 600;
                 grid-column: 1 / 5;
                 padding: 0;
                 line-height: 1rem;
                 margin: .1rem;
-
-                &.weather__heading {
-                    margin: .25rem 0 .5rem 0;
-                    padding: 2px;
-                    font-size: .9rem;
-                    text-align: center;
-                }
             }
 
             img {
@@ -69,7 +72,7 @@
 
                 p {
                     font-family: gv.$primary-headers;
-                    font-size: .85rem;
+                    font-size: .95rem;
                     font-weight: 700;
                     margin: .15rem .75rem;
                     padding: 0;

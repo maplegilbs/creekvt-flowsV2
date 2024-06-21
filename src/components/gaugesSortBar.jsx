@@ -4,7 +4,6 @@ import styles from "./gaugesSortBar.module.scss"
 export default function GaugesSortBar({ setSortedBy }) {
 
     function handleChange(e) {
-        console.log(e.target.value)
         setSortedBy(e.target.value)
     }
     return (
