@@ -7,10 +7,12 @@ import { RiverContext } from "../pages/innerLayout"
 import { useState, useEffect, useContext } from "react"
 //Libraries
 import { formatDateTime } from "../utils/formatDateTime"
+
 //Styles
 import styles from "./forecastsText.module.scss"
 //Testing Data
 import { forecastPlaceHolder } from "../utils/placeholderData"
+import pause from "../utils/pause"
 
 function getTextDirection(degree) {
     const directions = [
@@ -31,7 +33,7 @@ export default function ForecastText() {
     const [selectedLocation, setSelectedLocation] = useState(null);
     let currentData = null;
 
-    console.log(forecastData, status, riverData, selectedRiver);
+    // console.log(forecastData, status, riverData, selectedRiver);
 
     if (forecastData && forecastData.current.data.properties) {
         currentData = forecastData.current.data.properties;
@@ -62,7 +64,17 @@ export default function ForecastText() {
                 let stationsURL = pointJSON.properties.observationStations;
                 let forecastResponse = await fetch(forecastURL);
                 if (forecastResponse.status < 199 || forecastResponse.status > 300) {
-                    throw new Error(`Fetch to ${forecastURL} failed.`)
+                    let i = 0;
+                    while (i < 3) {
+                        console.log('Retrying')
+                        pause(1000)
+                        forecastResponse = await fetch(forecastURL);
+                        if (forecastResponse.status > 199 && forecastResponse.status < 300) i = 3;
+                        i++
+                    }
+                    if (forecastResponse.status < 199 || forecastResponse.status > 300) {
+                        throw new Error(`Fetch to ${forecastURL} failed.`)
+                    }
                 }
                 let forecastJSON = await forecastResponse.json();
                 let stationsResponse = await fetch(stationsURL)
@@ -111,7 +123,7 @@ export default function ForecastText() {
                             {selectedRiver &&
                                 <select value={selectedRiver.name} id="river-select" onChange={handleRiverChange}>
                                     {riverData &&
-                                        riverData.map(river => <option value={river.name}>{river.name}</option>)
+                                        riverData.map(river => <option key={river.id} value={river.name}>{river.name}</option>)
                                     }
                                 </select>
                             }
@@ -135,7 +147,7 @@ export default function ForecastText() {
                         <div className={`${styles["forecast__container"]}`}>
                             <h3 className={`${styles["weather__heading"]}`}>Seven-Day Forecast</h3>
                             {forecastData.forecast.properties.periods.length > 0 &&
-                                forecastData.forecast.properties.periods.map(periodData => <ForecastRow periodData={periodData} />)
+                                forecastData.forecast.properties.periods.map(periodData => <ForecastRow key={periodData.number} periodData={periodData} />)
                             }
                             <div className={`${styles["forecast-source"]}`}>
                                 <img src={`https://creekvt.com/FlowsPageAssets/Images/NOAALogo1.png`} />
