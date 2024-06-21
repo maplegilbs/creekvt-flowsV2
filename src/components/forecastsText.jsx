@@ -4,10 +4,9 @@ import ForecastRow from "./forecastRow"
 //Contexts
 import { RiverContext } from "../pages/innerLayout"
 //Hooks
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect} from "react"
 //Libraries
 import { formatDateTime } from "../utils/formatDateTime"
-
 //Styles
 import styles from "./forecastsText.module.scss"
 //Testing Data
@@ -25,35 +24,13 @@ function getTextDirection(degree) {
     return directions[index];
 }
 
-export default function ForecastText() {
-    const [status, setStatus] = useState('pending') //pending, success, failure
+export default function ForecastText({status, setStatus, selectedLocation}) {
     const [forecastData, setForecastData] = useState(null);
-    const riverData = useContext(RiverContext).riverData
-    const [selectedRiver, setSelectedRiver] = useState(null)
-    const [selectedLocation, setSelectedLocation] = useState(null);
     let currentData = null;
-
-    // console.log(forecastData, status, riverData, selectedRiver);
 
     if (forecastData && forecastData.current.data.properties) {
         currentData = forecastData.current.data.properties;
     }
-
-
-    function handleRiverChange(e) {
-        setStatus('pending')
-        setSelectedRiver(riverData.find(river => river.name.toLowerCase() == e.target.value.toLocaleLowerCase()))
-    }
-
-    useEffect(() => {
-        if (riverData && selectedRiver) {
-            setSelectedLocation([selectedRiver.putinLat, selectedRiver.putinLon])
-        }
-        if (riverData && !selectedRiver) {
-            setSelectedRiver(riverData.find(river => river.name.toLowerCase() === "mad river (lower)"))
-        }
-
-    }, [riverData, selectedRiver])
 
     useEffect(() => {
         async function getWeatherData() {
@@ -117,17 +94,6 @@ export default function ForecastText() {
                 }
                 {status === 'success' &&
                     <>
-                        <div className={`${styles["river-select__container"]}`}>
-                            <label htmlFor="river-select">Select A River To See Local Forecast</label>
-                            <br />
-                            {selectedRiver &&
-                                <select value={selectedRiver.name} id="river-select" onChange={handleRiverChange}>
-                                    {riverData &&
-                                        riverData.map(river => <option key={river.id} value={river.name}>{river.name}</option>)
-                                    }
-                                </select>
-                            }
-                        </div>
                         <div className={`${styles["current-weather__container"]}`}>
                             <h3 className={`${styles["weather__heading"]}`}>Current Conditions</h3>
                             <h3>Station: {forecastData.current.station}</h3>
@@ -158,17 +124,6 @@ export default function ForecastText() {
                 }
                 {status === 'failure' &&
                     <>
-                        <div className={`${styles["river-select__container"]}`}>
-                            <label htmlFor="river-select">Select A River To See Local Forecast</label>
-                            <br />
-                            {selectedRiver &&
-                                <select value={selectedRiver.name} id="river-select" onChange={handleRiverChange}>
-                                    {riverData &&
-                                        riverData.map(river => <option value={river.name}>{river.name}</option>)
-                                    }
-                                </select>
-                            }
-                        </div>
                         <div>Error fetching forecast data, please try another river.</div>
                     </>
                 }
