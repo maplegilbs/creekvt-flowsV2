@@ -21,7 +21,7 @@
                 padding: 0;
 
                 li {
-                    background-color: rgba(80, 100, 120, .5);
+                    background-color: gv.$nav_links;
                     padding: 2px 8px;
                     border-top: 2px solid rgba(100, 100, 100, .5);
                     border-right: 2px solid rgba(100, 100, 100, .5);
@@ -47,9 +47,7 @@
                         border-top: 3px solid rgba(100, 100, 100, .5);
                         border-right: 3px solid rgba(100, 100, 100, .5);
                         border-color: #444;
-                        // background-color: #f0f0f0;
                         background-color: white;
-                        // border-bottom: 2px solid #f0f0f0;
 
                         a {
                             opacity: 1;
@@ -65,26 +63,27 @@
     .content-container {
         min-height: 80vh;
         border-radius: 3px 3px 3px 3px;
-        // background-color: #f0f0f0;
         border: 2px solid #444;
 
     }
 }
 
 @media screen and (min-width: 720px) {
+    .page-wrapper {
 
-    .nav-container {
+        .nav-container {
 
-        nav {
+            nav {
 
-            ul {
+                ul {
 
-                li {
-                    font-size: 1.1rem;
+                    li {
+                        font-size: 1.1rem;
 
-                    a {
-                        padding: 15px;
-                        font-size: 1.05rem;
+                        a {
+                            padding: 5px;
+                            font-size: 1.05rem;
+                        }
                     }
                 }
             }

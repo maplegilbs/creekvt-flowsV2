@@ -2,20 +2,49 @@
 
 .page__container {
     @include gv.pageContainerTheme();
+
+    .river-select__container {
+        font-family: gv.$primary-headers;
+        font-size: .75rem;
+        font-weight: 800;
+        width: max-content;
+        margin: 0 auto;
+        position: sticky;
+        top: 10px;
+        background: gv.$nav_links;
+        color: black;
+        text-shadow: 1px 1px white;
+        z-index: 200;
+        padding: .5rem;
+        box-shadow: 2px 2px 3px 2px #777;
+        border-radius: 2px;
+    }
+
 }
 
 @media screen and (min-width: 1100px) {
-    .page__container {
-        display: flex;
 
-        &>div:nth-child(1) {
-            order: 1;
-            width: 48%
+    .page__container {
+
+        .river-select__container {
+            padding: .6rem 2rem;
+            margin: 1.33% 0 0 1.33%;
+            font-size: 1rem;
+
         }
 
-        &>div:nth-child(2) {
-            order: 2;
-            width: 48%
+        .inner__container {
+            display: flex;
+
+            &>div:nth-child(1) {
+                order: 1;
+                width: 48%
+            }
+
+            &>div:nth-child(2) {
+                order: 2;
+                width: 48%
+            }
         }
     }
 }

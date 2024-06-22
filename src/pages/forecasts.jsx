@@ -30,9 +30,9 @@ export default function Forecasts() {
     }
 
     return (
-        <>
+        <div className={`${styles["page__container"]}`}>
             <div className={`${styles["river-select__container"]}`}>
-                <label htmlFor="river-select">Select A River To See Local Forecast</label>
+                <label htmlFor="river-select">Select A River To Update Forecast Area</label>
                 <br />
                 {selectedRiver &&
                     <select value={selectedRiver.name} id="river-select" onChange={handleRiverChange}>
@@ -42,10 +42,10 @@ export default function Forecasts() {
                     </select>
                 }
             </div>
-            <div className={`${styles["page__container"]}`}>
-                <ForecastText selectedLocation={selectedLocation} status={status} setStatus={setStatus}/>
-                <ForecastQPF selectedLocation={selectedLocation}/>
+            <div className={`${styles["inner__container"]}`}>
+                <ForecastText selectedLocation={selectedLocation} status={status} setStatus={setStatus} />
+                <ForecastQPF selectedLocation={selectedLocation} />
             </div>
-        </>
+        </div>
     )
 }

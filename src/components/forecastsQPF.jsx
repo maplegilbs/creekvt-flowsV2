@@ -4,8 +4,7 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 //Styles
 import styles from "./forecastsQPF.module.scss"
 
-let NE = [49.04158309692921, -64.4150646364947]
-let SW = [39.96947848805576, -80.76598887821596]
+
 let origin = [49.04158309692921, -80.76598887821596]
 let range = [9.07210460887345, 16.35092424172126]
 
