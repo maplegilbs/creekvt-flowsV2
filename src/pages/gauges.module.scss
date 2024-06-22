@@ -1,5 +1,43 @@
 @use '../styles/global_variables.scss' as gv;
 
+.gauge-instructions__modal {
+    position: fixed;
+    z-index: 2000;
+    background-color: rgba(255,255,255,.975);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    left: 0px;
+    top: 0px;
+    padding: 1rem 0;
+
+    h3{
+        margin-right: 8%;
+        margin-left: auto;
+        margin-bottom: 1rem;
+        font-family: gv.$primary_headers;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    a{
+        margin: 0;
+        padding: 0;
+    }
+
+    img {
+        display: block;
+        width: 95%;
+        margin: 0 auto;
+        box-shadow: 2px 2px 5px #444;
+    }
+}
+
 .info__container {
     display: block;
     font-size: 16px;
@@ -122,7 +160,7 @@
         color: #222233;
         font-weight: 700;
         width: 100%;
-        
+
         &::after {
             content: '';
             position: absolute;
@@ -133,8 +171,8 @@
             background-color: black;
             z-index: 2;
         }
-        
-        
+
+
         td {
             text-align: center;
             color: white;
@@ -149,6 +187,13 @@
 /*---Media Queries---*/
 @media screen and (max-width: 640px) {
 
+    .gauge-instructions__modal {
+        h3{
+            font-size: .8rem;
+            margin-right: 2%;
+        }
+    }
+
     .mobile-hide {
         display: none;
     }
@@ -160,7 +205,7 @@
 
     .flows__table {
 
-        .sort-header{
+        .sort-header {
             top: 72px;
         }
 

@@ -6,12 +6,24 @@ import GaugesSortBar from "../components/gaugesSortBar";
 import { RiverContext } from "./innerLayout";
 //Hooks
 import { useContext, useEffect, useState } from "react";
+//Icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 //Libraries
 import { formatUSGSDateTimeQueryString } from "../utils/formatDateTime";
 import { sortByChange, sortByDifficulty, sortByLevel, sortByLocation, sortByQuality } from "../utils/sortingFunctions";
 import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
 //Styles
 import styles from "./gauges.module.scss";
+
+function GaugeInstructions({setIsModalActive}) {
+    return (
+        <div className={`${styles["gauge-instructions__modal"]}`}>
+            <h3 onClick={()=>setIsModalActive(false)}>Close &nbsp;<FontAwesomeIcon icon={faCircleXmark} size="xl" /></h3>
+            <a href="https://creekvt.com/FlowsPageAssets/Images/GaugePageRef.jpg"><img src="https://creekvt.com/FlowsPageAssets/Images/GaugePageRef.jpg" alt="Image showing how to read the flows table information" /></a>
+        </div>
+    )
+}
 
 export default function Gauges() {
     const [status, setStatus] = useState('pending'); //pending, success, error
@@ -20,6 +32,7 @@ export default function Gauges() {
     const [updatedRiverData, setUpdatedRiverData] = useState(null);
     const [sortedBy, setSortedBy] = useState('curLevel'); //riverName, curLevel, difficulty, location, quality
     const [sortedRiverData, setSortedRiverData] = useState(null);
+    const [isModalActive, setIsModalActive] = useState(false)
 
     useEffect(() => {
         async function fetchGauges() {
@@ -69,9 +82,12 @@ export default function Gauges() {
 
     return (
         <>
+            {isModalActive &&
+                <GaugeInstructions setIsModalActive={setIsModalActive}/>
+            }
             {status === "success" &&
                 <div className={`${styles["info__container"]}`}>
-                    <GaugesSortBar setSortedBy={setSortedBy} />
+                    <GaugesSortBar setSortedBy={setSortedBy} setIsModalActive={setIsModalActive} />
                     {sortedBy === 'changePerHr' &&
                         <p>Trend is determined by the % change over the past hour. A river whos gauge registers an <em>increase</em> in flow &gt; 5% is considered "rising", whereas a river whos gauge registers a <em>decrease</em> in flow of &gt; 5% will be considered "falling".  All others will be considered "steady"</p>
                     }

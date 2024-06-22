@@ -4,7 +4,7 @@ import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons"
 //Styles
 import styles from "./gaugesSortBar.module.scss"
 
-export default function GaugesSortBar({ setSortedBy }) {
+export default function GaugesSortBar({ setSortedBy, setIsModalActive }) {
 
     function handleChange(e) {
         setSortedBy(e.target.value)
@@ -20,7 +20,7 @@ export default function GaugesSortBar({ setSortedBy }) {
                 <option value="quality">Quality</option>
                 <option value="location">Location</option>
             </select>
-            <h5>How to read this table &nbsp;<FontAwesomeIcon icon={faCircleQuestion} size="lg" /></h5>
+            <h5 onClick={()=>setIsModalActive(true)}>How to read this table &nbsp;<FontAwesomeIcon icon={faCircleQuestion} size="lg" /></h5>
         </div>
     )
 
