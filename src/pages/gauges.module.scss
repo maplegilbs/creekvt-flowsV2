@@ -1,4 +1,4 @@
-@use '../styles/global_variables.scss';
+@use '../styles/global_variables.scss' as gv;
 
 .info__container {
     display: block;
@@ -9,6 +9,14 @@
     border-radius: 2px;
     margin-top: 15px;
     width: 100%;
+
+    &>p {
+        font-size: .8rem;
+        padding: .25rem 1rem;
+        font-weight: 600;
+        font-family: gv.$primary_headers;
+        background-color: gv.$table_row;
+    }
 }
 
 .flows__table {
@@ -99,7 +107,7 @@
     }
 
     .sort-header {
-        background: global_variables.$primary_gradient;
+        background: gv.$primary_gradient;
         position: sticky;
         position: -webkit-sticky;
         position: -moz-sticky;

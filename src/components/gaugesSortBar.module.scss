@@ -3,13 +3,20 @@
 .sort-options__container {
     display: flex;
 
-    h3 {
+    h3, h5 {
         font-size: .75rem;
         text-transform: uppercase;
         font-weight: 700;
         color: global_variables.$primary_dark;
         font-family: global_variables.$primary_headers;
         margin: 3px 8px;
+    }
+
+    h5 {
+        font-size: .5rem;
+        width: max-content;
+        margin-left: auto;
+        cursor: pointer;
     }
 
     select, option {
@@ -26,7 +33,7 @@
 
         margin: 1rem auto;
 
-        h3, select, option {
+        h3, select, option, h5 {
             font-size: 15px;
         }
     }

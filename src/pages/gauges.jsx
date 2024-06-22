@@ -7,7 +7,7 @@ import { RiverContext } from "./innerLayout";
 //Hooks
 import { useContext, useEffect, useState } from "react";
 //Libraries
-import {formatUSGSDateTimeQueryString } from "../utils/formatDateTime";
+import { formatUSGSDateTimeQueryString } from "../utils/formatDateTime";
 import { sortByChange, sortByDifficulty, sortByLevel, sortByLocation, sortByQuality } from "../utils/sortingFunctions";
 import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
 //Styles
@@ -52,11 +52,11 @@ export default function Gauges() {
         if (updatedRiverData) {
             let tempSort = [...updatedRiverData];
             if (sortedBy === 'riverName') { tempSort.sort((a, b) => a.name > b.name ? 1 : -1) }
-            if (sortedBy === 'curLevel') {sortByLevel(tempSort)}
-            if (sortedBy === 'difficulty') {sortByDifficulty(tempSort)}
-            if (sortedBy === 'location') {sortByLocation(tempSort)}
-            if (sortedBy === 'quality') {sortByQuality(tempSort)}
-            if (sortedBy === 'changePerHr') {sortByChange(tempSort)}
+            if (sortedBy === 'curLevel') { sortByLevel(tempSort) }
+            if (sortedBy === 'difficulty') { sortByDifficulty(tempSort) }
+            if (sortedBy === 'location') { sortByLocation(tempSort) }
+            if (sortedBy === 'quality') { sortByQuality(tempSort) }
+            if (sortedBy === 'changePerHr') { sortByChange(tempSort) }
             setSortedRiverData(tempSort)
         }
 
@@ -72,6 +72,9 @@ export default function Gauges() {
             {status === "success" &&
                 <div className={`${styles["info__container"]}`}>
                     <GaugesSortBar setSortedBy={setSortedBy} />
+                    {sortedBy === 'changePerHr' &&
+                        <p>Trend is determined by the % change over the past hour. A river whos gauge registers an <em>increase</em> in flow &gt; 5% is considered "rising", whereas a river whos gauge registers a <em>decrease</em> in flow of &gt; 5% will be considered "falling".  All others will be considered "steady"</p>
+                    }
                     <table className={`${styles["flows__table"]}`}>
                         <thead>
                             <tr>
