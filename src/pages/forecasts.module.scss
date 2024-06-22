@@ -7,10 +7,11 @@
         font-family: gv.$primary-headers;
         font-size: .75rem;
         font-weight: 800;
-        width: max-content;
+        width: 100%;
+        max-width: 80%;
         margin: 0 auto;
         position: sticky;
-        top: 10px;
+        top: -2px;
         background: gv.$nav_links;
         color: black;
         text-shadow: 1px 1px white;
@@ -18,6 +19,12 @@
         padding: .5rem;
         box-shadow: 2px 2px 3px 2px #777;
         border-radius: 2px;
+        transition: all 2s ease;
+    }
+
+    .full-width{
+        max-width: 100%;
+        box-shadow: none;
     }
 
 }
@@ -30,7 +37,6 @@
             padding: .6rem 2rem;
             margin: 1.33% 0 0 1.33%;
             font-size: 1rem;
-
         }
 
         .inner__container {

@@ -4,7 +4,7 @@ import ForecastRow from "./forecastRow"
 //Contexts
 import { RiverContext } from "../pages/innerLayout"
 //Hooks
-import { useState, useEffect} from "react"
+import { useState, useEffect } from "react"
 //Libraries
 import { formatDateTime } from "../utils/formatDateTime"
 //Styles
@@ -24,7 +24,7 @@ function getTextDirection(degree) {
     return directions[index];
 }
 
-export default function ForecastText({status, setStatus, selectedLocation}) {
+export default function ForecastText({ status, setStatus, selectedLocation }) {
     const [forecastData, setForecastData] = useState(null);
     let currentData = null;
 
@@ -32,6 +32,7 @@ export default function ForecastText({status, setStatus, selectedLocation}) {
         currentData = forecastData.current.data.properties;
     }
 
+    
     useEffect(() => {
         async function getWeatherData() {
             try {
