@@ -201,6 +201,13 @@
     .info__container {
         font-size: 10px;
         max-width: 96vw;
+
+        &>p{
+            line-height: 1.2rem;
+            font-weight: 500;
+            font-size: .7rem;
+            margin-top: .7rem;
+        }
     }
 
     .flows__table {
