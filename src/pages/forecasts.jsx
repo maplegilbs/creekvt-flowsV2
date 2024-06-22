@@ -29,6 +29,9 @@ export default function Forecasts() {
             }
         }
         window.addEventListener('scroll', scrollAction)
+        return (()=>{
+            window.removeEventListener('scroll', scrollAction)
+        })
 }, [isScrolled])
 
 
@@ -50,8 +53,8 @@ function handleRiverChange(e) {
 return (
     <div className={`${styles["page__container"]}`}>
         <div ref={riverSelectRef} className={`${styles["river-select__container"]} ${isScrolled ? styles["full-width"] : ""}`}>
-            <label htmlFor="river-select">Select A River To Update Forecast Area</label>
-            <br />
+            <label htmlFor="river-select">Selected River &nbsp;</label>
+            <br className={`mobile-show`}/>
             {selectedRiver &&
                 <select value={selectedRiver.name} id="river-select" onChange={handleRiverChange}>
                     {riverData &&
