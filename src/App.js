@@ -1,5 +1,7 @@
 //Components
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import TestMap from './components/dynamicMap';
+//Hooks
+import { createBrowserRouter, RouterProvider, useRouteError } from 'react-router-dom';
 //Pages
 import Forecasts from './pages/forecasts';
 import Gauges from './pages/gauges';
@@ -10,7 +12,6 @@ import Visuals from './pages/visuals';
 //Styles
 import "./App.css"
 
-import { useRouteError } from 'react-router-dom';
 
 const ErrorElement = () => {
   const error = useRouteError();
@@ -37,6 +38,9 @@ const router = createBrowserRouter([
       path: "/flowsV2/",
       element: <InnerLayout />,
       children: [
+        {path: "",
+          element: <TestMap/>
+        },
         {path: "forecasts",
           element: <Forecasts />
         },
