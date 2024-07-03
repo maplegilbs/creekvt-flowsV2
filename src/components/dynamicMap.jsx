@@ -1,21 +1,23 @@
+//Contexts
+import { RiverDataWithGaugeInfoContext } from "../pages/innerLayout";
 //Google maps
 import { Wrapper } from "@googlemaps/react-wrapper";
 //Hooks
-import { useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faForwardStep, faBackwardStep, faPause } from "@fortawesome/free-solid-svg-icons";
 //Libraries
-import { formatDateTime } from "../utils/formatDateTime";
 import { primaryMapStyles } from "../utils/mapStylingOptions";
 //Styles
 import styles from "./dynamicMap.module.scss"
+import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
 
 function MyMapComponent({ selectedMapLocation }) {
+    const riverDataWithGaugeInfo = useContext(RiverDataWithGaugeInfoContext).updatedRiverData;
     const [myMap, setMyMap] = useState();
     const mapRef = useRef();
 
-    console.log(myMap)
+    console.log(riverDataWithGaugeInfo)
 
 
     useEffect(() => {
@@ -33,11 +35,21 @@ function MyMapComponent({ selectedMapLocation }) {
             let riverResposne = await fetch("https://creekvt.com/FlowsPageAssets/all_rivers_colorless.geojson")
             let riverJSON = await riverResposne.json();
             await newMap.data.addGeoJson(riverJSON)
-            newMap.data.forEach(river => river.setProperty("Cool?", "yes"))
+            newMap.data.forEach(river => {
+                let foundRiver = riverDataWithGaugeInfo.find(compareRiver => {
+                    console.log(river.getProperty("Name"), compareRiver.name)
+                    return compareRiver.name === river.getProperty("Name")
+                })
+                if (foundRiver) {
+                    let levelStatus = foundRiver.levelStatus
+                    river.setProperty("Level status", levelStatus)
+                }
+            })
             newMap.data.setStyle(function (feature) {
                 // if (feature.Fg["Class"].match(/^V[\+\-]?$/)) {
                 // if (feature.Fg["Class"].match(/^IV[\+\-]?$/)) {
-                if (feature.Fg["Class"].match(/^III[\+\-]?$/)) {
+                // if (feature.Fg["Class"].match(/^III[\+\-]?$/)) {
+                if (feature.Fg["Level status"] === "running") {
                     return {
                         // strokeColor: '#222299',
                         strokeColor: '#009922',
@@ -56,7 +68,7 @@ function MyMapComponent({ selectedMapLocation }) {
             newMap.data.forEach(river => console.log(river))
             setMyMap(newMap)
         }
-        buildMap()
+        if (riverDataWithGaugeInfo) { buildMap() }
     }, []);
 
 
