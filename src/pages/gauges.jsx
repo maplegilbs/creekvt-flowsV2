@@ -34,6 +34,11 @@ export default function Gauges() {
     const [sortedRiverData, setSortedRiverData] = useState(null);
     const [isModalActive, setIsModalActive] = useState(false)
 
+    console.log(`River data`, riverData)
+    console.log(`Updated river data`, updatedRiverData)
+    console.log(`Gauge data`, gaugeData)
+    console.log(`Sorted river data`, sortedRiverData)
+
     useEffect(() => {
         async function fetchGauges() {
             try {

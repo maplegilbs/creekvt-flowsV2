@@ -7,8 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faForwardStep, faBackwardStep, faPause } from "@fortawesome/free-solid-svg-icons";
 //Libraries
 import { formatDateTime } from "../utils/formatDateTime";
+import { primaryMapStyles } from "../utils/mapStylingOptions";
 //Styles
-import styles from "./rainMap.module.scss"
+import styles from "./dynamicMap.module.scss"
 
 function MyMapComponent({ selectedMapLocation }) {
     const [myMap, setMyMap] = useState();
@@ -26,83 +27,7 @@ function MyMapComponent({ selectedMapLocation }) {
                 mapTypeId: "terrain",
                 streetViewControl: false,
                 mapTypeControl: false,
-                styles: [{
-                    "featureType": "poi",
-                    // "elementType": "labels",
-                    "stylers": [
-                        {
-                            "visibility": "off"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "road",
-                    "elementType": "labels",
-                    "stylers": [
-                        {
-                            "visibility": "off"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "road",
-                    "elementType": "geometry",
-                    "stylers": [
-                        {
-                            "weight": .35,
-                        }
-                    ]
-                },
-                {
-                    "featureType": "administrative.locality",
-                    "stylers": [
-                        {
-                            "visibility": "off"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "administrative.province",
-                    "elementType": "labels",
-                    "stylers": [
-                        {
-                            "visibility": "off"
-                        }
-                    ]
-                },
-                {
-                    "featureType": "landscape",
-                    "stylers": [
-                        {
-                            "visibility": "off"
-                        }
-                    ]
-                },
-                {
-                    featureType: 'administrative.province',
-                    elementType: 'geometry.stroke',
-                    stylers: [
-                        { color: '#333333' },
-                        { weight: 2 }
-                    ]
-                },
-                {
-                    featureType: 'administrative.country',
-                    elementType: 'geometry.stroke',
-                    stylers: [
-                        { color: '#333333' },
-                        { weight: 2 }
-                    ]
-                },
-                {
-                    featureType: 'water',
-                    elementType: 'geometry.fill',
-                    stylers: [
-                    //   { color: '#0088ff' } // Set your desired water fill color
-                      { color: '#4682b4' } // Set your desired water fill color
-                    ]
-                  }
-                ]
+                styles: primaryMapStyles
             });
 
             let riverResposne = await fetch("https://creekvt.com/FlowsPageAssets/all_rivers_colorless.geojson")
