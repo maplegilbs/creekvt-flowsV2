@@ -1,23 +1,20 @@
+//Compontents
+import Loader from "./loader";
 //Contexts
 import { RiverDataWithGaugeInfoContext } from "../pages/innerLayout";
 //Google maps
 import { Wrapper } from "@googlemaps/react-wrapper";
 //Hooks
 import { useContext, useState, useEffect, useRef } from "react";
-//Icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //Libraries
 import { primaryMapStyles } from "../utils/mapStylingOptions";
 //Styles
 import styles from "./dynamicMap.module.scss"
-import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
 
-function MyMapComponent({ selectedMapLocation }) {
-    const riverDataWithGaugeInfo = useContext(RiverDataWithGaugeInfoContext).updatedRiverData;
+function MapComponent({ }) {
+    const { gaugeFetchAndMergeStatus, mergedRiverData } = useContext(RiverDataWithGaugeInfoContext);
     const [myMap, setMyMap] = useState();
     const mapRef = useRef();
-
-    console.log(riverDataWithGaugeInfo)
 
 
     useEffect(() => {
@@ -36,8 +33,7 @@ function MyMapComponent({ selectedMapLocation }) {
             let riverJSON = await riverResposne.json();
             await newMap.data.addGeoJson(riverJSON)
             newMap.data.forEach(river => {
-                let foundRiver = riverDataWithGaugeInfo.find(compareRiver => {
-                    console.log(river.getProperty("Name"), compareRiver.name)
+                let foundRiver = mergedRiverData.find(compareRiver => {
                     return compareRiver.name === river.getProperty("Name")
                 })
                 if (foundRiver) {
@@ -51,7 +47,6 @@ function MyMapComponent({ selectedMapLocation }) {
                 // if (feature.Fg["Class"].match(/^III[\+\-]?$/)) {
                 if (feature.Fg["Level status"] === "running") {
                     return {
-                        // strokeColor: '#222299',
                         strokeColor: '#009922',
                         strokeWeight: 7,
                         strokeOpacity: 1
@@ -65,11 +60,10 @@ function MyMapComponent({ selectedMapLocation }) {
                     }
                 }
             })
-            newMap.data.forEach(river => console.log(river))
             setMyMap(newMap)
         }
-        if (riverDataWithGaugeInfo) { buildMap() }
-    }, []);
+        if (mergedRiverData) { console.log('building map'); buildMap() }
+    }, [mergedRiverData]);
 
 
 
@@ -77,10 +71,17 @@ function MyMapComponent({ selectedMapLocation }) {
         <div className={`${styles["inner__container"]}`}>
             <h2 className={`${styles["section__header"]}`}>Test Map</h2>
             <hr />
-            <div className={`${styles["map__container"]}`}>
-
-                <div className={`${styles["map"]}`} ref={mapRef} id="map"></div>
-            </div>
+            {gaugeFetchAndMergeStatus !== "error" &&
+                <div className={`${styles["map__container"]}`}>
+                    {!mergedRiverData && <Loader type="spinner" />}
+                    {mergedRiverData &&
+                        <div className={`${styles["map"]}`} ref={mapRef} id="map"></div>
+                    }
+                </div>
+            }
+            {gaugeFetchAndMergeStatus === "error" &&
+                <p>Error Building Map</p>
+            }
         </div>
     )
 }
@@ -89,10 +90,12 @@ function MyMapComponent({ selectedMapLocation }) {
 export default function TestMap() {
 
     return (
-        <div className={`${styles["component__container"]}`}>
-            <Wrapper apiKey={"AIzaSyBBtqHKDrsiMp-7ldVkI6QEMoxjzggJ-J8"}>
-                <MyMapComponent />
-            </Wrapper>
-        </div>
+        <>
+            <div className={`${styles["component__container"]}`}>
+                <Wrapper apiKey={"AIzaSyBBtqHKDrsiMp-7ldVkI6QEMoxjzggJ-J8"}>
+                    <MapComponent />
+                </Wrapper>
+            </div>
+        </>
     )
 }

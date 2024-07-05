@@ -51,7 +51,6 @@ const router = createBrowserRouter([
           element: <Rainfall />
         },
         {path: "visuals",
-          // element: <Visuals />,
           children: [
             {path: "",
               element: <Visuals initialState={'form'}/>

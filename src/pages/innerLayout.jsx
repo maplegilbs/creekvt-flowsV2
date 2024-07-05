@@ -1,5 +1,5 @@
 //Components
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom"
+import { NavLink, Outlet, useLocation } from "react-router-dom"
 //Hooks
 import { createContext, useEffect, useState } from "react";
 //Libraries
@@ -9,16 +9,19 @@ import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
 
 //Styles
 import styles from "../styles/innerLayout.module.scss"
-import Loader from "../components/loader";
 //Contexts
 export const RiverContext = createContext();
 export const RiverDataWithGaugeInfoContext = createContext();
 
+//Inner layout controls the data fetched from the rivers database, as well as the gauge data fetched from USGS
+//Additionally it combines these into one object correlating the gauge data to the rivers
+//If any of the above steps fail, set the gaugeFetchAndMergeStatus to error
 export default function InnerLayout() {
-    const [status, setStatus] = useState("pending") //pending, success or error
     const [riverData, setRiverData] = useState(null);
+    const [riverDataStatus, setRiverDataStatus] = useState('pending') ///pending, success or error - for fetching of river data
     const [gaugeData, setGaugeData] = useState(null);
-    const [updatedRiverData, setUpdatedRiverData] = useState(null);
+    const [mergedRiverData, setMergedRiverData] = useState(null);
+    const [gaugeFetchAndMergeStatus, setGaugeFetchAndMergeStatus] = useState("pending") //pending, success or error - for fetching and merging of guage data
     let curPath = useLocation();
 
     useEffect(() => {
@@ -33,14 +36,14 @@ export default function InnerLayout() {
                 setRiverData(riversDBData);
             } catch (error) {
                 console.log(`There was an error fetching gauge data: ${error}`)
-                setStatus('error')
+                setGaugeFetchAndMergeStatus('error')
+                setRiverDataStatus('error')
             }
         }
         fetchRiverInfo();
     }, [])
 
 
-    //! fetch gauge data and merge with river data to build updatedRiverData - if that doesn't work set status to error
     useEffect(() => {
         async function fetchGauges() {
             try {
@@ -54,19 +57,17 @@ export default function InnerLayout() {
                 setGaugeData(usgsData.value.timeSeries)
             } catch (error) {
                 console.log(`There was an error fetching gauge data: ${error}`)
-                setStatus('error')
+                setGaugeFetchAndMergeStatus('error')
             }
         }
         fetchGauges();
     }, [])
 
     useEffect(() => {
-        if (riverData && gaugeData) {
-            let updatedData = updateRiverGaugeObj(riverData, gaugeData);
-            setUpdatedRiverData(updatedData);
-            setTimeout(() => setStatus('success'), 2000);
-        }
-    }, [riverData, gaugeData])
+        if (riverData) { setRiverDataStatus("success") }
+        if (riverData && gaugeData && !mergedRiverData) {setMergedRiverData(updateRiverGaugeObj(riverData, gaugeData)) }
+        if (mergedRiverData) {setTimeout(() => setGaugeFetchAndMergeStatus('success'), 2000); }
+    }, [riverData, gaugeData, mergedRiverData])
 
     return (
         <div className={`${styles['page-wrapper']}`}>
@@ -88,11 +89,10 @@ export default function InnerLayout() {
                     </ul>
                 </nav>
             </div>
-            <RiverDataWithGaugeInfoContext.Provider value={{ updatedRiverData, status }}>
-                <RiverContext.Provider value={{ riverData, status }}>
+            <RiverDataWithGaugeInfoContext.Provider value={{ mergedRiverData, gaugeFetchAndMergeStatus }}>
+                <RiverContext.Provider value={{ riverData, riverDataStatus }}>
                     <div className={`${styles['content-container']}`}>
-                        {status === 'pending' && <Loader type="rain" />}
-                        {status === 'success' && <Outlet />}
+                        <Outlet />
                     </div>
                 </RiverContext.Provider>
             </RiverDataWithGaugeInfoContext.Provider>

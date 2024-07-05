@@ -27,17 +27,15 @@ function GaugeInstructions({setIsModalActive}) {
 }
 
 export default function Gauges() {
-    const riverData = useContext(RiverContext).riverData;
-    const updatedRiverData = useContext(RiverDataWithGaugeInfoContext).updatedRiverData;
-    const status = useContext(RiverDataWithGaugeInfoContext).status;
+    const {mergedRiverData, gaugeFetchAndMergeStatus} = useContext(RiverDataWithGaugeInfoContext);
     const [sortedBy, setSortedBy] = useState('curLevel'); //riverName, curLevel, difficulty, location, quality
     const [sortedRiverData, setSortedRiverData] = useState(null);
     const [isModalActive, setIsModalActive] = useState(false)
     
 
     useEffect(() => {
-        if (updatedRiverData) {
-            let tempSort = [...updatedRiverData];
+        if (mergedRiverData) {
+            let tempSort = [...mergedRiverData];
             if (sortedBy === 'riverName') { tempSort.sort((a, b) => a.name > b.name ? 1 : -1) }
             if (sortedBy === 'curLevel') { sortByLevel(tempSort) }
             if (sortedBy === 'difficulty') { sortByDifficulty(tempSort) }
@@ -47,7 +45,7 @@ export default function Gauges() {
             setSortedRiverData(tempSort)
         }
 
-    }, [updatedRiverData, sortedBy])
+    }, [mergedRiverData, sortedBy])
 
 
 
@@ -56,7 +54,7 @@ export default function Gauges() {
             {isModalActive &&
                 <GaugeInstructions setIsModalActive={setIsModalActive}/>
             }
-            {status === "success" &&
+            {gaugeFetchAndMergeStatus === "success" &&
                 <div className={`${styles["info__container"]}`}>
                     <GaugesSortBar setSortedBy={setSortedBy} setIsModalActive={setIsModalActive} />
                     {sortedBy === 'changePerHr' &&
@@ -93,13 +91,13 @@ export default function Gauges() {
                 </div>
             }
             {
-                status === "pending" &&
+                gaugeFetchAndMergeStatus === "pending" &&
                 <div>
                     <Loader type={'rain'} bottom_text={"Loading Gauges"} />
                 </div>
             }
             {
-                status === "error" &&
+                gaugeFetchAndMergeStatus === "error" &&
                 <div>
                     <Loader type={'rain'} bottom_text={"Loading Gauges ERROR"} />
                 </div>
