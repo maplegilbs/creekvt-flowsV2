@@ -3,7 +3,6 @@ import Loader from "../components/loader";
 import RiverFlowRow from "../components/riverFlowRow";
 import GaugesSortBar from "../components/gaugesSortBar";
 //Contexts
-import { RiverContext } from "./innerLayout";
 import { RiverDataWithGaugeInfoContext } from "./innerLayout";
 //Hooks
 import { useContext, useEffect, useState } from "react";
@@ -11,9 +10,7 @@ import { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 //Libraries
-import { formatUSGSDateTimeQueryString } from "../utils/formatDateTime";
 import { sortByChange, sortByDifficulty, sortByLevel, sortByLocation, sortByQuality } from "../utils/sortingFunctions";
-import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
 //Styles
 import styles from "./gauges.module.scss";
 
