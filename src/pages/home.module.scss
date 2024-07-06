@@ -38,6 +38,44 @@
             @include gv.sectionHRTheme;
             width: 50%;
         }
+
+
+        .legend{
+            margin-left: 2%;
+            display: flex;
+            // flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .legend-item{
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+        
+            p{
+                margin: 0 .5rem;
+            }
+
+        }
+
+        .running-line{
+            height: .6rem;
+            width: 1.5rem;
+            border: 2px solid black;
+            background-color: #00cc33;
+        }
+
+        .low-line{
+            height: .4rem;
+            width: 1.5rem;
+            background-color: #996633;
+        }
+
+        .high-line{
+            height: .5rem;
+            width: 1.5rem;
+            background-color: #990011;
+        }
     }
 }
 

@@ -20,11 +20,25 @@ export default function Home() {
                         <h2>What's Running?</h2>
                         <div className={`${styles["toggler__container"]}`}>
                             <label>Map</label>
-                            <Slider_Toggler istoggled={isMapToggled} setIsToggled={setIsMapToggled} />
+                            <Slider_Toggler istoggled={!isMapToggled} setIsToggled={setIsMapToggled} />
                             <label>Table</label>
                         </div>
                     </header>
                     <hr />
+                    <div className={`${styles["legend"]}`}>
+                        <div className={`${styles["legend-item"]}`}>
+                            <div className={`${styles["running-line"]}`}></div>
+                            <p>Running</p>
+                        </div>
+                        <div className={`${styles["legend-item"]}`}>
+                            <div className={`${styles["high-line"]}`}></div>
+                            <p>Too High</p>
+                        </div>
+                        <div className={`${styles["legend-item"]}`}>
+                            <div className={`${styles["low-line"]}`}></div>
+                            <p>Too Low</p>
+                        </div>
+                    </div>
                     <div className={`${styles["inner__container-card"]} ${!isMapToggled ? styles["map-flipped"] : ""}`}>
                         <HomeMap />
                     </div>

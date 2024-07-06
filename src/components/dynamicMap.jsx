@@ -29,9 +29,17 @@ function MapComponent({ }) {
                 styles: primaryMapStyles
             });
 
-            let riverResposne = await fetch("https://creekvt.com/FlowsPageAssets/all_rivers_colorless.geojson")
-            let riverJSON = await riverResposne.json();
+            let riverResponse = await fetch("https://creekvt.com/FlowsPageAssets/all_rivers_colorless.geojson")
+            let riverJSON = await riverResponse.json();
             await newMap.data.addGeoJson(riverJSON)
+            newMap.data.forEach(river => {river.setProperty("z-index", 0)})
+            const southWest = { lat: 42.72283693380878, lng: -73.31855248696228 }
+            const northEast = { lat: 45.02480931272919, lng: -71.65120773372199 }
+            const bounds = new window.google.maps.LatLngBounds(southWest, northEast)
+
+            let riverResponse2 = await fetch("https://creekvt.com/FlowsPageAssets/all_rivers_colorless.geojson")
+            let riverJSON2 = await riverResponse2.json();
+            await newMap.data.addGeoJson(riverJSON2)
             newMap.data.forEach(river => {
                 let foundRiver = mergedRiverData.find(compareRiver => {
                     return compareRiver.name === river.getProperty("Name")
@@ -45,24 +53,35 @@ function MapComponent({ }) {
                 // if (feature.Fg["Class"].match(/^V[\+\-]?$/)) {
                 // if (feature.Fg["Class"].match(/^IV[\+\-]?$/)) {
                 // if (feature.Fg["Class"].match(/^III[\+\-]?$/)) {
-                if (feature.Fg["Level status"] === "running") {
+                if (feature.Fg["Level status"] === "running" && feature.Fg["z-index"] === 0 ) {
                     return {
-                        strokeColor: '#008822',
-                        strokeWeight: 5,
+                        strokeColor: '#000000',
+                        strokeWeight: 7,
                         strokeOpacity: 1
+                    }
+                }
+                if (feature.Fg["Level status"] === "running" && feature.Fg["z-index"] !== 0) {
+                    return {
+                        strokeColor: '#00cc33',
+                        strokeWeight: 4,
+                        strokeOpacity: 1
+                    }
+                }
+                else if(feature.Fg["Level status"] === "too high"){
+                    return {
+                        strokeColor: '#990011',
+                        strokeWeight: 4.5,
+                        strokeOpacity: .85
                     }
                 }
                 else {
                     return {
                         strokeColor: '#996633',
-                        strokeWeight: 3.25,
+                        strokeWeight: 3.5,
                         strokeOpacity: .85
                     }
                 }
             })
-            const southWest = { lat: 42.72283693380878, lng: -73.31855248696228 }
-            const northEast = { lat: 45.02480931272919, lng: -71.65120773372199 }
-            const bounds = new window.google.maps.LatLngBounds(southWest, northEast)
             newMap.fitBounds(bounds)
             setMyMap(newMap)
         }
