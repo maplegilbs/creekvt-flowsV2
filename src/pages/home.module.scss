@@ -1,0 +1,62 @@
+@use '../styles/global_variables.scss' as gv;
+
+.page__container {
+    @include gv.pageContainerTheme();
+
+    .inner__container {
+        border-radius: 5px;
+        padding: 1rem 2%;
+        position: static;
+        background-color: white;
+        min-height: 100vh;
+
+        .section__header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            h2{
+                @include gv.innerSectionHeaderTheme;
+                margin: 0;
+            }
+
+            .toggler__container{
+                margin-left: auto;
+                margin-right: 4%;
+                
+                label{
+                font-family: gv.$primary-headers;
+                font-weight: 700;
+                font-size: .8rem;
+                }
+            }
+
+
+        }
+
+        hr {
+            @include gv.sectionHRTheme;
+            width: 50%;
+        }
+    }
+}
+
+.inner__container-card {
+    width: 100%;
+    height: max-content;
+}
+
+
+
+.map-flipped {
+    transform: rotateY(180deg);
+}
+
+.table-flipped {
+    height: 100%;
+    transform: rotateY(0deg);
+}
+
+
+
+@media screen and (min-width: 640px) {}

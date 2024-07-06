@@ -10,13 +10,10 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { primaryMapStyles } from "../utils/mapStylingOptions";
 //Styles
 import styles from "./dynamicMap.module.scss"
-import Slider_Toggler from "./toggler";
-import Gauges from "../pages/gauges";
 
 function MapComponent({ }) {
     const { gaugeFetchAndMergeStatus, mergedRiverData } = useContext(RiverDataWithGaugeInfoContext);
     const [myMap, setMyMap] = useState();
-    const [isMapToggled, setIsMapToggled] = useState(true)
     const mapRef = useRef();
 
 
@@ -24,7 +21,6 @@ function MapComponent({ }) {
     useEffect(() => {
         const buildMap = async () => {
             const newMap = new window.google.maps.Map(mapRef.current, {
-                // center: { lat: 44, lng: -72.55 },
                 zoom: 7.75,
                 isFractionalZoomEnabled: true,
                 mapTypeId: "terrain",
@@ -51,8 +47,8 @@ function MapComponent({ }) {
                 // if (feature.Fg["Class"].match(/^III[\+\-]?$/)) {
                 if (feature.Fg["Level status"] === "running") {
                     return {
-                        strokeColor: '#009922',
-                        strokeWeight: 7,
+                        strokeColor: '#008822',
+                        strokeWeight: 5,
                         strokeOpacity: 1
                     }
                 }
@@ -64,8 +60,8 @@ function MapComponent({ }) {
                     }
                 }
             })
-            const southWest = { lat: 42.72283693380878, lng: -73.43855248696228 }
-            const northEast = { lat: 45.02480931272919, lng: -71.45120773372199 }
+            const southWest = { lat: 42.72283693380878, lng: -73.31855248696228 }
+            const northEast = { lat: 45.02480931272919, lng: -71.65120773372199 }
             const bounds = new window.google.maps.LatLngBounds(southWest, northEast)
             newMap.fitBounds(bounds)
             setMyMap(newMap)
@@ -76,38 +72,30 @@ function MapComponent({ }) {
 
 
     return (
-        <div className={`${styles["inner__container"]}`}>
-            <h2 className={`${styles["section__header"]}`}>Test Map</h2>
-            <Slider_Toggler istoggled={isMapToggled} setIsToggled={setIsMapToggled} />
-            <hr />
+        <>
             {gaugeFetchAndMergeStatus !== "error" &&
                 <div className={`${styles["map__container"]}`}>
                     {!mergedRiverData && <Loader type="spinner" loader_text="Loading Map & Gauge Info" />}
                     {mergedRiverData &&
-                        <div className={`${styles["inner__container-card"]}`}>
-                            <div className={`${styles["map"]} ${!isMapToggled? styles["map-flipped"]: ""}`} ref={mapRef} id="map"></div>
-                            <div className={`${styles["table"]} ${!isMapToggled? styles["table-flipped"]: ""}`}><Gauges /></div>
-                        </div>
+                        <div className={`${styles["map"]}`} ref={mapRef} id="map"></div>
                     }
                 </div>
             }
             {gaugeFetchAndMergeStatus === "error" &&
                 <p>Error Building Map</p>
             }
-        </div>
+        </>
     )
 }
 
 
-export default function TestMap() {
+export default function HomeMap() {
 
     return (
-        <>
-            <div className={`${styles["component__container"]}`}>
-                <Wrapper apiKey={"AIzaSyBBtqHKDrsiMp-7ldVkI6QEMoxjzggJ-J8"}>
-                    <MapComponent />
-                </Wrapper>
-            </div>
-        </>
+        <div className={`${styles["component__container"]}`}>
+            <Wrapper apiKey={"AIzaSyBBtqHKDrsiMp-7ldVkI6QEMoxjzggJ-J8"}>
+                <MapComponent />
+            </Wrapper>
+        </div>
     )
 }

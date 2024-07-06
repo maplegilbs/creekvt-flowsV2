@@ -1,5 +1,3 @@
-//Components
-import TestMap from './components/dynamicMap';
 //Hooks
 import { createBrowserRouter, RouterProvider, useRouteError } from 'react-router-dom';
 //Pages
@@ -9,6 +7,7 @@ import InnerLayout from './pages/innerLayout';
 import Layout from './pages/layout';
 import Rainfall from './pages/rain';
 import Visuals from './pages/visuals';
+import Home from './pages/home';
 //Styles
 import "./App.css"
 
@@ -39,7 +38,7 @@ const router = createBrowserRouter([
       element: <InnerLayout />,
       children: [
         {path: "",
-          element: <TestMap/>
+          element: <Home />
         },
         {path: "forecasts",
           element: <Forecasts />
