@@ -7,6 +7,7 @@ import { RiverDataWithGaugeInfoContext } from "../pages/innerLayout";
 import { useContext, useState, useEffect, useRef } from "react";
 //Styles
 import styles from "./home.module.scss"
+import HomeGaugesTable from "../components/homeGaugeTable";
 
 
 export default function Home() {
@@ -25,8 +26,13 @@ export default function Home() {
                         </div>
                     </header>
                     <hr />
-                    <div className={`${styles["inner__container-card"]} ${!isMapToggled ? styles["map-flipped"] : ""}`}>
-                        <HomeMap />
+                    <div className={`${styles["card__container"]}`}>
+                        <div className={`${styles["inner__container-card"]} ${styles["map__container"]} ${!isMapToggled ? styles["map-flipped"] : ""}`}>
+                            <HomeMap />
+                        </div>
+                        <div className={`${styles["inner__container-card"]} ${styles["table__container"]} ${!isMapToggled ? styles["table-flipped"] : ""}`}>
+                            <HomeGaugesTable />
+                        </div>
                     </div>
                 </div>
             </div>
