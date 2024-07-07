@@ -32,7 +32,7 @@ function MapComponent({ }) {
             let riverResponse = await fetch("https://creekvt.com/FlowsPageAssets/all_rivers_colorless.geojson")
             let riverJSON = await riverResponse.json();
             await newMap.data.addGeoJson(riverJSON)
-            newMap.data.forEach(river => {river.setProperty("z-index", 0)})
+            newMap.data.forEach(river => { river.setProperty("z-index", 0) })
             const southWest = { lat: 42.72283693380878, lng: -73.31855248696228 }
             const northEast = { lat: 45.02480931272919, lng: -71.65120773372199 }
             const bounds = new window.google.maps.LatLngBounds(southWest, northEast)
@@ -53,7 +53,7 @@ function MapComponent({ }) {
                 // if (feature.Fg["Class"].match(/^V[\+\-]?$/)) {
                 // if (feature.Fg["Class"].match(/^IV[\+\-]?$/)) {
                 // if (feature.Fg["Class"].match(/^III[\+\-]?$/)) {
-                if (feature.Fg["Level status"] === "running" && feature.Fg["z-index"] === 0 ) {
+                if (feature.Fg["Level status"] === "running" && feature.Fg["z-index"] === 0) {
                     return {
                         strokeColor: '#000000',
                         strokeWeight: 7,
@@ -67,7 +67,7 @@ function MapComponent({ }) {
                         strokeOpacity: 1
                     }
                 }
-                else if(feature.Fg["Level status"] === "too high"){
+                else if (feature.Fg["Level status"] === "too high") {
                     return {
                         strokeColor: '#990011',
                         strokeWeight: 4.5,
@@ -96,7 +96,24 @@ function MapComponent({ }) {
                 <div className={`${styles["map__container"]}`}>
                     {!mergedRiverData && <Loader type="spinner" loader_text="Loading Map & Gauge Info" />}
                     {mergedRiverData &&
-                        <div className={`${styles["map"]}`} ref={mapRef} id="map"></div>
+                        <>
+                            <div className={`${styles["map"]}`} ref={mapRef} id="map">
+                            </div>
+                            <div className={`${styles["legend"]}`}>
+                                <div className={`${styles["legend-item"]}`}>
+                                    <div className={`${styles["running-line"]}`}></div>
+                                    <p>Running</p>
+                                </div>
+                                <div className={`${styles["legend-item"]}`}>
+                                    <div className={`${styles["high-line"]}`}></div>
+                                    <p>Too High</p>
+                                </div>
+                                <div className={`${styles["legend-item"]}`}>
+                                    <div className={`${styles["low-line"]}`}></div>
+                                    <p>Too Low</p>
+                                </div>
+                            </div>
+                        </>
                     }
                 </div>
             }

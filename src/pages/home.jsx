@@ -25,20 +25,6 @@ export default function Home() {
                         </div>
                     </header>
                     <hr />
-                    <div className={`${styles["legend"]}`}>
-                        <div className={`${styles["legend-item"]}`}>
-                            <div className={`${styles["running-line"]}`}></div>
-                            <p>Running</p>
-                        </div>
-                        <div className={`${styles["legend-item"]}`}>
-                            <div className={`${styles["high-line"]}`}></div>
-                            <p>Too High</p>
-                        </div>
-                        <div className={`${styles["legend-item"]}`}>
-                            <div className={`${styles["low-line"]}`}></div>
-                            <p>Too Low</p>
-                        </div>
-                    </div>
                     <div className={`${styles["inner__container-card"]} ${!isMapToggled ? styles["map-flipped"] : ""}`}>
                         <HomeMap />
                     </div>
