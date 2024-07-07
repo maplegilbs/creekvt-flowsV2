@@ -53,7 +53,7 @@ function MapComponent({ }) {
                 // if (feature.Fg["Class"].match(/^V[\+\-]?$/)) {
                 // if (feature.Fg["Class"].match(/^IV[\+\-]?$/)) {
                 // if (feature.Fg["Class"].match(/^III[\+\-]?$/)) {
-                if (feature.Fg["Level status"] === "running" && feature.Fg["z-index"] === 0) {
+                if (["running", "too high"].includes(feature.Fg["Level status"]) && feature.Fg["z-index"] === 0) {
                     return {
                         strokeColor: '#000000',
                         strokeWeight: 7,
@@ -67,17 +67,17 @@ function MapComponent({ }) {
                         strokeOpacity: 1
                     }
                 }
-                else if (feature.Fg["Level status"] === "too high") {
+                else if (feature.Fg["Level status"] === "too high" && feature.Fg["z-index"] !== 0) {
                     return {
-                        strokeColor: '#990011',
+                        strokeColor: '#ff0033',
                         strokeWeight: 4.5,
                         strokeOpacity: .85
                     }
                 }
                 else {
                     return {
-                        strokeColor: '#996633',
-                        strokeWeight: 3.5,
+                        strokeColor: '#aa6633',
+                        strokeWeight: 2.5,
                         strokeOpacity: .85
                     }
                 }

@@ -39,22 +39,24 @@
         }
 
         .running-line {
-            height: .5rem;
+            height: .4rem;
             width: 1.5rem;
             border: 2px solid black;
             background-color: #00cc33;
         }
-
+        
         .low-line {
-            height: .3rem;
+            height: .4rem;
             width: 1.5rem;
-            background-color: #996633;
+            border: 2px solid black;
+            background-color: #aa6633;
         }
-
+        
         .high-line {
             height: .4rem;
             width: 1.5rem;
-            background-color: #990011;
+            border: 2px solid black;
+            background-color: #ff0033;
         }
 
     }
@@ -86,11 +88,11 @@
             }
 
             .running-line {
-                height: .6rem;
+                height: .5rem;
             }
 
             .low-line {
-                height: .4rem;
+                height: .5rem;
             }
 
             .high-line {

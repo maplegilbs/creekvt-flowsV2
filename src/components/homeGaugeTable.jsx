@@ -9,6 +9,8 @@ import { useContext, useEffect, useState } from "react";
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
+//Libraries
+import { sortByRunning } from "../utils/sortingFunctions";
 //Styles
 import styles from "../pages/gauges.module.scss";
 
@@ -21,11 +23,17 @@ function GaugeInstructions({ setIsModalActive }) {
     )
 }
 
+function filterGauges(river, index) {
+    return (
+        Object.keys(river).includes("text") ?
+            <tr className={`${styles["sort-header"]}`} style={{ background: `${river.color}` }}><td colSpan={"100%"}>{river.text}</td></tr> :
+            <RiverFlowRow river={river} index={index} />
+    )
+}
+
 export default function HomeGaugesTable() {
     const { mergedRiverData, gaugeFetchAndMergeStatus } = useContext(RiverDataWithGaugeInfoContext);
     const [isModalActive, setIsModalActive] = useState(false)
-
-
 
 
     return (
@@ -54,13 +62,7 @@ export default function HomeGaugesTable() {
                         </thead>
                         <tbody>
                             {mergedRiverData &&
-                                mergedRiverData.map((river, index) => {
-                                    return (
-                                        Object.keys(river).includes("text") ?
-                                            <tr className={`${styles["sort-header"]}`} style={{ background: `${river.color}` }}><td colSpan={"100%"}>{river.text}</td></tr> :
-                                            <RiverFlowRow river={river} index={index} />
-                                    )
-                                })
+                                sortByRunning(mergedRiverData).map(filterGauges)
                             }
                         </tbody>
                     </table>
