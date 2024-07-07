@@ -53,14 +53,15 @@ export default function HomeGaugesTable() {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {sortedRiverData && sortedRiverData.map((river, index) => {
-                                return (
-                                    Object.keys(river).includes("text") ?
-                                        <tr className={`${styles["sort-header"]}`} style={{ background: `${river.color}` }}><td colSpan={"100%"}>{river.text}</td></tr> :
-                                        <RiverFlowRow river={river} index={index} />
-                                )
-                            })
-                            } */}
+                            {mergedRiverData &&
+                                mergedRiverData.map((river, index) => {
+                                    return (
+                                        Object.keys(river).includes("text") ?
+                                            <tr className={`${styles["sort-header"]}`} style={{ background: `${river.color}` }}><td colSpan={"100%"}>{river.text}</td></tr> :
+                                            <RiverFlowRow river={river} index={index} />
+                                    )
+                                })
+                            }
                         </tbody>
                     </table>
                 </div>
