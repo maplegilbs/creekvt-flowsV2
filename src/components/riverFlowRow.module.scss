@@ -91,6 +91,11 @@ tr.flow__table-row {
             a {
                 font-size: 1rem;
             }
+
+        }
+
+        .gauge-reading {
+            font-size: 1.5rem;
         }
 
         span {
@@ -133,9 +138,6 @@ tr.flow__table-row {
     }
 
 
-    .mobile-show {
-        display: none;
-    }
 
     hr {
         width: 50%;
@@ -161,6 +163,7 @@ tr.flow__table-row {
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
+            font-size: 1.5rem;
         }
 
         .curLvl {
@@ -174,6 +177,9 @@ tr.flow__table-row {
 
     }
 
+    .mobile-show {
+        display: none;
+    }
 
 
     .level,
@@ -193,7 +199,7 @@ tr.flow__table-row {
         .mobile-hide {
             display: none;
         }
-        
+
         .mobile-show {
             display: initial;
         }
@@ -222,6 +228,16 @@ tr.flow__table-row {
                     margin-top: 12px;
                 }
             }
+
+            span{
+                margin-top: 5px;
+            }
+
+            .river__heading {
+                a {
+                    font-size: 1.05rem;
+                }
+            }
         }
 
 
@@ -234,6 +250,14 @@ tr.flow__table-row {
 
             .levelInfo {
                 font-size: 1.15rem;
+
+                &.mobile-hide {
+                    visibility: hidden;
+                }
+
+                &.mobile-show {
+                    display: initial;
+                }
             }
         }
 

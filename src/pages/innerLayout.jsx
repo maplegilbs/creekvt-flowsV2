@@ -2,11 +2,12 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom"
 //Hooks
 import { createContext, useEffect, useState } from "react";
-//Libraries
+//Icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 //Libraries
 import { formatUSGSDateTimeQueryString } from "../utils/formatDateTime";
 import { updateRiverGaugeObj } from "../utils/updateRiverGaugeObj";
-
 //Styles
 import styles from "../styles/innerLayout.module.scss"
 //Contexts
@@ -69,13 +70,19 @@ export default function InnerLayout() {
         if (mergedRiverData) {setTimeout(() => setGaugeFetchAndMergeStatus('success'), 2000); }
     }, [riverData, gaugeData, mergedRiverData])
 
+    console.log(curPath.pathname)
+
     return (
         <div className={`${styles['page-wrapper']}`}>
             <div className={`${styles['nav-container']}`}>
                 <nav>
                     <ul>
+                        <li className={curPath.pathname.slice(-1) === "/" ? `${styles['active']}` : ""}>
+                            <NavLink to="./"><FontAwesomeIcon icon={faHouse} /></NavLink>
+                        </li>
                         <li className={curPath.pathname.includes('gauges') ? `${styles['active']}` : ""}>
                             <NavLink to="./gauges">Gauges</NavLink>
+                            {/* <NavLink to="./gauges"><FontAwesomeIcon icon={faRulerVertical} /></NavLink> */}
                         </li>
                         <li className={curPath.pathname.includes('visuals') ? `${styles['active']}` : ""}>
                             <NavLink to="./visuals">Visuals</NavLink>
