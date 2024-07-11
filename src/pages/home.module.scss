@@ -1,0 +1,79 @@
+@use '../styles/global_variables.scss' as gv;
+
+.page__container {
+    @include gv.pageContainerTheme();
+
+    .inner__container {
+        border-radius: 5px;
+        padding: 1rem 2%;
+        position: static;
+        background-color: white;
+        // min-height: 100vh;
+
+        .section__header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            h2 {
+                @include gv.innerSectionHeaderTheme;
+                margin: 0;
+            }
+
+            .toggler__container {
+                margin-left: auto;
+                margin-right: 4%;
+
+                label {
+                    font-family: gv.$primary-headers;
+                    font-weight: 700;
+                    font-size: .8rem;
+                }
+            }
+        }
+
+        hr {
+            @include gv.sectionHRTheme;
+            width: 50%;
+        }
+    }
+
+    .card__container {
+        position: relative;
+
+        .inner__container-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            transition: all 2s ease;
+            -webkit-perspective: 100px;
+            perspective: 100px;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+        
+        .map__container {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        
+        .map-flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .table__container {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transform: rotateY(-180deg);
+        }
+        
+        .table-flipped {
+            transform: rotateY(0deg);
+        }
+    }
+}
+
+
+
+@media screen and (min-width: 640px) {}

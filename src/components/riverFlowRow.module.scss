@@ -78,6 +78,7 @@ tr.flow__table-row {
         padding-top: 1.4rem;
 
         .river__heading {
+            color: black;
             position: absolute;
             display: flex;
             justify-content: space-between;
@@ -188,7 +189,6 @@ tr.flow__table-row {
 
     tr.flow__table-row {
         font-size: .65rem;
-        ;
 
         .mobile-hide {
             display: none;

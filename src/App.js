@@ -1,5 +1,5 @@
-//Components
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+//Hooks
+import { createBrowserRouter, RouterProvider, useRouteError } from 'react-router-dom';
 //Pages
 import Forecasts from './pages/forecasts';
 import Gauges from './pages/gauges';
@@ -7,10 +7,10 @@ import InnerLayout from './pages/innerLayout';
 import Layout from './pages/layout';
 import Rainfall from './pages/rain';
 import Visuals from './pages/visuals';
+import Home from './pages/home';
 //Styles
 import "./App.css"
 
-import { useRouteError } from 'react-router-dom';
 
 const ErrorElement = () => {
   const error = useRouteError();
@@ -37,6 +37,9 @@ const router = createBrowserRouter([
       path: "/flowsV2/",
       element: <InnerLayout />,
       children: [
+        {path: "",
+          element: <Home />
+        },
         {path: "forecasts",
           element: <Forecasts />
         },
@@ -47,7 +50,6 @@ const router = createBrowserRouter([
           element: <Rainfall />
         },
         {path: "visuals",
-          // element: <Visuals />,
           children: [
             {path: "",
               element: <Visuals initialState={'form'}/>
