@@ -123,7 +123,7 @@ export function sortByRunning(sortArray){
         filteredRivers.unshift({ text: "Running", color: "linear-gradient(45deg, rgb(100,155,100) 70%, rgb(80,130,80))" });
     }
     if (filteredRivers.findIndex(riv => riv.levelStatus && riv.levelStatus !== "running") !== -1) {
-        filteredRivers.splice([filteredRivers.findIndex(riv => ["too low", "too high"].includes(riv.levelStatus))], 0, { text: "Coming In", color: "linear-gradient(315deg, #293b46, #4e647b)" });
+        filteredRivers.splice([filteredRivers.findIndex(riv => ["too low", "too high"].includes(riv.levelStatus))], 0, { text: "Coming In - @ Current Trend Will Be Runnable In 2hrs", color: "linear-gradient(315deg, #293b46, #4e647b)" });
     }
     return filteredRivers
 }
