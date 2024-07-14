@@ -112,7 +112,7 @@ export default function CamContainer({ camName, camsInfo }) {
                     }
                 </>
             }
-            <hr/>
+            <hr className={`${styles["cam__hr"]}`}/>
         </div>
     )
 }
