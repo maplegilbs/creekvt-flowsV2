@@ -16,6 +16,7 @@ function MapComponent({ }) {
     const [myMap, setMyMap] = useState();
     const mapRef = useRef();
 
+    console.log(mergedRiverData)
 
 
     useEffect(() => {
@@ -49,6 +50,16 @@ function MapComponent({ }) {
                     river.setProperty("Level status", levelStatus)
                 }
             })
+            newMap.data.addListener('click', (event)=>{
+                let river = event.feature.getProperty("Name");
+                let foundRiver = mergedRiverData.find(compareRiver => compareRiver.name.toLowerCase() === river.toLowerCase());
+                console.log(foundRiver.gauge1Reading)
+                const infoWindow = new window.google.maps.InfoWindow({
+                    content: `${`<h4>${foundRiver.name}</h4><h5>${foundRiver.gauge1Reading}</h5>`}`,
+                    position: event.latLng
+                });
+                infoWindow.open(newMap)
+            })
             newMap.data.setStyle(function (feature) {
                 // if (feature.Fg["Class"].match(/^V[\+\-]?$/)) {
                 // if (feature.Fg["Class"].match(/^IV[\+\-]?$/)) {
@@ -56,28 +67,42 @@ function MapComponent({ }) {
                 if (["running", "too high"].includes(feature.Fg["Level status"]) && feature.Fg["z-index"] === 0) {
                     return {
                         strokeColor: '#000000',
-                        strokeWeight: 7,
+                        strokeWeight: 6.5,
+                        strokeOpacity: 1
+                    }
+                }
+                if ((feature.Fg["Level status"] === "too low" || !feature.Fg["Level status"]) && feature.Fg["z-index"] === 0) {
+                    return {
+                        strokeColor: '#000000',
+                        strokeWeight: 4.5,
                         strokeOpacity: 1
                     }
                 }
                 if (feature.Fg["Level status"] === "running" && feature.Fg["z-index"] !== 0) {
                     return {
                         strokeColor: '#00cc33',
-                        strokeWeight: 4,
+                        strokeWeight: 4.5,
                         strokeOpacity: 1
                     }
                 }
                 else if (feature.Fg["Level status"] === "too high" && feature.Fg["z-index"] !== 0) {
                     return {
                         strokeColor: '#ff0033',
-                        strokeWeight: 4.5,
+                        strokeWeight: 3.5,
                         strokeOpacity: .85
+                    }
+                }
+                else if (feature.Fg["Level status"] === "too low") {
+                    return {
+                        strokeColor: '#cc8855',
+                        strokeWeight: 1.5,
+                        strokeOpacity: 1
                     }
                 }
                 else {
                     return {
-                        strokeColor: '#aa6633',
-                        strokeWeight: 2.5,
+                        strokeColor: '#888888',
+                        strokeWeight: 1.5,
                         strokeOpacity: .85
                     }
                 }
