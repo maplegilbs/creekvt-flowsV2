@@ -14,7 +14,6 @@ export default function VisualCams() {
     const [camsInfo, setCamsInfo] = useState(null)
     const [status, setStatus] = useState('pending') //pending, success, failure
 
-    console.log(camsInfo)
 
     useEffect(() => {
         async function getCamsInfo() {
@@ -43,7 +42,7 @@ export default function VisualCams() {
                     Issues with these images? Contact us at <a href="mailto:gopaddling@creekvt.com">gopaddling@creekvt.com</a>
                 </p>
                 {camsInfo &&
-                    <>{camsInfo.map(cam => <CamContainer camsInfo={camsInfo} camName={cam.riverName} />)}                </>
+                    <>{camsInfo.sort((cam1, cam2) => cam1.riverName > cam2.riverName? 1 : -1).map(cam => <CamContainer camsInfo={camsInfo} camName={cam.riverName} />)}                </>
                 }
             </div>
         </div>

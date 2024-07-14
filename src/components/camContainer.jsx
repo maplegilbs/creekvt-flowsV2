@@ -2,6 +2,9 @@
 import Loader from "./loader";
 //Hooks
 import { useState, useEffect } from "react";
+//Icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 //Styles
 import styles from "./camContainer.module.scss";
 
@@ -19,12 +22,12 @@ function ImageContainer({ overlayURL, overlayOpacity, imgURL }) {
 //!!handle failure state
 export default function CamContainer({ camName, camsInfo }) {
     const [status, setStatus] = useState('pending') //pending, success, failure
+    const [isDisplayed, setIsDisplayed] = useState(false);
     const [camInfo, setCamInfo] = useState(null)
     const [imageURLS, setImageURLS] = useState([])
     const [overlayOpacity, setOverlayOpacity] = useState(.5);
     const [overlayURL, setOverlayURL] = useState('')
 
-    console.log(camName, camInfo)
 
     useEffect(() => {
         let matchedCam = camsInfo.find(cam => cam.riverName === camName)
@@ -60,59 +63,61 @@ export default function CamContainer({ camName, camsInfo }) {
             }
             {(status === 'success' && camInfo) &&
                 <>
-                    <h4>{camInfo.riverName}</h4>
-                    <h5>{camInfo.location}</h5>
-                    <div className={`${styles["overlay-controls__container"]}`}>
-                        <h6>Overlay Reference Images</h6>
-                        <div className={`${styles["overlay-radios"]}`}>
-                            {camInfo.refImgMin &&
-                                <div className={`${styles["radio-group"]}`}>
-                                    <label htmlFor={`${camName}refImgMin`}>Min</label>
-                                    <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id={`${camName}refImgMin`} name="refImageRadio" value={`refImgMin`} />
-                                </div>
-                            }
-                            {camInfo.refImgLow &&
-                                <div className={`${styles["radio-group"]}`}>
-                                    <label htmlFor={`${camName}refImgLow`}>Low</label>
-                                    <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id={`${camName}refImgLow`} name="refImageRadio" value={`refImgLow`} />
-                                </div>
-                            }
-                            {camInfo.refImgMed &&
-                                <div className={`${styles["radio-group"]}`}>
-                                    <label htmlFor={`${camName}refImgMed`}>Med</label>
-                                    <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id={`${camName}refImgMed`} name="refImageRadio" value={`refImgMed`} />
-                                </div>
-                            }
-                            {camInfo.refImgHigh &&
-                                <div className={`${styles["radio-group"]}`}>
-                                    <label htmlFor={`${camName}refImgHigh`}>High</label>
-                                    <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id={`${camName}refImgHigh`} name="refImageRadio" value={`refImgHigh`} />
-                                </div>
-                            }
-                            {camInfo.refImgMax &&
-                                <div className={`${styles["radio-group"]}`}>
-                                    <label htmlFor={`${camName}refImgMax`}>Max</label>
-                                    <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id={`${camName}refImgMax`} name="refImageRadio" value={`refImgMax`} />
+                    <h4 onClick={() => setIsDisplayed(prev => !prev)}>{camInfo.riverName}&nbsp;<FontAwesomeIcon icon={faChevronRight} rotation={isDisplayed ? 90 : 0} /></h4>
+                    <div className={`${styles["cam__container"]} ${isDisplayed ? styles["displayed"] : ""}`}>
+                        <h5>{camInfo.location}</h5>
+                        <div className={`${styles["overlay-controls__container"]}`}>
+                            <h6>Overlay Reference Images</h6>
+                            <div className={`${styles["overlay-radios"]}`}>
+                                {camInfo.refImgMin &&
+                                    <div className={`${styles["radio-group"]}`}>
+                                        <label htmlFor={`${camName}refImgMin`}>Min</label>
+                                        <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id={`${camName}refImgMin`} name="refImageRadio" value={`refImgMin`} />
+                                    </div>
+                                }
+                                {camInfo.refImgLow &&
+                                    <div className={`${styles["radio-group"]}`}>
+                                        <label htmlFor={`${camName}refImgLow`}>Low</label>
+                                        <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id={`${camName}refImgLow`} name="refImageRadio" value={`refImgLow`} />
+                                    </div>
+                                }
+                                {camInfo.refImgMed &&
+                                    <div className={`${styles["radio-group"]}`}>
+                                        <label htmlFor={`${camName}refImgMed`}>Med</label>
+                                        <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id={`${camName}refImgMed`} name="refImageRadio" value={`refImgMed`} />
+                                    </div>
+                                }
+                                {camInfo.refImgHigh &&
+                                    <div className={`${styles["radio-group"]}`}>
+                                        <label htmlFor={`${camName}refImgHigh`}>High</label>
+                                        <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id={`${camName}refImgHigh`} name="refImageRadio" value={`refImgHigh`} />
+                                    </div>
+                                }
+                                {camInfo.refImgMax &&
+                                    <div className={`${styles["radio-group"]}`}>
+                                        <label htmlFor={`${camName}refImgMax`}>Max</label>
+                                        <input onClick={(e) => { setOverlayURL(camInfo[e.target.value]) }} type="radio" id={`${camName}refImgMax`} name="refImageRadio" value={`refImgMax`} />
+                                    </div>
+                                }
+                            </div>
+                            {overlayURL &&
+                                <div className={`${styles["slider__container"]}`}>
+                                    <label htmlFor="opacitySlider">Current</label>
+                                    <input className={`${styles["opacity-slider"]}`} name="opacitySlider" id="opacitySlider" onChange={(e) => setOverlayOpacity(e.target.value)} value={overlayOpacity} type="range" min={0} max={1} step={.02} />
+                                    <label htmlFor="opacitySlider">Reference</label>
                                 </div>
                             }
                         </div>
-                        {overlayURL && 
-                        <div className={`${styles["slider__container"]}`}>
-                            <label htmlFor="opacitySlider">Current</label>
-                            <input className={`${styles["opacity-slider"]}`} name="opacitySlider" id="opacitySlider" onChange={(e) => setOverlayOpacity(e.target.value)} value={overlayOpacity} type="range" min={0} max={1} step={.02} />
-                            <label htmlFor="opacitySlider">Reference</label>
-                        </div>
+                        {imageURLS &&
+                            <div className={`${styles["live-images__container"]}`}>
+                                <ImageContainer overlayURL={overlayURL} overlayOpacity={overlayOpacity} imgURL={imageURLS[imageURLS.length - 1]} />
+                                <ImageContainer overlayURL={overlayURL} overlayOpacity={overlayOpacity} imgURL={imageURLS[imageURLS.length - 2]} />
+                            </div>
                         }
                     </div>
-                    {imageURLS &&
-                        <div className={`${styles["live-images__container"]}`}>
-                            <ImageContainer overlayURL={overlayURL} overlayOpacity={overlayOpacity} imgURL={imageURLS[imageURLS.length - 1]} />
-                            <ImageContainer overlayURL={overlayURL} overlayOpacity={overlayOpacity} imgURL={imageURLS[imageURLS.length - 2]} />
-                        </div>
-                    }
                 </>
             }
-            <hr className={`${styles["cam__hr"]}`}/>
+            <hr className={`${styles["cam__hr"]}`} />
         </div>
     )
 }

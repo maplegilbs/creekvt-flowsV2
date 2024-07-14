@@ -2,6 +2,7 @@
 
 .component__container {
     @include gv.componentContainerTheme;
+    
 
     hr {
         @include gv.sectionHRTheme;
