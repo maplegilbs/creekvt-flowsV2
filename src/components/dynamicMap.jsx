@@ -53,7 +53,6 @@ function MapComponent({ }) {
             newMap.data.addListener('click', (event)=>{
                 let river = event.feature.getProperty("Name");
                 let foundRiver = mergedRiverData.find(compareRiver => compareRiver.name.toLowerCase() === river.toLowerCase());
-                console.log(foundRiver.gauge1Reading)
                 const infoWindow = new window.google.maps.InfoWindow({
                     content: `${`<h4>${foundRiver.name}</h4><h5>${foundRiver.gauge1Reading}</h5>`}`,
                     position: event.latLng
