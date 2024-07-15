@@ -50,15 +50,17 @@ function MapComponent({ }) {
                     river.setProperty("Level status", levelStatus)
                 }
             })
-            newMap.data.addListener('click', (event)=>{
+            let openInfoWindow;
+            newMap.data.addListener('mouseover', (event)=>{
                 let river = event.feature.getProperty("Name");
                 let foundRiver = mergedRiverData.find(compareRiver => compareRiver.name.toLowerCase() === river.toLowerCase());
-                const infoWindow = new window.google.maps.InfoWindow({
+                openInfoWindow = new window.google.maps.InfoWindow({
                     content: `${`<h4>${foundRiver.name}</h4><h5>${foundRiver.gauge1Reading}</h5>`}`,
                     position: event.latLng
                 });
-                infoWindow.open(newMap)
+                openInfoWindow.open(newMap)
             })
+            newMap.data.addListener('mouseout', (event)=>{openInfoWindow.close(newMap)})
             newMap.data.setStyle(function (feature) {
                 // if (feature.Fg["Class"].match(/^V[\+\-]?$/)) {
                 // if (feature.Fg["Class"].match(/^IV[\+\-]?$/)) {
