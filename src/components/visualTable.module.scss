@@ -3,110 +3,138 @@
 .component__container {
     @include gv.componentContainerTheme;
 
-    .filter__container {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        width: 100%;
-        margin-bottom: 8px;
+    .inner__container {
+        background-color: rgba(255, 255, 255, .95);
+        box-shadow: 2px 2px 3px #444;
+        border-radius: 5px;
+        padding: 1rem 2%;
 
-        .filter__row {
-            display: flex;
-            align-items: center;
-            margin: 7px 1%;
-        }
-
-        h6,
-        select,
-        label {
-            font-size: .8rem;
-            color: rgb(43, 62, 73);
-            font-family: gv.$primary_headers;
-            font-weight: 700;
-            margin: 0 5px;
-        }
-
-        h6 {
-            text-decoration: underline;
-        }
-
-        select {
-            padding: 2px 6px;
-            border: 1px solid black;
-            border-radius: 3px;
-            font-size: .7rem;
+        .section__header {
+            @include gv.innerSectionHeaderTheme;
         }
 
         hr {
-            width: 75%;
-            margin: 8px auto;
+            @include gv.sectionHRTheme;
+            width: 50%;
         }
 
-        .update-filters__button {
-            @include gv.buttonTheme(.85rem, 1.7rem);
-            margin-left: 4%;
+        .filter__container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            width: 100%;
+            margin-bottom: 8px;
 
-            &:active {
-                box-shadow: 2px -2px 1px white inset;
+            .filter__row {
+                display: flex;
+                align-items: center;
+                margin: 7px 1%;
+            }
+
+            h6,
+            select,
+            label {
+                font-size: .8rem;
+                color: rgb(43, 62, 73);
+                font-family: gv.$primary_headers;
+                font-weight: 700;
+                margin: 0 5px;
+            }
+
+            h6 {
+                text-decoration: underline;
+            }
+
+            select {
+                padding: 2px 6px;
+                border: 1px solid black;
+                border-radius: 3px;
+                font-size: .7rem;
+            }
+
+            hr {
+                width: 75%;
+                margin: 8px auto;
+            }
+
+            .update-filters__button {
+                @include gv.buttonTheme(.85rem, 1.7rem);
+                margin-left: 4%;
+
+                &:active {
+                    box-shadow: 2px -2px 1px white inset;
+                }
+            }
+        }
+
+        .visual-table__container {
+            position: relative;
+            overflow-x: scroll;
+            padding: 10px;
+            max-width: fit-content;
+            margin: 0 auto;
+
+            >p {
+                position: absolute;
+                top: 0;
+                right: 8px;
+                font-size: .7rem;
+                color: rgb(43, 62, 73);
+                font-family: gv.$primary_headers;
+                font-weight: 700;
+            }
+
+            .table-title {
+                font-size: 1rem;
+                margin: 0;
+                padding: 5px;
+                color: white;
+                border-radius: 0px 4px 0 0;
+                text-align: left;
+                width: max-content;
+                font-weight: 700;
+                font-family: gv.$primary_headers;
+                background-color: rgb(43, 62, 73);
+            }
+
+            table {
+                @include gv.tableTheme();
+            }
+
+            thead {
+                @include gv.tableHeadTheme();
+            }
+
+            th {
+                @include gv.tableHeadCellTheme();
+            }
+
+            td {
+                @include gv.tableCellTheme();
+            }
+
+            tbody {
+                tr:nth-child(odd) {
+                    background-color: white;
+                }
+
+                tr:nth-child(even) {
+                    background-color: gv.$table_row;
+                    border-top: 1px solid black;
+                    border-bottom: 1px solid black;
+                }
             }
         }
     }
+}
 
-    .visual-table__container {
-        position: relative;
-        overflow-x: scroll;
-        padding: 10px;
-        max-width: fit-content;
-        margin: 0 auto;
-
-        >p {
-            position: absolute;
-            top: 0;
-            right: 8px;
-            font-size: .7rem;
-            color: rgb(43, 62, 73);
-            font-family: gv.$primary_headers;
-            font-weight: 700;
-        }
-
-        .table-title {
-            font-size: 1rem;
-            margin: 0;
-            padding: 5px;
-            color: white;
-            border-radius: 0px 4px 0 0;
-            text-align: left;
-            width: max-content;
-            font-weight: 700;
-            font-family: gv.$primary_headers;
-            background-color: rgb(43, 62, 73);
-        }
-
-        table {
-            @include gv.tableTheme();
-        }
-
-        thead {
-            @include gv.tableHeadTheme();
-        }
-
-        th {
-            @include gv.tableHeadCellTheme();
-        }
-
-        td {
-            @include gv.tableCellTheme();
-        }
-
-        tbody {
-            tr:nth-child(odd) {
-                background-color: white;
-            }
-
-            tr:nth-child(even) {
-                background-color: gv.$table_row;
-                border-top: 1px solid black;
-                border-bottom: 1px solid black;
+@media screen and (min-width: 1500px) {
+    .component__container {
+        .inner__container{
+            .visual-table__container{
+                td, th{
+                    font-size: .65rem;
+                }
             }
         }
     }

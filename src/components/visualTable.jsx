@@ -63,89 +63,93 @@ export default function VisualTable({ reportSubmitted }) {
 
     return (
         <div className={`${styles["component__container"]}`}>
-            {(status === 'pending') &&
-                <div className={`${styles["visual-table__container"]}`}>
-                    <Loader type={'spinner'} text={'Loading flow reports...'} />
-                </div>
-            }
-            {(status === 'success') &&
-                <>
-                    <div className={`${styles["filter__container"]}`}>
-                        <div className={`${styles["filter__row"]}`}>
-                            <h6>Filter Options</h6>
-                        </div>
-                        <div className={`${styles["filter__row"]}`}>
-                            <label htmlFor='riverName'>River</label>
-                            <select onChange={updateFilters} id="riverName" name="riverName">
-                                <option value={'all'}>All</option>
-                                {riverData ?
-                                    riverData.map(river => <option value={river.name}>{river.name}</option>)
-                                    :
-                                    <></>
-                                }
-                            </select>
-                        </div>
-                        <div className={`${styles["filter__row"]}`}>
-                            <label htmlFor='limit'>Limit To</label>
-                            <select onChange={(e) => updateFilters(e)} id="limit" name="limit">
-                                <option value={5}>5</option>
-                                <option value={10}>10</option>
-                                <option value={25}>25</option>
-                                <option value={50}>50</option>
-                                <option value={'all'}>All</option>
-                            </select>
-                        </div>
-                        <button onClick={getFlows} className={`${styles["update-filters__button"]}`}>Update</button>
-                        <hr />
-                    </div>
+            <div className={`${styles["inner__container"]}`}>
+                <h2 className={`${styles["section__header"]}`}>Recent Reports</h2>
+                <hr />
+                {(status === 'pending') &&
                     <div className={`${styles["visual-table__container"]}`}>
-                        <h3 className={`${styles["table-title"]}`}>Level Reports</h3>
-                        <p className={`${styles["table-legend"]}`}><FontAwesomeIcon icon={faBell} /> = recent report</p>
-                        <table>
-                            <thead>
-                                <tr className={`mobile-hide`}>
-                                    <th colSpan={3}></th>
-                                    <th colSpan={2}>Level Type</th>
-                                    <th colSpan={5}>Gauge 1</th>
-                                    <th colSpan={5}>Gauge 2</th>
-                                </tr>
-                                <tr>
-                                    <th>Date of Report</th>
-                                    <th>River</th>
-                                    <th className={`mobile-hide ${styles[""]}`}>Level Type</th>
-                                    <th className={`mobile-show ${styles[""]}`}>Level</th>
-                                    <th className={`mobile-show ${styles[""]}`}>Level Type</th>
-                                    <th className={`mobile-hide ${styles[""]}`}>Numeric</th>
-                                    <th className={`mobile-hide ${styles[""]}`}>Text</th>
-                                    <th className={`mobile-hide ${styles[""]}`}>Name</th>
-                                    <th className={`mobile-hide ${styles[""]}`}>Reading Time</th>
-                                    <th className={`mobile-hide ${styles[""]}`}>Level</th>
-                                    <th className={`mobile-hide ${styles[""]}`}>Change / Hr</th>
-                                    <th className={`mobile-hide ${styles[""]}`}>Trend</th>
-                                    <th className={`mobile-hide ${styles[""]}`}>Name</th>
-                                    <th className={`mobile-hide ${styles[""]}`}>Reading Time</th>
-                                    <th className={`mobile-hide ${styles[""]}`}>Level</th>
-                                    <th className={`mobile-hide ${styles[""]}`}>Change / Hr</th>
-                                    <th className={`mobile-hide ${styles[""]}`}>Trend</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {(levelReports && levelReports.length > 0) ?
-                                    levelReports.map(levelReport => <VisualTableRow key={levelReport.id} levelReport={levelReport} />)
-                                    :
-                                    <tr>
-                                        <td colSpan={15}>No results available for selected filters.  Please update and try again.</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                        <Loader type={'spinner'} text={'Loading flow reports...'} />
                     </div>
-                </>
-            }
-            {(status === 'failure') &&
-                <div className={`${styles["visual-table__container"]}`}>
-                </div>
-            }
+                }
+                {(status === 'success') &&
+                    <>
+                        <div className={`${styles["filter__container"]}`}>
+                            <div className={`${styles["filter__row"]}`}>
+                                <h6>Filter Options</h6>
+                            </div>
+                            <div className={`${styles["filter__row"]}`}>
+                                <label htmlFor='riverName'>River</label>
+                                <select onChange={updateFilters} id="riverName" name="riverName">
+                                    <option value={'all'}>All</option>
+                                    {riverData ?
+                                        riverData.map(river => <option value={river.name}>{river.name}</option>)
+                                        :
+                                        <></>
+                                    }
+                                </select>
+                            </div>
+                            <div className={`${styles["filter__row"]}`}>
+                                <label htmlFor='limit'>Limit To</label>
+                                <select onChange={(e) => updateFilters(e)} id="limit" name="limit">
+                                    <option value={5}>5</option>
+                                    <option value={10}>10</option>
+                                    <option value={25}>25</option>
+                                    <option value={50}>50</option>
+                                    <option value={'all'}>All</option>
+                                </select>
+                            </div>
+                            <button onClick={getFlows} className={`${styles["update-filters__button"]}`}>Update</button>
+                            <hr />
+                        </div>
+                        <div className={`${styles["visual-table__container"]}`}>
+                            <h3 className={`${styles["table-title"]}`}>Level Reports</h3>
+                            <p className={`${styles["table-legend"]}`}><FontAwesomeIcon icon={faBell} /> = recent report</p>
+                            <table>
+                                <thead>
+                                    <tr className={`mobile-hide`}>
+                                        <th colSpan={3}></th>
+                                        <th colSpan={2}>Level Type</th>
+                                        <th colSpan={5}>Gauge 1</th>
+                                        <th colSpan={5}>Gauge 2</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Date of Report</th>
+                                        <th>River</th>
+                                        <th className={`mobile-hide ${styles[""]}`}>Level Type</th>
+                                        <th className={`mobile-show ${styles[""]}`}>Level</th>
+                                        <th className={`mobile-show ${styles[""]}`}>Level Type</th>
+                                        <th className={`mobile-hide ${styles[""]}`}>Numeric</th>
+                                        <th className={`mobile-hide ${styles[""]}`}>Text</th>
+                                        <th className={`mobile-hide ${styles[""]}`}>Name</th>
+                                        <th className={`mobile-hide ${styles[""]}`}>Reading Time</th>
+                                        <th className={`mobile-hide ${styles[""]}`}>Level</th>
+                                        <th className={`mobile-hide ${styles[""]}`}>Change / Hr</th>
+                                        <th className={`mobile-hide ${styles[""]}`}>Trend</th>
+                                        <th className={`mobile-hide ${styles[""]}`}>Name</th>
+                                        <th className={`mobile-hide ${styles[""]}`}>Reading Time</th>
+                                        <th className={`mobile-hide ${styles[""]}`}>Level</th>
+                                        <th className={`mobile-hide ${styles[""]}`}>Change / Hr</th>
+                                        <th className={`mobile-hide ${styles[""]}`}>Trend</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {(levelReports && levelReports.length > 0) ?
+                                        levelReports.map(levelReport => <VisualTableRow key={levelReport.id} levelReport={levelReport} />)
+                                        :
+                                        <tr>
+                                            <td colSpan={15}>No results available for selected filters.  Please update and try again.</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </>
+                }
+                {(status === 'failure') &&
+                    <div className={`${styles["visual-table__container"]}`}>
+                    </div>
+                }
+            </div>
         </div>
     )
 

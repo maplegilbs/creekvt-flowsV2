@@ -3,7 +3,6 @@
 .component__container {
     @include gv.componentContainerTheme;
     
-
     hr {
         @include gv.sectionHRTheme;
         width: 50%;
@@ -14,15 +13,15 @@
         background-color: rgba(255, 255, 255, .95);
         box-shadow: 2px 2px 3px #444;
         border-radius: 5px;
+        padding: 1rem 0 2rem 0;
+
         
         .section__header {
-            // @include gv.innerSectionHeaderTheme;
-            font-weight: 800;
+            @include gv.innerSectionHeaderTheme;
             text-transform: uppercase;
             font-family: gv.$primary_headers;
             text-align: left;
             padding-left: 5px;
-            padding-top: 5px;
         }
 
     }

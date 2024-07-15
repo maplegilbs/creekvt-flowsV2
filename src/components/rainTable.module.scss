@@ -4,6 +4,8 @@
     @include gv.componentContainerTheme;
 
     .inner__container {
+        background-color: rgba(255, 255, 255, .95);
+        box-shadow: 2px 2px 3px #444;
         border-radius: 5px;
         padding: 1rem 2%;
 

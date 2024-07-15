@@ -1,39 +1,5 @@
 @use '../styles/global_variables.scss' as gv;
 
-.visuals-page {
-
-    div.visual-form__container, div.visual-table__container, div.visual-cams__container {
-        max-height: 0;
-        box-sizing: border-box;
-        overflow: hidden;
-        transition: max-height 1s ease;
-        margin: 5px auto 20px auto;
-    }
-
-
-    div.visible {
-        max-height: 3000px;
-        overflow-y: scroll;
-    }
-    
-    div.table-visible{
-        // max-height: 3000px;
-        max-height: max-content;
-    }
-
-    div.cams-visible {
-        max-height: max-content;
-    }
-
-    button {
-        background-color: transparent;
-        margin: 1rem 5% 0 5%;
-        text-transform: uppercase;
-        font-family: gv.$primary_headers;
-        border: 0px;
-        border-bottom: 2px solid #333;
-        font-weight: 800;
-        font-size: 1rem;
-        color: #333;
-    }
+.page__container {
+    @include gv.pageContainerTheme();
 }

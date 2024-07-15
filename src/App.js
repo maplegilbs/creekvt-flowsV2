@@ -15,7 +15,7 @@ import "./App.css"
 
 const ErrorElement = () => {
   const error = useRouteError();
-  
+
   // Log the error to the console
   console.error('Error:', error);
 
@@ -38,41 +38,34 @@ const router = createBrowserRouter([
       path: "/flowsV2/",
       element: <InnerLayout />,
       children: [
-        {path: "",
+        {
+          path: "",
           element: <Home />
         },
-        {path: "forecasts",
+        {
+          path: "forecasts",
           element: <Forecasts />
         },
-        {path: "gauges",
+        {
+          path: "gauges",
           element: <Gauges />
         },
-        {path: "rain",
+        {
+          path: "rain",
           element: <Rainfall />
         },
-        {path: "cams",
+        {
+          path: "cams",
           element: <Cams />
         },
-        {path: "visuals",
-          children: [
-            {path: "",
-              element: <Visuals initialState={'form'}/>
-            },
-            {path: "addReport",
-              element: <Visuals initialState={'form'}/>
-            },
-            {path: "levelsTable",
-              element: <Visuals initialState={'table'}/>
-            },
-            {path: "cams",
-              element: <Visuals initialState={'cams'}/>
-            },
-          ]
+        {
+          path: "visuals",
+          element: <Visuals />,
         },
       ]
     }]
   },
-  {basename: "/flowsV2"}
+  { basename: "/flowsV2" }
 ])
 
 function App() {
