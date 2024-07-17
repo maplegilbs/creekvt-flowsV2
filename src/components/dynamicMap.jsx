@@ -10,6 +10,7 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { primaryMapStyles } from "../utils/mapStylingOptions";
 //Styles
 import styles from "./dynamicMap.module.scss"
+import renderInfoWindow from "./mapInfoWindow";
 
 function MapComponent({ }) {
     const { gaugeFetchAndMergeStatus, mergedRiverData } = useContext(RiverDataWithGaugeInfoContext);
@@ -17,7 +18,6 @@ function MapComponent({ }) {
     const mapRef = useRef();
 
     console.log(mergedRiverData)
-
 
     useEffect(() => {
         const buildMap = async () => {
@@ -51,16 +51,17 @@ function MapComponent({ }) {
                 }
             })
             let openInfoWindow;
-            newMap.data.addListener('mouseover', (event)=>{
+            newMap.data.addListener('click', (event) => {
                 let river = event.feature.getProperty("Name");
                 let foundRiver = mergedRiverData.find(compareRiver => compareRiver.name.toLowerCase() === river.toLowerCase());
                 openInfoWindow = new window.google.maps.InfoWindow({
-                    content: `${`<h4>${foundRiver.name}</h4><h5>${foundRiver.gauge1Reading}</h5>`}`,
-                    position: event.latLng
-                });
+                    position: event.latLng,
+                    headerDisabled: true
+                })
+                openInfoWindow.setContent(renderInfoWindow(foundRiver, openInfoWindow));
                 openInfoWindow.open(newMap)
             })
-            newMap.data.addListener('mouseout', (event)=>{openInfoWindow.close(newMap)})
+            // newMap.data.addListener('mouseout', (event)=>{openInfoWindow.close(newMap)})
             newMap.data.setStyle(function (feature) {
                 // if (feature.Fg["Class"].match(/^V[\+\-]?$/)) {
                 // if (feature.Fg["Class"].match(/^IV[\+\-]?$/)) {

@@ -1,0 +1,80 @@
+@use "../styles/global_variables.scss" as gv;
+
+.info-window__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 20vw;
+
+    * {
+        font-family: gv.$primary_headers;
+        // font-size: 1rem;
+    }
+
+    h4 {
+        font-size: 1.25rem;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .button--close {
+        margin-left: auto;
+        background-color: transparent;
+        border: none;
+        margin-bottom: .5rem;
+
+        &:focus-visible {
+            outline: none;
+        }
+    }
+
+    .level-status {
+        width: 80%;
+        align-self: flex-start;
+        font-weight: 600;
+        padding: 0 .25rem;
+    }
+
+
+    .flow__container {
+        width: 100%;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+
+
+        p {
+            margin: 1rem 0;
+
+            &.flow-info {
+                display: flex;
+                height: 2.5rem;
+                align-items: center;
+
+                span {
+                    &:nth-child(1) {
+                        font-size: 1.85rem;
+                    }
+
+                    &:nth-child(2) {
+                        font-size: .75rem;
+                        align-self: flex-start;
+                        margin-left: 1rem;
+                    }
+                }
+            }
+        }
+
+        .min-max__container {
+            display: flex;
+            justify-content: space-between;
+
+            p {
+                font-size: .8rem;
+                text-transform: uppercase;
+                font-weight: 600;
+                margin: 0 1rem;
+            }
+        }
+    }
+}
