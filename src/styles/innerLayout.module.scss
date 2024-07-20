@@ -68,6 +68,27 @@
     }
 }
 
+@media screen and (max-width: 380px) {
+    .page-wrapper {
+
+        .nav-container {
+            nav {
+                ul {
+                    li {
+                        font-size: .8rem;
+                        padding: .3rem;
+
+                        a {
+                            font-size: .65rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
 @media screen and (min-width: 720px) {
     .page-wrapper {
 

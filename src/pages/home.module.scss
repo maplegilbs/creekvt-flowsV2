@@ -46,34 +46,63 @@
             top: 0;
             left: 0;
             width: 100%;
+            -webkit-transition: all 2s ease;
             transition: all 2s ease;
             -webkit-perspective: 100px;
             perspective: 100px;
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
         }
-        
+
         .map__container {
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
+            -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
         }
-        
+
         .map-flipped {
+            -webkit-transform: rotateY(180deg);
             transform: rotateY(180deg);
         }
-        
+
         .table__container {
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
+            -webkit-transform: rotateY(-180deg);
             transform: rotateY(-180deg);
         }
-        
+
         .table-flipped {
+            -webkit-transform: rotateY(0deg);
             transform: rotateY(0deg);
         }
     }
 }
 
 
+@media screen and (max-width: 380px) {
+    .page__container {
+        .inner__container {
+            .section__header {
+                h2{
+                    font-size: 1rem;
+                }
+
+                .toggler__container {
+                    label {
+                        font-family: gv.$primary-headers;
+                        font-weight: 700;
+                        font-size: .6rem;
+                    }
+                }
+            }
+        hr {
+            margin-top: 0;
+            width: 40%;
+        }
+        }
+    }
+}
 
 @media screen and (min-width: 640px) {}

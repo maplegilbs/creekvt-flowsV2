@@ -91,7 +91,7 @@ export default function InnerLayout() {
                             <NavLink to="./cams">Cams</NavLink>
                         </li>
                         <li className={curPath.pathname.includes('rain') ? `${styles['active']}` : ""}>
-                            <NavLink to="./rain">Rainfall</NavLink>
+                            <NavLink to="./rain">Rain</NavLink>
                         </li>
                         <li className={curPath.pathname.includes('forecasts') ? `${styles['active']}` : ""}>
                             <NavLink to="./forecasts">Forecasts</NavLink>

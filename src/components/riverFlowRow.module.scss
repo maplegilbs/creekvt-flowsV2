@@ -7,6 +7,7 @@ tr.flow__table-row {
     margin: 10px 0;
     height: 120px;
     border-bottom: 2px solid #333;
+    width: 100%;
 
     &:nth-child(even) {
         background-color: gv.$table_row;
@@ -66,58 +67,61 @@ tr.flow__table-row {
             }
 
         }
-    }
 
-    td.river-stats {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        align-items: flex-start;
-        justify-content: center;
-        text-align: left;
-        padding-top: 1.4rem;
-
-        .river__heading {
-            color: black;
-            position: absolute;
+        &.river-stats {
             display: flex;
-            justify-content: space-between;
-            top: .2rem;
-            left: 0;
+            flex-direction: column;
             width: 100%;
-            height: max-content;
-            padding: 0 5px;
+            align-items: flex-start;
+            justify-content: center;
+            text-align: left;
+            padding-top: 1.4rem;
+            position: relative;
+            overflow: visible;
 
-            a {
-                font-size: 1rem;
+            .river__heading {
+                color: black;
+                position: absolute;
+                display: flex;
+                justify-content: space-between;
+                top: .2rem;
+                left: 0;
+                // width: 100%;
+                width: max-content;
+                height: max-content;
+                padding: 0 5px;
+
+                a {
+                    font-size: 1rem;
+                }
+
             }
 
-        }
+            .gauge-reading {
+                font-size: 1.5rem;
+            }
 
-        .gauge-reading {
-            font-size: 1.5rem;
-        }
+            span {
+                padding: 0 5px;
+                margin-top: 2px;
+                width: 100%;
+                font-size: .75rem;
+            }
 
-        span {
-            padding: 0 5px;
-            margin-top: 2px;
-            width: 100%;
-            font-size: .75rem;
-        }
+            p {
+                margin: 0;
+                margin-top: 5px;
+                font-size: .7rem;
+                font-weight: 500;
+                text-transform: uppercase;
 
-        p {
-            margin: 0;
-            margin-top: 5px;
-            font-size: .7rem;
-            font-weight: 500;
-            text-transform: uppercase;
-
-            &:nth-child(2) {
-                margin-top: .4rem;
+                &:nth-child(2) {
+                    margin-top: .4rem;
+                }
             }
         }
-
     }
+
 
     a,
     a:visited,
@@ -230,7 +234,7 @@ tr.flow__table-row {
                 }
             }
 
-            span{
+            span {
                 margin-top: 5px;
             }
 

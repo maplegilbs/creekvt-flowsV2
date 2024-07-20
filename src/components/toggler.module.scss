@@ -5,7 +5,7 @@
     margin: 0 7px;
     width: 55px;
     height: 27px;
-    background-color: rgba(190,190,190,.75);
+    background-color: rgba(190, 190, 190, .75);
     border-radius: 25px;
     border: 2px solid black;
     transition: all 1s ease;
@@ -29,4 +29,21 @@
 
 .groove_toggle_on {
     background-color: rgb(84 121 151);
+}
+
+@media screen and (max-width: 380px) {
+    .groove {
+        margin: 0 7px;
+        width: 35px;
+        height: 17px;
+
+        .slider {
+            width: 17px;
+            height: 13px;
+        }
+    }
+
+    .toggle_on {
+        transform: translateX(14px);
+    }
 }
