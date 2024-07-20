@@ -155,7 +155,8 @@ tr.flow__table-row {
         padding: 0 20%;
         display: flex;
         flex-wrap: nowrap;
-        justify-content: space-around;
+        // justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
 
 
@@ -243,6 +244,7 @@ tr.flow__table-row {
 
         .levelContainer {
             padding: 0px;
+            justify-content: space-evenly;
 
             >div {
                 width: 25%;
@@ -250,9 +252,10 @@ tr.flow__table-row {
 
             .levelInfo {
                 font-size: 1.15rem;
+                justify-content: center;
 
                 &.mobile-hide {
-                    visibility: hidden;
+                    display: none;
                 }
 
                 &.mobile-show {

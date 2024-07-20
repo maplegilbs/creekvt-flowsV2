@@ -33,13 +33,12 @@ export default function RiverFlowRow({ river, index }) {
                     <td className={`${styles["river-stats"]}`} >
                         <div className={`${styles["river__heading"]}`}><a href={`https://creekvt.com/riverguide/${river.url}`}>{river.name}</a></div>
                         <span style={{ background: `linear-gradient(90deg, ${river.flowBarColor} 50%, ${index % 2 === 1 ? "rgba(188,188,188,.0)" : "transparent"} 80%` }}>{`${river.levelStatus ? river.levelStatus.toUpperCase() : "\u00A0"}`}</span>
-                        {/* Trying out gauge reading shown in this location temporarily */}
                         <div className={`${styles["gauge-reading"]} mobile-show`}>{river.gauge1Reading}</div>
-                        {/* <br className="mobile-show" /> */}
                         <p className={`${styles["stats"]}`}>{<>{river.location}<br />Class {river.difficultyChar}</>}</p>
                     </td>
                     <td className={`${styles["level"]}`}>
-                        <div className={`${styles["levelContainer"]}`} style={{ justifyContent: `${!river.gauge1Max ? "space-between" : "space-between"}` }}>
+                        {/* <div className={`${styles["levelContainer"]}`} style={{ justifyContent: `${!river.gauge1Max ? "space-between" : "space-between"}` }}> */}
+                        <div className={`${styles["levelContainer"]}`} >
                             {/* <div className={`${styles["levelInfo"]}`}></div> */}
                             <div className={`${styles["levelInfo"]} ${styles["mobile-hide"]}`}>{river.gauge1Reading}</div>
                             {river.gauge1Max &&
