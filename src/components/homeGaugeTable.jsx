@@ -13,6 +13,7 @@ import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { sortByRunning } from "../utils/sortingFunctions";
 //Styles
 import styles from "../pages/gauges.module.scss";
+import homeTableStyles from "./homeGaugeTable.module.scss"
 
 function GaugeInstructions({ setIsModalActive }) {
     return (
@@ -26,7 +27,7 @@ function GaugeInstructions({ setIsModalActive }) {
 function filterGauges(river, index) {
     return (
         Object.keys(river).includes("text") ?
-            <tr className={`${styles["sort-header"]}`} style={{ background: `${river.color}` }}><td colSpan={"100%"}>{river.text}</td></tr> :
+            <tr className={`${styles["sort-header"]} ${homeTableStyles["sort__header"]}`} style={{ background: `${river.color}` }}><td colSpan={"100%"}>{river.text}</td></tr> :
             <RiverFlowRow river={river} index={index} />
     )
 }
