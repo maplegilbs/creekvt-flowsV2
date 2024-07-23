@@ -1,13 +1,13 @@
 //Components
 import Slider_Toggler from "../components/toggler";
 import HomeMap from "../components/dynamicMap";
+import HomeGaugesTable from "../components/homeGaugeTable";
 //Contexts
 import { RiverDataWithGaugeInfoContext } from "../pages/innerLayout";
 //Hooks
 import { useContext, useState, useEffect, useRef } from "react";
 //Styles
 import styles from "./home.module.scss"
-import HomeGaugesTable from "../components/homeGaugeTable";
 
 
 export default function Home() {
@@ -32,6 +32,7 @@ export default function Home() {
     }, [isMapToggled])
 
     useEffect(() => {
+        console.log(containerHeight)
         if (containerRef.current) { containerRef.current.style.height = `${containerHeight + 20}px` }
 
     }, [containerHeight])
@@ -50,12 +51,17 @@ export default function Home() {
                     </header>
                     <hr />
                     <div ref={containerRef} className={`${styles["card__container"]}`}>
-                        <div ref={mapRef} className={`${styles["inner__container-card"]} ${styles["map__container"]} ${!isMapToggled ? styles["map-flipped"] : ""}`}>
-                            <HomeMap />
-                        </div>
-                        <div ref={tableRef} className={`${styles["inner__container-card"]} ${styles["table__container"]} ${!isMapToggled ? styles["table-flipped"] : ""}`}>
-                            <HomeGaugesTable />
-                        </div>
+                        {/* {isMapToggled && */}
+                            <div ref={mapRef} className={`${styles["inner__container-card"]} ${styles["map__container"]} ${isMapToggled ? styles["map-visible"] : ""}`}>
+                                <HomeMap />
+                            </div>
+                         {/* } */}
+                         {/* {!isMapToggled && */}
+                            <div ref={tableRef} className={`${styles["inner__container-card"]} ${styles["table__container"]} ${!isMapToggled ? styles["table-visible"] : ""}`}>
+                                <HomeGaugesTable />
+                            </div>
+                         {/* } */}
+
                     </div>
                 </div>
             </div>

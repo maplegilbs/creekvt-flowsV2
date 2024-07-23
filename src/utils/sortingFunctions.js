@@ -101,7 +101,7 @@ export function sortByQuality(sortArray) {
 export function sortByRunning(sortArray){
     let filteredRivers = sortArray.filter(river => {
         if(river.levelStatus ===  "running") return river;
-        else if(river.gauge1Min && (river.gauge1ChangePerHr * 200 + Number(river.gauge1Reading)) > river.gauge1Min) return river;
+        else if(river.gauge1Min && Math.abs(river.gauge1ChangePerHr * 2000 + Number(river.gauge1Reading)) > river.gauge1Min) return river;
     })
     filteredRivers.sort((a, b) => {
         //Sort rivers without a level status to the bottom

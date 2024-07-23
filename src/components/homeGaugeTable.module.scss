@@ -1,7 +1,16 @@
-tbody {
-    tr {
-        &.sort__header {
-            top: 92px !important;
+.info__container {
+    display: flex;
+    justify-content: center;
+
+    table.flows__table {
+        width: 100%;
+
+        tbody {
+            tr {
+                &.sort__header {
+                    top: 92px !important;
+                }
+            }
         }
     }
 }

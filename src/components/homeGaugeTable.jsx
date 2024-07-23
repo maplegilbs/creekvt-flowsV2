@@ -43,8 +43,8 @@ export default function HomeGaugesTable() {
                 <GaugeInstructions setIsModalActive={setIsModalActive} />
             }
             {gaugeFetchAndMergeStatus === "success" &&
-                <div className={`${styles["info__container"]}`}>
-                    <table className={`${styles["flows__table"]}`}>
+                <div className={`${styles["info__container"]} ${homeTableStyles["info__container"]}`}>
+                    <table className={`${styles["flows__table"]} ${homeTableStyles["flows__table"]}`}>
                         <thead>
                             <tr>
                                 <th>River</th>
