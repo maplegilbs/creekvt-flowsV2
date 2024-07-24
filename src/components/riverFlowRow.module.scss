@@ -197,10 +197,10 @@ tr.flow__table-row {
 
 /*---Media Queries---*/
 @media screen and (max-width: 640px) {
-
+    
     tr.flow__table-row {
         font-size: .65rem;
-
+        
         .mobile-hide {
             display: none;
         }
@@ -214,30 +214,30 @@ tr.flow__table-row {
             max-width: 96vw;
             box-shadow: 2px 2px 4px 4px rgb(188 188 188);
         }
-
+        
         td {
             width: 34%;
             padding-top: 1.5rem;
-
+            
         }
-
+        
         td.level,
         td.river-stats {
             font-size: 1.25em;
-
+            
             p {
                 // margin-top: 12px;
                 line-height: normal;
-
+                
                 &:nth-of-type(1) {
                     margin-top: 12px;
                 }
             }
-
+            
             span {
                 margin-top: 5px;
             }
-
+            
             .river__heading {
                 a {
                     font-size: 1.05rem;
@@ -245,7 +245,7 @@ tr.flow__table-row {
             }
         }
 
-
+        
         .levelContainer {
             padding: 0px;
             justify-content: space-evenly;
@@ -253,22 +253,22 @@ tr.flow__table-row {
             >div {
                 width: 25%;
             }
-
+            
             .levelInfo {
                 font-size: 1.15rem;
                 justify-content: center;
-
+                
                 &.mobile-hide {
                     display: none;
                 }
-
+                
                 &.mobile-show {
                     display: initial;
                 }
             }
         }
-
-
+        
+        
         .mobile-show.gaugeInfo,
         .gaugeName.mobile-show {
             display: table-cell;
@@ -276,20 +276,20 @@ tr.flow__table-row {
             box-sizing: border-box;
             overflow: hidden;
         }
-
-
+        
+        
         .level {
             width: 55%;
-
+            
             .mobile-show {
                 font-size: .9em;
                 font-weight: 500;
-
+                
                 hr {
                     margin: 1px auto;
                 }
             }
-
+            
         }
 
         .flowBar {
@@ -299,11 +299,34 @@ tr.flow__table-row {
         .gaugeName {
             font-size: .65rem;
             padding-top: 1.6rem;
-
+            
             a {
                 font-size: .5rem;
             }
         }
     }
+    
+}
 
+
+
+@media screen and (max-width: 380px) {
+    tr.flow__table-row {
+        
+        td.level,
+        td.river-stats {
+            font-size: .85rem;
+            
+            .gauge-reading {
+                font-size: 1.2rem;
+            }
+            
+            .river__heading {
+                a {
+                    font-size: .85rem;
+                }
+            }
+        }
+      
+    }
 }

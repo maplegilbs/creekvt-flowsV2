@@ -61,7 +61,6 @@ function MapComponent({ }) {
                 openInfoWindow.setContent(renderInfoWindow(foundRiver, openInfoWindow));
                 openInfoWindow.open(newMap)
             })
-            // newMap.data.addListener('mouseout', (event)=>{openInfoWindow.close(newMap)})
             newMap.data.setStyle(function (feature) {
                 // if (feature.Fg["Class"].match(/^V[\+\-]?$/)) {
                 // if (feature.Fg["Class"].match(/^IV[\+\-]?$/)) {

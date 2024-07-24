@@ -6,13 +6,27 @@ tr.visuals-row {
         padding: 5px;
         font-size: .65rem;
 
-        .alert-icon{
+        .alert-icon {
             padding-right: 5px;
         }
 
         &.gauge-cell {
             font-weight: 500;
             font-size: .8rem;
+        }
+    }
+}
+
+
+@media screen and (max-width: 380px) {
+    table {
+        tbody {
+            tr.visuals-row {
+
+                td {
+                    font-size: .6rem !important;
+                }
+            }
         }
     }
 }

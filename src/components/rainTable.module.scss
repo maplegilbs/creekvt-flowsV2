@@ -49,3 +49,14 @@
         }
 
     }
+
+    @media screen and (max-width: 380px){
+
+        .component__container{
+            .inner__container{
+                th {
+                    font-size: .6rem;
+                }
+            }
+        }
+    }

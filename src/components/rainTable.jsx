@@ -57,7 +57,7 @@ export default function RainTable() {
                     <table>
                         <thead>
                             <tr>
-                                <th rowSpan={2}>Location<br /><span style={{ fontSize: ".7rem" }}>Report Time</span></th>
+                                <th rowSpan={2}>Location<br /><span>Report Time</span></th>
                                 <th rowSpan={2}>Source</th>
                                 <th colSpan={5}>Rain Accumulation</th>
                             </tr>

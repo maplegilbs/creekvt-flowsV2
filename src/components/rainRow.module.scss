@@ -15,7 +15,7 @@
     }
 
     .station-stats {
-        font-size: .6rem;
+        font-size: .5rem;
         font-weight: 600;
         margin-bottom: 0;
         text-align: left;
@@ -110,4 +110,38 @@
         }
     }
 
+}
+
+@media screen and (max-width: 380px){
+    .rain__row {
+        
+        td{
+            font-size: .75rem;
+            // margin: .25rem 2rem;
+        }
+        
+        .station-info {
+            
+            .station__heading {
+                font-size: .6rem;
+                line-height: .8rem;
+                // text-align: center;
+            }
+            
+            .station-stats {
+                // text-align: center;
+                font-size: .6rem;
+                margin: .25rem auto;
+            }
+        }
+        
+        
+        .source-icon__img {
+
+            img {
+                width: 90%;
+                max-width: 80px;
+            }
+        }
+    }
 }
