@@ -4,7 +4,6 @@ import { formatDateTime } from "../utils/formatDateTime";
 import styles from "./riverFlowRow.module.scss"
 
 export default function RiverFlowRow({ river, index }) {
-    console.log(river)
 
     if (!river.gauge1ID || river.gauge1ID === 'error') {
         return (

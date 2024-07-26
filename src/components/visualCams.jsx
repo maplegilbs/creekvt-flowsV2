@@ -13,7 +13,7 @@ import styles from './visualCams.module.scss'
 export default function VisualCams() {
     const [camsInfo, setCamsInfo] = useState(null)
     const [status, setStatus] = useState('pending') //pending, success, failure
-
+console.log(camsInfo)
 
     useEffect(() => {
         async function getCamsInfo() {

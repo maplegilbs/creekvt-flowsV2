@@ -32,7 +32,6 @@ export default function Home() {
     }, [isMapToggled])
 
     useEffect(() => {
-        console.log(containerHeight)
         if (containerRef.current) { containerRef.current.style.height = `${containerHeight + 20}px` }
 
     }, [containerHeight])

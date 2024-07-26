@@ -17,7 +17,6 @@ function MapComponent({ }) {
     const [myMap, setMyMap] = useState();
     const mapRef = useRef();
 
-    console.log(mergedRiverData)
 
     useEffect(() => {
         const buildMap = async () => {
@@ -62,9 +61,6 @@ function MapComponent({ }) {
                 openInfoWindow.open(newMap)
             })
             newMap.data.setStyle(function (feature) {
-                // if (feature.Fg["Class"].match(/^V[\+\-]?$/)) {
-                // if (feature.Fg["Class"].match(/^IV[\+\-]?$/)) {
-                // if (feature.Fg["Class"].match(/^III[\+\-]?$/)) {
                 if (["running", "too high"].includes(feature.Fg["Level status"]) && feature.Fg["z-index"] === 0) {
                     return {
                         strokeColor: '#000000',
@@ -114,6 +110,46 @@ function MapComponent({ }) {
         if (mergedRiverData) { console.log('building map'); buildMap() }
     }, [mergedRiverData]);
 
+
+    useEffect(() => {
+        if (myMap) {
+            async function displayCams() {
+                let camsResponse = await fetch("https://creekvt.com/FlowsPageAssets/cams.geojson")
+                let camsJSON = await camsResponse.json();
+                console.log(camsJSON)
+                let camsDataLayer = new window.google.maps.Data();
+                camsDataLayer.addGeoJson(camsJSON)
+
+                console.log(camsDataLayer)
+                camsDataLayer.setStyle(feature => {
+                    if (feature.Fg.type === 'cam') {
+                        return {
+                            icon: {
+                                url: "https://creekvt.com/FlowsPageAssets/Images/Icons/CameraCircleIconBlue100x100.png",
+                                scaledSize: new window.google.maps.Size(25, 25)
+                            }
+                        }
+                    }
+
+                })
+                camsDataLayer.addListener('click', event => {
+                    let openInfoWindow;
+                    openInfoWindow = new window.google.maps.InfoWindow({
+                        position: event.latLng,
+                        headerDisabled: true
+                    })
+                    let camName = event.feature.getProperty("Name");
+                    let camApiEndpoint = event.feature.getProperty("api-endpoint");
+                    let type = "cam";
+                    openInfoWindow.setContent(renderInfoWindow({camName, camApiEndpoint, type}, openInfoWindow))
+                    openInfoWindow.open(myMap)
+
+                })
+                camsDataLayer.setMap(myMap)
+            }
+            displayCams()
+        }
+    }, [myMap])
 
 
     return (
