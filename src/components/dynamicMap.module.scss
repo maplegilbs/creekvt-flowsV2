@@ -5,6 +5,42 @@
     background-color: #A7B1BB;
     width: 98%;
 
+    .features-options {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: .25rem 1rem;
+        border: 2px solid black;
+        border-bottom: 0;
+        background: gv.$primary_gradient-reverse;
+        
+        h4{
+            font-size: .8rem;
+            text-transform: uppercase;
+            margin: .5rem 0;
+            color: white;
+        }
+        
+        .input-group__container{
+            display: flex;
+            align-items: center;
+            
+            .input-group {
+                color: white;
+                margin: 0 .5rem;
+                display: flex;
+                align-items: center;
+                
+                label {
+                    padding-right: 5px;
+                    font-size: .75rem;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
     .map__container {
         position: relative;
         min-height: 80vh;

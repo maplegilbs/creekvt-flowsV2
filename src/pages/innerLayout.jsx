@@ -70,8 +70,6 @@ export default function InnerLayout() {
         if (mergedRiverData) {setTimeout(() => setGaugeFetchAndMergeStatus('success'), 2000); }
     }, [riverData, gaugeData, mergedRiverData])
 
-    console.log(curPath.pathname)
-
     return (
         <div className={`${styles['page-wrapper']}`}>
             <div className={`${styles['nav-container']}`}>
