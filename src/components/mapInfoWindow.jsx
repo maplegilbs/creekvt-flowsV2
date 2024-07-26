@@ -53,7 +53,7 @@ function CamInfoWindow({ camData, infoWindow }) {
             <figure>
                 <figcaption>Most recent image</figcaption>
                 <a target="_blank" href={imageUrl}>
-                    <img src={imageUrl} alt={`Most recent cam image of ${camData.camName}`} />
+                    <img style={{opacity: `${imageUrl? 1 : 0}`}} src={imageUrl} alt={`Most recent cam image of ${camData.camName}`} />
                 </a>
                 <figcaption>Click for full size, more detail including reference imges on the
                     <a href={"./cams"}> cams page</a></figcaption>

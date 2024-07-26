@@ -212,15 +212,15 @@ export default function HomeMap() {
                 <div className={`${styles["input-group__container"]}`}>
                     <div className={`${styles["input-group"]}`}>
                         <label htmlFor="rivers">Rivers</label>
-                        <input type="checkbox" id="rivers" name="rivers" checked={featureOpts.rivers} onChange={handleOptsChange} />
+                        <input className={`${styles["checkbox"]}`} type="checkbox" id="rivers" name="rivers" checked={featureOpts.rivers} onChange={handleOptsChange} />
                     </div>
                     <div className={`${styles["input-group"]}`}>
                         <label htmlFor="cams">Cameras</label>
-                        <input type="checkbox" id="cams" name="cams" checked={featureOpts.cams} onChange={handleOptsChange} />
+                        <input className={`${styles["checkbox"]}`} type="checkbox" id="cams" name="cams" checked={featureOpts.cams} onChange={handleOptsChange} />
                     </div>
                     <div className={`${styles["input-group"]}`}>
                         <label htmlFor="gauges">Gauges </label>
-                        <input type="checkbox" id="gaugess" name="gauges" onChange={handleOptsChange} />
+                        <input className={`${styles["checkbox"]}`} type="checkbox" id="gaugess" name="gauges" onChange={handleOptsChange} />
                     </div>
                 </div>
             </div>
