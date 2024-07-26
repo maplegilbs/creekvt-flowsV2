@@ -59,8 +59,8 @@
     }
 
     .level-status {
-        width: 80%;
-        align-self: flex-start;
+        width: 100%;
+        text-align: center  ;
         font-weight: 600;
         padding: 0 .25rem;
     }
@@ -88,7 +88,6 @@
 
                     &:nth-child(2) {
                         font-size: .75rem;
-                        align-self: flex-start;
                         margin-left: 1rem;
                     }
                 }
@@ -103,7 +102,7 @@
                 font-size: .8rem;
                 text-transform: uppercase;
                 font-weight: 600;
-                margin: 0 1rem;
+                margin: 0 .5rem;
             }
         }
     }

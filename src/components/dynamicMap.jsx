@@ -17,9 +17,7 @@ function MapComponent({ featureOpts }) {
     const [myMap, setMyMap] = useState();
     const [dataLayers, setDataLayers] = useState({ baseRivers: null, overlayRivers: null, cams: null, gauges: null })
     const mapRef = useRef();
-
-    console.log(featureOpts)
-
+   
     useEffect(() => {
         const buildMap = async () => {
             const newMap = new window.google.maps.Map(mapRef.current, {
@@ -46,7 +44,6 @@ function MapComponent({ featureOpts }) {
 
             let baseRiversDataLayer = new window.google.maps.Data();
             baseRiversDataLayer.addGeoJson(riverJSON)
-            baseRiversDataLayer.forEach(river => { river.setProperty("z-index", 0) })
             baseRiversDataLayer.forEach(river => {
                 let foundRiver = mergedRiverData.find(compareRiver => compareRiver.name === river.getProperty("Name"))
                 if (foundRiver) { river.setProperty("Level status", foundRiver.levelStatus) }
@@ -100,7 +97,6 @@ function MapComponent({ featureOpts }) {
     useEffect(() => {
         async function updateDataLayersShown() {
             if (featureOpts.rivers && dataLayers.baseRivers && !dataLayers.baseRivers.getMap()) {
-                console.log(dataLayers.baseRivers.getMap())
                 await dataLayers.baseRivers.setMap(myMap);
                 dataLayers.overlayRivers.setMap(myMap);
             }
@@ -197,6 +193,9 @@ function MapComponent({ featureOpts }) {
 
 export default function HomeMap() {
     const [featureOpts, setFeatureOpts] = useState({ rivers: true, cams: false, gauges: false })
+    const componentContainerRef = useRef()
+
+    useEffect(()=>{setTimeout(()=>componentContainerRef.current.scrollIntoView({block: "end", behavior: "smooth"}), 500)},[componentContainerRef])
 
     function handleOptsChange(event) {
         console.log(event.target.name, event.target.checked)
@@ -206,7 +205,7 @@ export default function HomeMap() {
         })
     }
     return (
-        <div className={`${styles["component__container"]}`}>
+        <div ref={componentContainerRef} className={`${styles["component__container"]}`}>
             <div className={`${styles["features-options"]}`}>
                 <h4>Data Layers</h4>
                 <div className={`${styles["input-group__container"]}`}>

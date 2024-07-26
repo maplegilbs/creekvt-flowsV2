@@ -18,7 +18,7 @@
         h4 {
             font-size: 1rem;
             text-transform: uppercase;
-            margin: .5rem 0;
+            margin: .25rem 0;
             color: white;
             font-weight: 600;
         }
@@ -42,16 +42,18 @@
 
                 .checkbox {
                     appearance: none;
-                    width: .85rem;
-                    height: .85rem;
+                    width: 1rem;
+                    height: 1rem;
                     border-radius: 3px;
                     position: relative;
                     cursor: pointer;
                     outline: none;
                     background-color: white;
+                    border: 1px solid white;
 
                     &:checked {
                         background-color: #6ccece;
+                        background-color: gv.$primary_light;
                         display: flex;
                         justify-content: center;
                         align-items: center;
@@ -60,7 +62,7 @@
                     &:checked::after {
                         content: "X";
                         text-shadow: .05rem .05rem 2px black;
-                        font-size: 0.8rem;
+                        font-size: 0.7rem;
                         font-weight: 700;
                         color: white;
                         line-height: 0px;
@@ -144,38 +146,46 @@
 
 
 @media screen and (min-width: 640px) {
+    .component__container {
+        .features-options {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    .map__container {
-        .legend {
-            .legend-item {
-                p {
-                    margin: 0 .5rem;
-                    font-size: 1.2rem;
+        .map__container {
+            .legend {
+                .legend-item {
+                    p {
+                        margin: 0 .5rem;
+                        font-size: 1.2rem;
 
+                    }
+                }
+
+                .running-line {
+                    height: .5rem;
+                }
+
+                .low-line {
+                    height: .5rem;
+                }
+
+                .high-line {
+                    height: .5rem;
                 }
             }
-
-            .running-line {
-                height: .5rem;
-            }
-
-            .low-line {
-                height: .5rem;
-            }
-
-            .high-line {
-                height: .5rem;
-            }
         }
-    }
 
-    .map {
-        height: 100%;
+        .map {
+            height: 100%;
+        }
     }
 }
 
 @media screen and (max-width: 380px) {
     .component__container {
+
         .map__container {
             .legend {
                 max-width: 75%;

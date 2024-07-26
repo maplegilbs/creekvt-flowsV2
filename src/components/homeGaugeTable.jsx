@@ -27,8 +27,8 @@ function GaugeInstructions({ setIsModalActive }) {
 function filterGauges(river, index) {
     return (
         Object.keys(river).includes("text") ?
-            <tr className={`${styles["sort-header"]} ${homeTableStyles["sort__header"]}`} style={{ background: `${river.color}` }}><td colSpan={"100%"}>{river.text}</td></tr> :
-            <RiverFlowRow river={river} index={index} />
+            <tr key={index} className={`${styles["sort-header"]} ${homeTableStyles["sort__header"]}`} style={{ background: `${river.color}` }}><td colSpan={"100%"}>{river.text}</td></tr> :
+            <RiverFlowRow key={index} river={river} index={index} />
     )
 }
 

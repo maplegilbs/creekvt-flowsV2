@@ -50,16 +50,12 @@ export default function Home() {
                     </header>
                     <hr />
                     <div ref={containerRef} className={`${styles["card__container"]}`}>
-                        {/* {isMapToggled && */}
-                            <div ref={mapRef} className={`${styles["inner__container-card"]} ${styles["map__container"]} ${isMapToggled ? styles["map-visible"] : ""}`}>
-                                <HomeMap />
-                            </div>
-                         {/* } */}
-                         {/* {!isMapToggled && */}
-                            <div ref={tableRef} className={`${styles["inner__container-card"]} ${styles["table__container"]} ${!isMapToggled ? styles["table-visible"] : ""}`}>
-                                <HomeGaugesTable />
-                            </div>
-                         {/* } */}
+                        <div ref={mapRef} className={`${styles["inner__container-card"]} ${styles["map__container"]} ${isMapToggled ? styles["map-visible"] : ""}`}>
+                            <HomeMap />
+                        </div>
+                        <div ref={tableRef} className={`${styles["inner__container-card"]} ${styles["table__container"]} ${!isMapToggled ? styles["table-visible"] : ""}`}>
+                            <HomeGaugesTable />
+                        </div>
 
                     </div>
                 </div>
