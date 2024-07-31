@@ -17,7 +17,7 @@ function MapComponent({ featureOpts }) {
     const [myMap, setMyMap] = useState();
     const [dataLayers, setDataLayers] = useState({ baseRivers: null, overlayRivers: null, cams: null, gauges: null })
     const mapRef = useRef();
-   
+
     useEffect(() => {
         const buildMap = async () => {
             const newMap = new window.google.maps.Map(mapRef.current, {
@@ -37,6 +37,7 @@ function MapComponent({ featureOpts }) {
         if (mapRef.current) buildMap()
     }, [mapRef.current]);
 
+    //use effect to add a rivers data layer and set it in the dataLayers state variable
     useEffect(() => {
         async function displayRivers() {
             let riverResponse = await fetch("https://creekvt.com/FlowsPageAssets/all_rivers_colorless.geojson")
@@ -94,28 +95,10 @@ function MapComponent({ featureOpts }) {
         if (myMap && mergedRiverData) { displayRivers() }
     }, [mergedRiverData, myMap])
 
-    useEffect(() => {
-        async function updateDataLayersShown() {
-            if (featureOpts.rivers && dataLayers.baseRivers && !dataLayers.baseRivers.getMap()) {
-                await dataLayers.baseRivers.setMap(myMap);
-                dataLayers.overlayRivers.setMap(myMap);
-            }
-            if (!featureOpts.rivers && dataLayers.baseRivers) {
-                dataLayers.baseRivers.setMap(null);
-                dataLayers.overlayRivers.setMap(null);
-            }
-            if (featureOpts.cams && dataLayers.cams && !dataLayers.cams.getMap()) {
-                dataLayers.cams.setMap(myMap);
-            }
-            if (!featureOpts.cams && dataLayers.cams) {
-                dataLayers.cams.setMap(null);
-            }
-        }
-        updateDataLayersShown()
-
-    }, [featureOpts, dataLayers])
 
 
+
+    //use effect to add a cameras data layer and set it in the dataLayers state variable
     useEffect(() => {
         if (myMap) {
             async function displayCams() {
@@ -155,6 +138,26 @@ function MapComponent({ featureOpts }) {
         }
     }, [myMap])
 
+    //use effect to handle the updating of displayed layers based on the featureOpts property set by the parent home map component (in this file)
+    useEffect(() => {
+        async function updateDataLayersShown() {
+            if (featureOpts.rivers && dataLayers.baseRivers && !dataLayers.baseRivers.getMap()) {
+                await dataLayers.baseRivers.setMap(myMap);
+                dataLayers.overlayRivers.setMap(myMap);
+            }
+            if (!featureOpts.rivers && dataLayers.baseRivers) {
+                dataLayers.baseRivers.setMap(null);
+                dataLayers.overlayRivers.setMap(null);
+            }
+            if (featureOpts.cams && dataLayers.cams && !dataLayers.cams.getMap()) {
+                dataLayers.cams.setMap(myMap);
+            }
+            if (!featureOpts.cams && dataLayers.cams) {
+                dataLayers.cams.setMap(null);
+            }
+        }
+        updateDataLayersShown()
+    }, [featureOpts, dataLayers])
 
     return (
         <>
@@ -195,7 +198,7 @@ export default function HomeMap() {
     const [featureOpts, setFeatureOpts] = useState({ rivers: true, cams: false, gauges: false })
     const componentContainerRef = useRef()
 
-    useEffect(()=>{setTimeout(()=>componentContainerRef.current.scrollIntoView({block: "end", behavior: "smooth"}), 500)},[componentContainerRef])
+    useEffect(() => { setTimeout(() => componentContainerRef.current.scrollIntoView({ block: "end", behavior: "smooth" }), 500) }, [componentContainerRef])
 
     function handleOptsChange(event) {
         console.log(event.target.name, event.target.checked)

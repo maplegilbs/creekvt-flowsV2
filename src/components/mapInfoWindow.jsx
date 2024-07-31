@@ -47,7 +47,7 @@ function CamInfoWindow({ camData, infoWindow }) {
 
     return (
         <div className={`${styles["info-window__container"]}`}>
-            <button onClick={() => infoWindow.close()} className={`${styles["button--close"]}`}><FontAwesomeIcon icon={faCircleXmark} /></button>
+            <button onClick={() => infoWindow.close()} className={`${styles["button--close"]}`}><FontAwesomeIcon icon={faCircleXmark} size="xl"/></button>
             <h4>{camData.camName}</h4>
             {/* {imageUrl && */}
             <figure>
