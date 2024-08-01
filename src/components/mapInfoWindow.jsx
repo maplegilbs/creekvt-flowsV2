@@ -64,6 +64,17 @@ function CamInfoWindow({ camData, infoWindow }) {
     )
 }
 
+
+function GaugeInfoWindow({ gaugeData, infoWindow }) {
+
+    return (
+        <div className={`${styles["info-window__container"]}`}>
+            <button onClick={() => infoWindow.close()} className={`${styles["button--close"]}`}><FontAwesomeIcon icon={faCircleXmark} size="xl"/></button>
+            {gaugeData.name}
+        </div>
+    )
+}
+
 export default function renderInfoWindow(data, infoWindow) {
     let targetDiv = document.createElement('div');
     const root = ReactDOM.createRoot(targetDiv);
@@ -71,6 +82,9 @@ export default function renderInfoWindow(data, infoWindow) {
     if (data.type === "cam") {
         console.log("camera");
         root.render(<CamInfoWindow camData={data} infoWindow={infoWindow} />)
+    }
+    else if(data.type == "gauge"){
+        root.render(<GaugeInfoWindow gaugeData={data} infoWindow={infoWindow} />)
     }
     else {
         root.render(<RiverInfoWindow riverData={data} infoWindow={infoWindow} />)

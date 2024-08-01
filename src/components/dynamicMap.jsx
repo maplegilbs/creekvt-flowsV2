@@ -12,12 +12,19 @@ import { primaryMapStyles } from "../utils/mapStylingOptions";
 //Styles
 import styles from "./dynamicMap.module.scss"
 
+import {geoJSONData} from "../utils/gauges"
+
+
+
 function MapComponent({ featureOpts }) {
     const { gaugeFetchAndMergeStatus, mergedRiverData } = useContext(RiverDataWithGaugeInfoContext);
     const [myMap, setMyMap] = useState();
     const [dataLayers, setDataLayers] = useState({ baseRivers: null, overlayRivers: null, cams: null, gauges: null })
     const mapRef = useRef();
 
+    console.log(dataLayers)
+
+    //setting up basemap and displaying to page
     useEffect(() => {
         const buildMap = async () => {
             const newMap = new window.google.maps.Map(mapRef.current, {
@@ -42,7 +49,6 @@ function MapComponent({ featureOpts }) {
         async function displayRivers() {
             let riverResponse = await fetch("https://creekvt.com/FlowsPageAssets/all_rivers_colorless.geojson")
             let riverJSON = await riverResponse.json();
-
             let baseRiversDataLayer = new window.google.maps.Data();
             baseRiversDataLayer.addGeoJson(riverJSON)
             baseRiversDataLayer.forEach(river => {
@@ -57,7 +63,6 @@ function MapComponent({ featureOpts }) {
                     return { strokeColor: '#000000', strokeWeight: 4.5 }
                 }
             })
-
             let overlayRiversDataLayer = new window.google.maps.Data();
             overlayRiversDataLayer.addGeoJson(riverJSON)
             overlayRiversDataLayer.forEach(river => {
@@ -78,7 +83,6 @@ function MapComponent({ featureOpts }) {
                     return { strokeColor: '#888888', strokeWeight: 1.5 }
                 }
             })
-
             let openInfoWindow;
             overlayRiversDataLayer.addListener('click', (event) => {
                 let river = event.feature.getProperty("Name");
@@ -94,8 +98,6 @@ function MapComponent({ featureOpts }) {
         }
         if (myMap && mergedRiverData) { displayRivers() }
     }, [mergedRiverData, myMap])
-
-
 
 
     //use effect to add a cameras data layer and set it in the dataLayers state variable
@@ -116,7 +118,6 @@ function MapComponent({ featureOpts }) {
                             }
                         }
                     }
-
                 })
                 camsDataLayer.addListener('click', event => {
                     let openInfoWindow;
@@ -129,14 +130,54 @@ function MapComponent({ featureOpts }) {
                     let type = "cam";
                     openInfoWindow.setContent(renderInfoWindow({ camName, camApiEndpoint, type }, openInfoWindow))
                     openInfoWindow.open(myMap)
-
                 })
                 setDataLayers(prev => { return { ...prev, cams: camsDataLayer } })
-
             }
             displayCams()
         }
     }, [myMap])
+
+
+    //use effect to add a gauges data layer and set it in the dataLayers state variable
+    useEffect(() => {
+        if (myMap) {
+            async function displayGauges() {
+                // let camsResponse = await fetch("../../public/USGS_streamgages_25th_75th_percentile.geojson")
+                // let camsJSON = await camsResponse.json();
+                let gaugesDataLayer = new window.google.maps.Data();
+                gaugesDataLayer.addGeoJson(geoJSONData)
+                gaugesDataLayer.setStyle(feature => {
+                    // if (feature.Fg.type === 'cam') {
+                        return {
+                            icon: {
+                                path: window.google.maps.SymbolPath.CIRCLE,
+                                scale: 3, // Radius of the circle in pixels
+                                fillColor: '#339933',
+                                fillOpacity: 1,
+                                strokeColor: '#000000',
+                                strokeWeight: 1
+                              }
+                            
+                        }
+                    // }
+                })
+                gaugesDataLayer.addListener('click', event => {
+                    let openInfoWindow;
+                    openInfoWindow = new window.google.maps.InfoWindow({
+                        position: event.latLng,
+                        headerDisabled: true
+                    })
+                    let gaugeName = event.feature.getProperty("name");
+                    let type = "gauge";
+                    openInfoWindow.setContent(renderInfoWindow({ name: gaugeName, type }, openInfoWindow))
+                    openInfoWindow.open(myMap)
+                })
+                setDataLayers(prev => { return { ...prev, gauges: gaugesDataLayer } })
+            }
+            displayGauges()
+        }
+    }, [myMap])
+
 
     //use effect to handle the updating of displayed layers based on the featureOpts property set by the parent home map component (in this file)
     useEffect(() => {
@@ -154,6 +195,12 @@ function MapComponent({ featureOpts }) {
             }
             if (!featureOpts.cams && dataLayers.cams) {
                 dataLayers.cams.setMap(null);
+            }
+            if (featureOpts.gauges && dataLayers.gauges && !dataLayers.gauges.getMap()) {
+                dataLayers.gauges.setMap(myMap);
+            }
+            if (!featureOpts.gauges && dataLayers.gauges) {
+                dataLayers.gauges.setMap(null);
             }
         }
         updateDataLayersShown()
