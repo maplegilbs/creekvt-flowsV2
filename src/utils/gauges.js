@@ -661,6 +661,31 @@ export const geoJSONData = {
         {
             "type": "Feature",
             "properties": {
+                "ID": "01170100", "name": "GREEN RIVER NEAR COLRAIN, MA"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -72.67064738,
+                    42.7034169
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ID": "01333000", "name": "GREEN RIVER AT WILLIAMSTOWN, MA"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -73.19675110,42.70886815
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
                 "ID": "04296280", "name": "BARTON RIVER NEAR COVENTRY, VT"
             },
             "geometry": {

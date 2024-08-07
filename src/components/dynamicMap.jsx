@@ -12,17 +12,17 @@ import { primaryMapStyles } from "../utils/mapStylingOptions";
 //Styles
 import styles from "./dynamicMap.module.scss"
 
-import {geoJSONData} from "../utils/gauges"
+import { geoJSONData } from "../utils/gauges"
 
 
 
 function MapComponent({ featureOpts }) {
     const { gaugeFetchAndMergeStatus, mergedRiverData } = useContext(RiverDataWithGaugeInfoContext);
-    const [myMap, setMyMap] = useState();
+    const [myMap, setMyMap] = useState(null);
     const [dataLayers, setDataLayers] = useState({ baseRivers: null, overlayRivers: null, cams: null, gauges: null })
     const mapRef = useRef();
+    if (!dataLayers.baseRivers && !dataLayers.overlayRivers && dataLayers.gauges) { console.log('gauges loaded first!') }
 
-    console.log(dataLayers)
 
     //setting up basemap and displaying to page
     useEffect(() => {
@@ -46,57 +46,59 @@ function MapComponent({ featureOpts }) {
 
     //use effect to add a rivers data layer and set it in the dataLayers state variable
     useEffect(() => {
-        async function displayRivers() {
-            let riverResponse = await fetch("https://creekvt.com/FlowsPageAssets/all_rivers_colorless.geojson")
-            let riverJSON = await riverResponse.json();
-            let baseRiversDataLayer = new window.google.maps.Data();
-            baseRiversDataLayer.addGeoJson(riverJSON)
-            baseRiversDataLayer.forEach(river => {
-                let foundRiver = mergedRiverData.find(compareRiver => compareRiver.name === river.getProperty("Name"))
-                if (foundRiver) { river.setProperty("Level status", foundRiver.levelStatus) }
-            })
-            baseRiversDataLayer.setStyle(function (feature) {
-                if (["running", "too high"].includes(feature.Fg["Level status"])) {
-                    return { strokeColor: '#000000', strokeWeight: 6.5 }
-                }
-                if ((feature.Fg["Level status"] === "too low" || !feature.Fg["Level status"])) {
-                    return { strokeColor: '#000000', strokeWeight: 4.5 }
-                }
-            })
-            let overlayRiversDataLayer = new window.google.maps.Data();
-            overlayRiversDataLayer.addGeoJson(riverJSON)
-            overlayRiversDataLayer.forEach(river => {
-                let foundRiver = mergedRiverData.find(compareRiver => compareRiver.name === river.getProperty("Name"))
-                if (foundRiver) { river.setProperty("Level status", foundRiver.levelStatus) }
-            })
-            overlayRiversDataLayer.setStyle(function (feature) {
-                if (feature.Fg["Level status"] === "running") {
-                    return { strokeColor: '#00cc33', strokeWeight: 4.5 }
-                }
-                else if (feature.Fg["Level status"] === "too high") {
-                    return { strokeColor: '#ff0033', strokeWeight: 3.5 }
-                }
-                else if (feature.Fg["Level status"] === "too low") {
-                    return { strokeColor: '#cc8855', strokeWeight: 1.5 }
-                }
-                else {
-                    return { strokeColor: '#888888', strokeWeight: 1.5 }
-                }
-            })
-            let openInfoWindow;
-            overlayRiversDataLayer.addListener('click', (event) => {
-                let river = event.feature.getProperty("Name");
-                let foundRiver = mergedRiverData.find(compareRiver => compareRiver.name.toLowerCase() === river.toLowerCase());
-                openInfoWindow = new window.google.maps.InfoWindow({
-                    position: event.latLng,
-                    headerDisabled: true
+        if (myMap && mergedRiverData) {
+            async function displayRivers() {
+                let riverResponse = await fetch("https://creekvt.com/FlowsPageAssets/all_rivers_colorless.geojson")
+                let riverJSON = await riverResponse.json();
+                let baseRiversDataLayer = new window.google.maps.Data();
+                baseRiversDataLayer.addGeoJson(riverJSON)
+                baseRiversDataLayer.forEach(river => {
+                    let foundRiver = mergedRiverData.find(compareRiver => compareRiver.name === river.getProperty("Name"))
+                    if (foundRiver) { river.setProperty("Level status", foundRiver.levelStatus) }
                 })
-                openInfoWindow.setContent(renderInfoWindow(foundRiver, openInfoWindow));
-                openInfoWindow.open(myMap)
-            })
-            setDataLayers(prev => { return { ...prev, baseRivers: baseRiversDataLayer, overlayRivers: overlayRiversDataLayer } })
+                baseRiversDataLayer.setStyle(function (feature) {
+                    if (["running", "too high"].includes(feature.Fg["Level status"])) {
+                        return { strokeColor: '#000000', strokeWeight: 6.5 }
+                    }
+                    if ((feature.Fg["Level status"] === "too low" || !feature.Fg["Level status"])) {
+                        return { strokeColor: '#000000', strokeWeight: 4.5 }
+                    }
+                })
+                let overlayRiversDataLayer = new window.google.maps.Data();
+                overlayRiversDataLayer.addGeoJson(riverJSON)
+                overlayRiversDataLayer.forEach(river => {
+                    let foundRiver = mergedRiverData.find(compareRiver => compareRiver.name === river.getProperty("Name"))
+                    if (foundRiver) { river.setProperty("Level status", foundRiver.levelStatus) }
+                })
+                overlayRiversDataLayer.setStyle(function (feature) {
+                    if (feature.Fg["Level status"] === "running") {
+                        return { strokeColor: '#00cc33', strokeWeight: 4.5 }
+                    }
+                    else if (feature.Fg["Level status"] === "too high") {
+                        return { strokeColor: '#ff0033', strokeWeight: 3.5 }
+                    }
+                    else if (feature.Fg["Level status"] === "too low") {
+                        return { strokeColor: '#cc8855', strokeWeight: 1.5 }
+                    }
+                    else {
+                        return { strokeColor: '#888888', strokeWeight: 1.5 }
+                    }
+                })
+                let openInfoWindow;
+                overlayRiversDataLayer.addListener('click', (event) => {
+                    let river = event.feature.getProperty("Name");
+                    let foundRiver = mergedRiverData.find(compareRiver => compareRiver.name.toLowerCase() === river.toLowerCase());
+                    openInfoWindow = new window.google.maps.InfoWindow({
+                        position: event.latLng,
+                        headerDisabled: true
+                    })
+                    openInfoWindow.setContent(renderInfoWindow(foundRiver, openInfoWindow));
+                    openInfoWindow.open(myMap)
+                })
+                setDataLayers(prev => { return { ...prev, baseRivers: baseRiversDataLayer, overlayRivers: overlayRiversDataLayer } })
+            }
+            displayRivers()
         }
-        if (myMap && mergedRiverData) { displayRivers() }
     }, [mergedRiverData, myMap])
 
 
@@ -147,19 +149,17 @@ function MapComponent({ featureOpts }) {
                 let gaugesDataLayer = new window.google.maps.Data();
                 gaugesDataLayer.addGeoJson(geoJSONData)
                 gaugesDataLayer.setStyle(feature => {
-                    // if (feature.Fg.type === 'cam') {
-                        return {
-                            icon: {
-                                path: window.google.maps.SymbolPath.CIRCLE,
-                                scale: 3, // Radius of the circle in pixels
-                                fillColor: '#339933',
-                                fillOpacity: 1,
-                                strokeColor: '#000000',
-                                strokeWeight: 1
-                              }
-                            
+                    return {
+                        icon: {
+                            path: window.google.maps.SymbolPath.CIRCLE,
+                            scale: 4,
+                            fillColor: '#335533',
+                            fillOpacity: 1,
+                            strokeColor: '#000000',
+                            strokeWeight: 1
                         }
-                    // }
+
+                    }
                 })
                 gaugesDataLayer.addListener('click', event => {
                     let openInfoWindow;
@@ -182,8 +182,8 @@ function MapComponent({ featureOpts }) {
     //use effect to handle the updating of displayed layers based on the featureOpts property set by the parent home map component (in this file)
     useEffect(() => {
         async function updateDataLayersShown() {
-            if (featureOpts.rivers && dataLayers.baseRivers && !dataLayers.baseRivers.getMap()) {
-                await dataLayers.baseRivers.setMap(myMap);
+            if (featureOpts.rivers && dataLayers.baseRivers && dataLayers.overlayRivers && !dataLayers.baseRivers.getMap()) {
+                dataLayers.baseRivers.setMap(myMap);
                 dataLayers.overlayRivers.setMap(myMap);
             }
             if (!featureOpts.rivers && dataLayers.baseRivers) {
