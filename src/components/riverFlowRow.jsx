@@ -58,9 +58,9 @@ export default function RiverFlowRow({ river, index }) {
                         </div>
                     </td>
                     <td className={`${styles["mobile-hide"]}`}>{river.gauge1Max ? river.gauge1Max : "-"} <hr /> {river.gauge1Min ? river.gauge1Min : "-"}</td>
-                    <td className={`${styles["gaugeName"]} ${styles["mobile-hide"]}`}><a href={`https://waterdata.usgs.gov/monitoring-location/${river.gauge1ID}`}>{river.gauge1Name}</a></td>
+                    <td className={`${styles["gaugeName"]} ${styles["mobile-hide"]}`}><a target="_blank" href={`https://waterdata.usgs.gov/monitoring-location/${river.gauge1ID}`}>{river.gauge1Name}</a></td>
                     <td className={`${styles["updateTime"]} ${styles["mobile-hide"]}`}>{gauge1FormattedTime}</td>
-                    <td className={`${styles["gaugeName"]} ${styles["mobile-show"]}`}>{river.gauge1Name.slice(0, river.gauge1Name.toLowerCase().search(/\bnear\b|\bat\b|@|\bbelow\b|\babove\b/))}<br /><br />{gauge1FormattedTime}</td>
+                    <td className={`${styles["gaugeName"]} ${styles["mobile-show"]}`}><a target="_blank" href={`https://waterdata.usgs.gov/monitoring-location/${river.gauge1ID}`}>{river.gauge1Name.slice(0, river.gauge1Name.toLowerCase().search(/\bnear\b|\bat\b|@|\bbelow\b|\babove\b/))}<br /><br />{gauge1FormattedTime}</a></td>
                 </tr>
             </>
         )
