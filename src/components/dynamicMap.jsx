@@ -21,7 +21,6 @@ function MapComponent({ featureOpts }) {
     const [myMap, setMyMap] = useState(null);
     const [dataLayers, setDataLayers] = useState({ baseRivers: null, overlayRivers: null, cams: null, gauges: null })
     const mapRef = useRef();
-    if (!dataLayers.baseRivers && !dataLayers.overlayRivers && dataLayers.gauges) { console.log('gauges loaded first!') }
 
 
     //setting up basemap and displaying to page
@@ -41,7 +40,7 @@ function MapComponent({ featureOpts }) {
             newMap.fitBounds(bounds)
             setMyMap(newMap)
         }
-        if (mapRef.current) buildMap()
+        if (mapRef.current && !myMap) buildMap()
     }, [mapRef.current]);
 
     //use effect to add a rivers data layer and set it in the dataLayers state variable
@@ -58,11 +57,22 @@ function MapComponent({ featureOpts }) {
                 })
                 baseRiversDataLayer.setStyle(function (feature) {
                     if (["running", "too high"].includes(feature.Fg["Level status"])) {
-                        return { strokeColor: '#000000', strokeWeight: 6.5 }
+                        return { strokeColor: '#000000', strokeWeight: 6.5, zIndex: 0 }
                     }
                     if ((feature.Fg["Level status"] === "too low" || !feature.Fg["Level status"])) {
-                        return { strokeColor: '#000000', strokeWeight: 4.5 }
+                        return { strokeColor: '#000000', strokeWeight: 4.5, zIndex: 0 }
                     }
+                })
+                let openInfoWindow;
+                baseRiversDataLayer.addListener('click', (event) => {
+                    let river = event.feature.getProperty("Name");
+                    let foundRiver = mergedRiverData.find(compareRiver => compareRiver.name.toLowerCase() === river.toLowerCase());
+                    openInfoWindow = new window.google.maps.InfoWindow({
+                        position: event.latLng,
+                        headerDisabled: true
+                    })
+                    openInfoWindow.setContent(renderInfoWindow(foundRiver, openInfoWindow));
+                    openInfoWindow.open(myMap)
                 })
                 let overlayRiversDataLayer = new window.google.maps.Data();
                 overlayRiversDataLayer.addGeoJson(riverJSON)
@@ -72,19 +82,19 @@ function MapComponent({ featureOpts }) {
                 })
                 overlayRiversDataLayer.setStyle(function (feature) {
                     if (feature.Fg["Level status"] === "running") {
-                        return { strokeColor: '#00cc33', strokeWeight: 4.5 }
+                        return { strokeColor: '#00cc33', strokeWeight: 4.5, zIndex: 2 }
                     }
                     else if (feature.Fg["Level status"] === "too high") {
-                        return { strokeColor: '#ff0033', strokeWeight: 3.5 }
+                        return { strokeColor: '#ff0033', strokeWeight: 3.5, zIndex: 2 }
                     }
                     else if (feature.Fg["Level status"] === "too low") {
-                        return { strokeColor: '#cc8855', strokeWeight: 1.5 }
+                        return { strokeColor: '#cc8855', strokeWeight: 1.5, zIndex: 2 }
                     }
                     else {
-                        return { strokeColor: '#888888', strokeWeight: 1.5 }
+                        return { strokeColor: '#888888', strokeWeight: 1.5, zIndex: 2 }
                     }
                 })
-                let openInfoWindow;
+                // let openInfoWindow;
                 overlayRiversDataLayer.addListener('click', (event) => {
                     let river = event.feature.getProperty("Name");
                     let foundRiver = mergedRiverData.find(compareRiver => compareRiver.name.toLowerCase() === river.toLowerCase());
@@ -144,8 +154,6 @@ function MapComponent({ featureOpts }) {
     useEffect(() => {
         if (myMap) {
             async function displayGauges() {
-                // let camsResponse = await fetch("../../public/USGS_streamgages_25th_75th_percentile.geojson")
-                // let camsJSON = await camsResponse.json();
                 let gaugesDataLayer = new window.google.maps.Data();
                 gaugesDataLayer.addGeoJson(geoJSONData)
                 gaugesDataLayer.setStyle(feature => {
@@ -248,7 +256,6 @@ export default function HomeMap() {
     useEffect(() => { setTimeout(() => componentContainerRef.current.scrollIntoView({ block: "end", behavior: "smooth" }), 500) }, [componentContainerRef])
 
     function handleOptsChange(event) {
-        console.log(event.target.name, event.target.checked)
         setFeatureOpts(prev => {
             let updatedOpts = { ...prev, [event.target.name]: event.target.checked }
             return updatedOpts

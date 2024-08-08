@@ -16,7 +16,6 @@ export default function Forecasts() {
     const [isScrolled, setIsScrolled] = useState(false);
     const riverSelectRef = useRef();
 
-    console.log(isScrolled)
     useEffect(() => {
         function scrollAction() {
             if (!isScrolled && riverSelectRef.current.getBoundingClientRect().y < 10) {
