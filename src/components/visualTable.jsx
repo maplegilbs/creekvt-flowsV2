@@ -17,7 +17,6 @@ export default function VisualTable({ reportSubmitted }) {
     const [filters, setFilters] = useState({ limit: 5 }) //riverName, limit
     const [levelReports, setLevelReports] = useState(null)
     const riverData = useContext(RiverContext).riverData;
-    // console.log(filters, riverData)
 
     function buildQueryString() {
         if (Object.keys(filters).length < 1) return null;
@@ -67,7 +66,7 @@ export default function VisualTable({ reportSubmitted }) {
                 <h2 className={`${styles["section__header"]}`}>Recent Reports</h2>
                 <hr />
                 {(status === 'pending') &&
-                    <div className={`${styles["visual-table__container"]}`}>
+                    <div style={{overflowX: "hidden", maxWidth: "initial" }} className={`${styles["visual-table__container"]}`}>
                         <Loader type={'spinner'} text={'Loading flow reports...'} />
                     </div>
                 }
