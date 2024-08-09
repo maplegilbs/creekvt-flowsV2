@@ -57,7 +57,7 @@ function MapComponent({ featureOpts }) {
                 })
                 baseRiversDataLayer.setStyle(function (feature) {
                     if (["running", "too high"].includes(feature.Fg["Level status"])) {
-                        return { strokeColor: '#000000', strokeWeight: 6.5, zIndex: 0 }
+                        return { strokeColor: '#000000', strokeWeight: 7.5, zIndex: 0 }
                     }
                     if ((feature.Fg["Level status"] === "too low" || !feature.Fg["Level status"])) {
                         return { strokeColor: '#000000', strokeWeight: 4.5, zIndex: 0 }
@@ -82,7 +82,7 @@ function MapComponent({ featureOpts }) {
                 })
                 overlayRiversDataLayer.setStyle(function (feature) {
                     if (feature.Fg["Level status"] === "running") {
-                        return { strokeColor: '#00cc33', strokeWeight: 4.5, zIndex: 2 }
+                        return { strokeColor: '#00bb33', strokeWeight: 4.5, zIndex: 2 }
                     }
                     else if (feature.Fg["Level status"] === "too high") {
                         return { strokeColor: '#ff0033', strokeWeight: 3.5, zIndex: 2 }
@@ -169,6 +169,14 @@ function MapComponent({ featureOpts }) {
 
                     }
                 })
+                let gaugeInfo;
+                try {
+                    let gaugeResponse = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/levels/gaugeData`)
+                    gaugeInfo = await gaugeResponse.json()
+                } catch (error) {
+                    console.error(error)
+                    gaugeInfo = null
+                }
                 gaugesDataLayer.addListener('click', event => {
                     let openInfoWindow;
                     openInfoWindow = new window.google.maps.InfoWindow({
@@ -176,15 +184,16 @@ function MapComponent({ featureOpts }) {
                         headerDisabled: true
                     })
                     let gaugeName = event.feature.getProperty("name");
+                    let gaugeID = event.feature.getProperty("ID")
                     let type = "gauge";
-                    openInfoWindow.setContent(renderInfoWindow({ name: gaugeName, type }, openInfoWindow))
+                    openInfoWindow.setContent(renderInfoWindow({ gaugeID, gaugeName, type, gaugeInfo, mergedRiverData}, openInfoWindow))
                     openInfoWindow.open(myMap)
                 })
                 setDataLayers(prev => { return { ...prev, gauges: gaugesDataLayer } })
             }
             displayGauges()
         }
-    }, [myMap])
+    }, [myMap, mergedRiverData])
 
 
     //use effect to handle the updating of displayed layers based on the featureOpts property set by the parent home map component (in this file)

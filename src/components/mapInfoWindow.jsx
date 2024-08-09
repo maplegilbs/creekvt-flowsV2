@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom/client'
 import { useState, useEffect } from 'react'
 //Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
+import { faCircleXmark, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 //Styles
 import styles from "./mapInfoWindow.module.scss"
 
 function RiverInfoWindow({ riverData, infoWindow }) {
     return (
         <div className={`${styles["info-window__container"]}`}>
-            <button onClick={() => infoWindow.close()} className={`${styles["button--close"]}`}><FontAwesomeIcon icon={faCircleXmark} size="xl"/></button>
+            <button onClick={() => infoWindow.close()} className={`${styles["button--close"]}`}><FontAwesomeIcon icon={faCircleXmark} size="xl" /></button>
             <h4>{riverData.name}</h4>
             <span className={`${styles["level-status"]}`} style={{ background: `linear-gradient(90deg, transparent 10%, ${riverData.flowBarColor} 20% 80%,  transparent 90%` }}>{`${riverData.levelStatus ? riverData.levelStatus.toUpperCase() : "\u00A0"}`}</span>
             <div className={`${styles["flow__container"]}`}>
@@ -47,13 +47,13 @@ function CamInfoWindow({ camData, infoWindow }) {
 
     return (
         <div className={`${styles["info-window__container"]}`}>
-            <button onClick={() => infoWindow.close()} className={`${styles["button--close"]}`}><FontAwesomeIcon icon={faCircleXmark} size="xl"/></button>
+            <button onClick={() => infoWindow.close()} className={`${styles["button--close"]}`}><FontAwesomeIcon icon={faCircleXmark} size="xl" /></button>
             <h4>{camData.camName}</h4>
             {/* {imageUrl && */}
             <figure>
                 <figcaption>Most recent image</figcaption>
                 <a target="_blank" href={imageUrl}>
-                    <img style={{opacity: `${imageUrl? 1 : 0}`}} src={imageUrl} alt={`Most recent cam image of ${camData.camName}`} />
+                    <img style={{ opacity: `${imageUrl ? 1 : 0}` }} src={imageUrl} alt={`Most recent cam image of ${camData.camName}`} />
                 </a>
                 <figcaption>Click for full size, more detail including reference imges on the
                     <a href={"./cams"}> cams page</a></figcaption>
@@ -67,10 +67,25 @@ function CamInfoWindow({ camData, infoWindow }) {
 
 function GaugeInfoWindow({ gaugeData, infoWindow }) {
 
+    let correlatedRivers = gaugeData.mergedRiverData.filter(river => river.gauge1ID == gaugeData.gaugeID).length > 0 ? gaugeData.mergedRiverData.filter(river => river.gauge1ID == gaugeData.gaugeID) : null;
+    let gaugeLevelObj = gaugeData.mergedRiverData.find(river => river.gauge1ID == gaugeData.gaugeID)
+    let gaugeLevel = null;
+    console.log(correlatedRivers)
+    if(gaugeLevelObj){gaugeLevel = gaugeLevelObj.gauge1Reading}
+
     return (
         <div className={`${styles["info-window__container"]}`}>
-            <button onClick={() => infoWindow.close()} className={`${styles["button--close"]}`}><FontAwesomeIcon icon={faCircleXmark} size="xl"/></button>
-            {gaugeData.name}
+            <button onClick={() => infoWindow.close()} className={`${styles["button--close"]}`}><FontAwesomeIcon icon={faCircleXmark} size="xl" /></button>
+            <h4>{gaugeData.gaugeName}</h4>
+            <h6>{gaugeLevel && gaugeLevel}</h6>
+            {correlatedRivers ?
+                <ul className={`${styles["rivers-list"]}`}>
+                     <li><span>River</span> <span className={`${styles["min-max"]}`}><span>Min</span><FontAwesomeIcon icon={faArrowRight} size="sm" />  <span>Max </span></span></li>
+                    {correlatedRivers.map(river => <li><span>{river.name}:  </span> {river.gauge1Min ?<span className={`${styles["min-max"]}`}><span>{river.gauge1Min}</span> <FontAwesomeIcon icon={faArrowRight} size="sm" /> <span>{river.gauge1Max}</span></span>: "No min / max established"}</li> )}
+                </ul>
+                :
+                <p>No rivers correlated to this gauge</p>
+            }
         </div>
     )
 }
@@ -78,12 +93,11 @@ function GaugeInfoWindow({ gaugeData, infoWindow }) {
 export default function renderInfoWindow(data, infoWindow) {
     let targetDiv = document.createElement('div');
     const root = ReactDOM.createRoot(targetDiv);
-    console.log(data)
     if (data.type === "cam") {
         console.log("camera");
         root.render(<CamInfoWindow camData={data} infoWindow={infoWindow} />)
     }
-    else if(data.type == "gauge"){
+    else if (data.type == "gauge") {
         root.render(<GaugeInfoWindow gaugeData={data} infoWindow={infoWindow} />)
     }
     else {
