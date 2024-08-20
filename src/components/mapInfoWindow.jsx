@@ -81,10 +81,10 @@ function GaugeInfoWindow({ gaugeData, infoWindow }) {
             {correlatedRivers ?
                 <ul className={`${styles["rivers-list"]}`}>
                      <li><span>River</span> <span className={`${styles["min-max"]}`}><span>Min</span><FontAwesomeIcon icon={faArrowRight} size="sm" />  <span>Max </span></span></li>
-                    {correlatedRivers.map(river => <li><span>{river.name}:  </span> {river.gauge1Min ?<span className={`${styles["min-max"]}`}><span>{river.gauge1Min}</span> <FontAwesomeIcon icon={faArrowRight} size="sm" /> <span>{river.gauge1Max}</span></span>: "No min / max established"}</li> )}
+                    {correlatedRivers.map(river => <li><span>{river.name}:  </span> {river.gauge1Min ?<span className={`${styles["min-max"]}`}><span>{river.gauge1Min}</span> <FontAwesomeIcon icon={faArrowRight} size="sm" /> <span>{river.gauge1Max}</span></span>: <span style={{textAlign: "right"}}>Not established</span>}</li> )}
                 </ul>
                 :
-                <p>No rivers correlated to this gauge</p>
+                <p className={`${styles["gauge-paragraph"]}`}>No rivers correlated to this gauge</p>
             }
         </div>
     )

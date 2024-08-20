@@ -323,19 +323,6 @@ export const geoJSONData = {
         {
             "type": "Feature",
             "properties": {
-                "ID": "01138500", "name": "CONNECTICUT RIVER AT WELLS RIVER, VT"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    -72.0417577,
-                    44.15339689
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
                 "ID": "01142500", "name": "AYERS BROOK AT RANDOLPH, VT"
             },
             "geometry": {
@@ -479,45 +466,6 @@ export const geoJSONData = {
         {
             "type": "Feature",
             "properties": {
-                "ID": "01135100", "name": "POPE BROOK TRIBUTARY (W-9), NR NORTH DANVILLE, VT"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    -72.1617667,
-                    44.49061087
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "ID": "04282581", "name": "EAST BR DEAD CREEK NEAR BRIDPORT, VT"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    -73.32063889,
-                    44.0286111
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "ID": "04282586", "name": "WEST BR DEAD CREEK NEAR ADDISON, VT"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    -73.3541667,
-                    44.04916667
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
                 "ID": "04282629", "name": "LITTLE OTTER CK AT MONKTON RD, NR FERRISBURGH, VT"
             },
             "geometry": {
@@ -525,19 +473,6 @@ export const geoJSONData = {
                 "coordinates": [
                     -73.1848694,
                     44.185725
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "ID": "04285800", "name": "NORTH BRANCH WINOOSKI RIVER AT MONTPELIER, VT"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    -72.5759425,
-                    44.2608926
                 ]
             }
         },
@@ -609,58 +544,6 @@ export const geoJSONData = {
         {
             "type": "Feature",
             "properties": {
-                "ID": "04292750", "name": "MILL RIVER AT GEORGIA SHORE RD, NR ST ALBANS, VT"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    -73.1437467,
-                    44.7797674
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "ID": "04292810", "name": "JEWETT BROOK AT VT 38, NEAR ST. ALBANS, VT"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    -73.1508333,
-                    44.8561111
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "ID": "04294140", "name": "ROCK RIVER NEAR HIGHGATE CENTER, VT"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    -72.9919444,
-                    44.96305556
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "ID": "04294300", "name": "PIKE RIVER AT EAST FRANKLIN, NR ENOSBURG FALLS, VT"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    -72.83346858,
-                    45.00282217
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
                 "ID": "01170100", "name": "GREEN RIVER NEAR COLRAIN, MA"
             },
             "geometry": {
@@ -680,6 +563,66 @@ export const geoJSONData = {
                 "type": "Point",
                 "coordinates": [
                     -73.19675110,42.70886815
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ID": "01130000", "name": "UPPER AMMONOOSUC RIVER NEAR GROVETON, NH"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -71.46897210,44.62505316
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ID": "01154950", "name": "COLD RIVER AT HIGH STREET, AT ALSTEAD, NH"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -72.36166670,43.14944444
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ID": "01144500", "name": "CONNECTICUT RIVER AT WEST LEBANON, NH"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -72.31231340,43.64618187
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ID": "04280450", "name": "METTAWEE RIVER NEAR MIDDLE GRANVILLE NY"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -73.28450000,43.46394444
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "ID": "01329490", "name": "BATTEN KILL BELOW MILL AT BATTENVILLE NY"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -73.42241670,43.10866667
                 ]
             }
         },
