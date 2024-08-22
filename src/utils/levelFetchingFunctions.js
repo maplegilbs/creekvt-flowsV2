@@ -27,7 +27,6 @@ function findMatchedReadingIndex(gaugeReadings, reportTime) {
 
 // input array of gaugeIds ordered by gauge1, gauge2
 // return gauge1Name, gauge1ReadingTime, gauge1Level, gauge1HourlyChange, gauge1Trend (repeat for gauge2)
-// export async function fetchGaugeDataForLevelReport(gauge1ID=null, gauge2ID=null){
 export async function fetchGaugeDataForLevelReport(gaugeList, tripDateTime, riverData) {
     let gaugeData = {};
     if (gaugeList.length > 0) {
@@ -64,7 +63,54 @@ export async function fetchGaugeDataForLevelReport(gaugeList, tripDateTime, rive
                         }
                     }
                 }
-                else {throw new Error(`A matching gauge could not be found for gaugeID ${gauge}`)}
+                else { throw new Error(`A matching gauge could not be found for gaugeID ${gauge}`) }
+            });
+        } catch (error) {
+            console.error(`There was an error fetching gauge data: ${error}`)
+            return gaugeData;
+        }
+    }
+    return gaugeData;
+}
+
+
+
+export async function fetchGaugeDataForMapGauges(gaugeList) {
+    let gaugeData = {};
+    if (gaugeList.length > 0) {
+        try {
+            let usgsDate = formatUSGSDateTimeQueryString();
+            let usgsURL = `https://nwis.waterservices.usgs.gov/nwis/iv/?format=json&sites=${gaugeList.join(",")}&parameterCd=00060${usgsDate}`
+            let usgsResponse = await fetch(usgsURL);
+            if (usgsResponse.status < 200 || usgsResponse.status > 299) { throw new Error(`Gauge data fetch error to url: ${usgsURL}`) }
+            let usgsData = await usgsResponse.json();
+            gaugeList.forEach((gauge, index) => {
+                let matchedGauge = usgsData.value.timeSeries.find(usgsGauge => usgsGauge.sourceInfo.siteCode[0].value == gauge);
+                if (matchedGauge) {
+                    let gaugeReadings = matchedGauge.values[0].value;
+                    let currentReadingTime = gaugeReadings[gaugeReadings.length - 1].dateTime;
+                    let currentLevel = gaugeReadings[gaugeReadings.length - 1].value;
+                    let curGauge = {}
+                    curGauge.siteName = matchedGauge.sourceInfo.siteName;
+                    curGauge.currentReadingTime = currentReadingTime;
+                    curGauge.currentReading = currentLevel;
+                    if (gaugeReadings.length> 0) {
+                        let currentTime = new Date(currentReadingTime);
+                        for (let j = 0; j < 20; j++) {
+                            let priorTime = new Date(gaugeReadings[gaugeReadings.length - 1 - j].dateTime);
+                            let elapsed = currentTime - priorTime;
+                            if (elapsed >= 3600000) {
+                                let priorLevel = gaugeReadings[gaugeReadings.length - 1 - j].value;
+                                curGauge.hourlyChange = Math.round((currentLevel - priorLevel) / (elapsed / 3600000));
+                                curGauge.trend = trend(currentLevel, priorLevel);
+                                j = 20;
+                            }
+                        }
+                    }
+                    gaugeData[gauge] = curGauge
+                }
+                else { throw new Error(`A matching gauge could not be found for gaugeID ${gauge}`) }
+                console.log(gaugeData)
             });
         } catch (error) {
             console.error(`There was an error fetching gauge data: ${error}`)

@@ -5,14 +5,15 @@ import renderInfoWindow from "./mapInfoWindow";
 import { RiverDataWithGaugeInfoContext } from "../pages/innerLayout";
 //Google maps
 import { Wrapper } from "@googlemaps/react-wrapper";
+import { geoJSONData } from "../utils/gauges"
 //Hooks
 import { useContext, useState, useEffect, useRef } from "react";
 //Libraries
 import { primaryMapStyles } from "../utils/mapStylingOptions";
+import { fetchGaugeDataForMapGauges } from "../utils/levelFetchingFunctions";
 //Styles
 import styles from "./dynamicMap.module.scss"
 
-import { geoJSONData } from "../utils/gauges"
 
 
 
@@ -155,20 +156,31 @@ function MapComponent({ featureOpts }) {
         if (myMap) {
             async function displayGauges() {
                 let gaugesDataLayer = new window.google.maps.Data();
-                gaugesDataLayer.addGeoJson(geoJSONData)
-                gaugesDataLayer.setStyle(feature => {
-                    return {
-                        icon: {
-                            path: window.google.maps.SymbolPath.CIRCLE,
-                            scale: 4,
-                            fillColor: '#335533',
-                            fillOpacity: 1,
-                            strokeColor: '#000000',
-                            strokeWeight: 1
-                        }
+                let gaugeGeoJSONInfo
+                try {
+                    let gaugeGeoJsonResponse = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/gauges/geoJSON`)
+                    gaugeGeoJSONInfo = await gaugeGeoJsonResponse.json()
+                    console.log(gaugeGeoJSONInfo)
+                } catch (error) {
+                    console.error(error)
+                    gaugeGeoJSONInfo = null
+                }
+                if (gaugeGeoJSONInfo) {
+                    gaugesDataLayer.addGeoJson(gaugeGeoJSONInfo)
+                    gaugesDataLayer.setStyle(feature => {
+                        return {
+                            icon: {
+                                path: window.google.maps.SymbolPath.CIRCLE,
+                                scale: 4,
+                                fillColor: '#335533',
+                                fillOpacity: 1,
+                                strokeColor: '#000000',
+                                strokeWeight: 1
+                            }
 
-                    }
-                })
+                        }
+                    })
+                }
                 let gaugeInfo;
                 try {
                     let gaugeResponse = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/levels/gaugeData`)
@@ -176,6 +188,14 @@ function MapComponent({ featureOpts }) {
                 } catch (error) {
                     console.error(error)
                     gaugeInfo = null
+                }
+                try {
+                    let gaugeResponse = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/gauges/`)
+                    let gaugeL = await gaugeResponse.json()
+                    fetchGaugeDataForMapGauges(gaugeL.map(gauge => gauge.usgsID))
+                    console.log(gaugeL.map(gauge => gauge.usgsID).join(", "))
+                } catch (error) {
+                    console.error(error)
                 }
                 gaugesDataLayer.addListener('click', event => {
                     let openInfoWindow;
@@ -186,7 +206,7 @@ function MapComponent({ featureOpts }) {
                     let gaugeName = event.feature.getProperty("name");
                     let gaugeID = event.feature.getProperty("ID")
                     let type = "gauge";
-                    openInfoWindow.setContent(renderInfoWindow({ gaugeID, gaugeName, type, gaugeInfo, mergedRiverData}, openInfoWindow))
+                    openInfoWindow.setContent(renderInfoWindow({ gaugeID, gaugeName, type, gaugeInfo, mergedRiverData }, openInfoWindow))
                     openInfoWindow.open(myMap)
                 })
                 setDataLayers(prev => { return { ...prev, gauges: gaugesDataLayer } })
