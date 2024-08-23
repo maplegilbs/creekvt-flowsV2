@@ -156,11 +156,10 @@ function MapComponent({ featureOpts }) {
         if (myMap) {
             async function displayGauges() {
                 let gaugesDataLayer = new window.google.maps.Data();
-                let gaugeGeoJSONInfo
+                let gaugeGeoJSONInfo = null;
                 try {
                     let gaugeGeoJsonResponse = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/gauges/geoJSON`)
                     gaugeGeoJSONInfo = await gaugeGeoJsonResponse.json()
-                    console.log(gaugeGeoJSONInfo)
                 } catch (error) {
                     console.error(error)
                     gaugeGeoJSONInfo = null
@@ -180,36 +179,33 @@ function MapComponent({ featureOpts }) {
 
                         }
                     })
-                }
-                let gaugeInfo;
-                try {
-                    let gaugeResponse = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/levels/gaugeData`)
-                    gaugeInfo = await gaugeResponse.json()
-                } catch (error) {
-                    console.error(error)
-                    gaugeInfo = null
-                }
-                try {
-                    let gaugeResponse = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/gauges/`)
-                    let gaugeL = await gaugeResponse.json()
-                    fetchGaugeDataForMapGauges(gaugeL.map(gauge => gauge.usgsID))
-                    console.log(gaugeL.map(gauge => gauge.usgsID).join(", "))
-                } catch (error) {
-                    console.error(error)
-                }
-                gaugesDataLayer.addListener('click', event => {
-                    let openInfoWindow;
-                    openInfoWindow = new window.google.maps.InfoWindow({
-                        position: event.latLng,
-                        headerDisabled: true
+                    let gaugeInfo;
+                    try {
+                        let gaugeResponse = await fetch(`${process.env.REACT_APP_SERVER}/creekvt_flows/gauges/gaugesInclRivers`)
+                        let gaugeList = await gaugeResponse.json()
+                        gaugeInfo = await fetchGaugeDataForMapGauges(gaugeList.map(gauge => gauge.usgsID))
+                        for (let gaugeID in gaugeInfo) {
+                            let riversList = gaugeList.find(gauge => gauge.usgsID === gaugeID).rivers.split(",")
+                            gaugeInfo[gaugeID].rivers = riversList
+                        }
+                    } catch (error) {
+                        console.error(error)
+                    }
+
+                    gaugesDataLayer.addListener('click', event => {
+                        let openInfoWindow;
+                        openInfoWindow = new window.google.maps.InfoWindow({
+                            position: event.latLng,
+                            headerDisabled: true
+                        })
+                        let gaugeName = event.feature.getProperty("name");
+                        let gaugeID = event.feature.getProperty("ID")
+                        let type = "gauge";
+                        openInfoWindow.setContent(renderInfoWindow({ gaugeID, gaugeName, type, gaugeInfo, mergedRiverData }, openInfoWindow))
+                        openInfoWindow.open(myMap)
                     })
-                    let gaugeName = event.feature.getProperty("name");
-                    let gaugeID = event.feature.getProperty("ID")
-                    let type = "gauge";
-                    openInfoWindow.setContent(renderInfoWindow({ gaugeID, gaugeName, type, gaugeInfo, mergedRiverData }, openInfoWindow))
-                    openInfoWindow.open(myMap)
-                })
-                setDataLayers(prev => { return { ...prev, gauges: gaugesDataLayer } })
+                    setDataLayers(prev => { return { ...prev, gauges: gaugesDataLayer } })
+                }
             }
             displayGauges()
         }

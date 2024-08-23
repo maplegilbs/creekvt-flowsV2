@@ -66,8 +66,23 @@
         padding: 0 .25rem;
     }
 
+    .gauge-level {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-weight: 600;
+        font-size: 1.1rem;
+        padding: .5rem 0.25rem;
+        margin: 0;
 
-    .gauge-paragraph{
+        .level-change {
+            font-size: .9rem;
+            margin: .5rem;
+            font-weight: 400;
+        }
+    }
+
+    .gauge-paragraph {
         line-height: 1rem;
         margin: 0 auto;
         text-align: center;
@@ -128,22 +143,24 @@
             width: 100%;
             margin: .25rem auto;
             font-weight: 500;
-            
-            &:first-child{
+            padding: 0 .2rem;
+
+            &:first-child {
                 font-weight: 600;
                 border-bottom: 1px solid black;
                 text-transform: uppercase;
             }
 
-            &>span:first-child{
-                margin-right: .25rem;
+            &>span:first-child {
+                margin-right: 1.25rem;
             }
+
             .min-max {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 width: max-content;
-                
+
                 span {
                     padding: 5px;
                 }

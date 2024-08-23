@@ -94,7 +94,7 @@ export async function fetchGaugeDataForMapGauges(gaugeList) {
                     curGauge.siteName = matchedGauge.sourceInfo.siteName;
                     curGauge.currentReadingTime = currentReadingTime;
                     curGauge.currentReading = currentLevel;
-                    if (gaugeReadings.length> 0) {
+                    if (gaugeReadings.length > 0) {
                         let currentTime = new Date(currentReadingTime);
                         for (let j = 0; j < 20; j++) {
                             let priorTime = new Date(gaugeReadings[gaugeReadings.length - 1 - j].dateTime);
@@ -109,8 +109,7 @@ export async function fetchGaugeDataForMapGauges(gaugeList) {
                     }
                     gaugeData[gauge] = curGauge
                 }
-                else { throw new Error(`A matching gauge could not be found for gaugeID ${gauge}`) }
-                console.log(gaugeData)
+                else { console.log(`A matching gauge could not be found for gaugeID ${gauge}`) }
             });
         } catch (error) {
             console.error(`There was an error fetching gauge data: ${error}`)

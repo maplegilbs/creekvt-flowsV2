@@ -66,22 +66,20 @@ function CamInfoWindow({ camData, infoWindow }) {
 
 
 function GaugeInfoWindow({ gaugeData, infoWindow }) {
-
-    let correlatedRivers = gaugeData.mergedRiverData.filter(river => river.gauge1ID == gaugeData.gaugeID).length > 0 ? gaugeData.mergedRiverData.filter(river => river.gauge1ID == gaugeData.gaugeID) : null;
-    let gaugeLevelObj = gaugeData.mergedRiverData.find(river => river.gauge1ID == gaugeData.gaugeID)
-    let gaugeLevel = null;
-    console.log(correlatedRivers)
-    if(gaugeLevelObj){gaugeLevel = gaugeLevelObj.gauge1Reading}
-
+    let { gaugeID, gaugeName, gaugeInfo, mergedRiverData } = gaugeData;
+    let correlatedRivers = mergedRiverData.filter(river => river.gauge1ID == gaugeID).length > 0 ? mergedRiverData.filter(river => river.gauge1ID == gaugeID) : null;
+    let gaugeLevel, hourlyChange = null;
+    gaugeLevel = gaugeInfo[gaugeID].currentReading
+    hourlyChange = gaugeInfo[gaugeID].hourlyChange
     return (
         <div className={`${styles["info-window__container"]}`}>
             <button onClick={() => infoWindow.close()} className={`${styles["button--close"]}`}><FontAwesomeIcon icon={faCircleXmark} size="xl" /></button>
             <h4>{gaugeData.gaugeName}</h4>
-            <h6>{gaugeLevel && gaugeLevel}</h6>
+            <h6 className={`${styles["gauge-level"]}`}>{gaugeLevel && <span>{`${gaugeLevel} cfs`}</span>}{hourlyChange && hourlyChange >= 0 ? <span className={`${styles["level-change"]}`}>{` +${hourlyChange}/hr`}</span> : <span className={`${styles["level-change"]}`}>{` ${hourlyChange}/hr`}</span>}</h6>
             {correlatedRivers ?
                 <ul className={`${styles["rivers-list"]}`}>
-                     <li><span>River</span> <span className={`${styles["min-max"]}`}><span>Min</span><FontAwesomeIcon icon={faArrowRight} size="sm" />  <span>Max </span></span></li>
-                    {correlatedRivers.map(river => <li><span>{river.name}:  </span> {river.gauge1Min ?<span className={`${styles["min-max"]}`}><span>{river.gauge1Min}</span> <FontAwesomeIcon icon={faArrowRight} size="sm" /> <span>{river.gauge1Max}</span></span>: <span style={{textAlign: "right"}}>Not established</span>}</li> )}
+                    <li><span>River</span> <span className={`${styles["min-max"]}`}><span>Min</span><FontAwesomeIcon icon={faArrowRight} size="sm" />  <span>Max </span></span></li>
+                    {correlatedRivers.map(river => <li style={{ backgroundColor: `${river.flowBarColor}` }}><span>{river.name}:  </span> {river.gauge1Min ? <span className={`${styles["min-max"]}`}><span>{river.gauge1Min}</span> <FontAwesomeIcon icon={faArrowRight} size="sm" /> <span>{river.gauge1Max}</span></span> : <span style={{ textAlign: "right" }}>Not established</span>}</li>)}
                 </ul>
                 :
                 <p className={`${styles["gauge-paragraph"]}`}>No rivers correlated to this gauge</p>
