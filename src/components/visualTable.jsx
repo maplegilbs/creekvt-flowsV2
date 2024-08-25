@@ -81,7 +81,7 @@ export default function VisualTable({ reportSubmitted }) {
                                 <select onChange={updateFilters} id="riverName" name="riverName">
                                     <option value={'all'}>All</option>
                                     {riverData ?
-                                        riverData.map(river => <option value={river.name}>{river.name}</option>)
+                                        riverData.map(river => <option key={river.name} value={river.name}>{river.name}</option>)
                                         :
                                         <></>
                                     }

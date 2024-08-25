@@ -29,7 +29,6 @@ function RiverInfoWindow({ riverData, infoWindow }) {
 function CamInfoWindow({ camData, infoWindow }) {
     const [imageUrl, setImageURL] = useState(null)
 
-    console.log(imageUrl)
     useEffect(() => {
         async function fetchImageURLS() {
             try {
@@ -79,7 +78,7 @@ function GaugeInfoWindow({ gaugeData, infoWindow }) {
             {correlatedRivers ?
                 <ul className={`${styles["rivers-list"]}`}>
                     <li><span>River</span> <span className={`${styles["min-max"]}`}><span>Min</span><FontAwesomeIcon icon={faArrowRight} size="sm" />  <span>Max </span></span></li>
-                    {correlatedRivers.map(river => <li style={{ background: `linear-gradient(90deg, ${river.flowBarColor}, white`, }}><span>{river.name}:  </span> {river.gauge1Min ? <span className={`${styles["min-max"]}`}><span>{river.gauge1Min}</span> <FontAwesomeIcon icon={faArrowRight} size="sm" /> <span>{river.gauge1Max}</span></span> : <span style={{ textAlign: "right" }}>Not established</span>}</li>)}
+                    {correlatedRivers.map(river => <li key={river.name} style={{ background: `linear-gradient(90deg, ${river.flowBarColor}, white`, }}><span>{river.name}:  </span> {river.gauge1Min ? <span className={`${styles["min-max"]}`}><span>{river.gauge1Min}</span> <FontAwesomeIcon icon={faArrowRight} size="sm" /> <span>{river.gauge1Max}</span></span> : <span style={{ textAlign: "right" }}>Not established</span>}</li>)}
                 </ul>
                 :
                 <p className={`${styles["gauge-paragraph"]}`}>No rivers correlated to this gauge</p>
@@ -92,7 +91,6 @@ export default function renderInfoWindow(data, infoWindow) {
     let targetDiv = document.createElement('div');
     const root = ReactDOM.createRoot(targetDiv);
     if (data.type === "cam") {
-        console.log("camera");
         root.render(<CamInfoWindow camData={data} infoWindow={infoWindow} />)
     }
     else if (data.type == "gauge") {

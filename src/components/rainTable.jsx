@@ -71,7 +71,7 @@ export default function RainTable() {
                         </thead>
                         <tbody>
                             {rainData &&
-                                rainData.map(record => <RainRow rainRecord={record} />)}
+                                rainData.map((record, index) => <RainRow key={index} rainRecord={record} />)}
                         </tbody>
                     </table>
                 }

@@ -13,7 +13,6 @@ export default function ForecastQPF({ selectedLocation }) {
     if (selectedLocation) {
         offset = [origin[0] - selectedLocation[0], Math.abs(origin[1] - selectedLocation[1])]
         offsetPercentage = [offset[0] / range[0], offset[1] / range[1]]
-        console.log(offsetPercentage)
     }
     return (
         <div className={`${styles["component__container"]}`}>

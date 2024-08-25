@@ -184,7 +184,7 @@ function MapComponent({ featureOpts }) {
                         let gaugeList = await gaugeResponse.json()
                         gaugeInfo = await fetchGaugeDataForMapGauges(gaugeList.map(gauge => gauge.usgsID))
                         for (let gaugeID in gaugeInfo) {
-                            let riversList = gaugeList.find(gauge => gauge.usgsID === gaugeID).rivers.split(",")
+                            let riversList = gaugeList.find(gauge => gauge.usgsID === gaugeID).rivers? gaugeList.find(gauge => gauge.usgsID === gaugeID).rivers.split(",") : null;
                             gaugeInfo[gaugeID].rivers = riversList
                         }
                     } catch (error) {
