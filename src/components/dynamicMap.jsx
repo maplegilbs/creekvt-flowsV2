@@ -5,7 +5,6 @@ import renderInfoWindow from "./mapInfoWindow";
 import { RiverDataWithGaugeInfoContext } from "../pages/innerLayout";
 //Google maps
 import { Wrapper } from "@googlemaps/react-wrapper";
-import { geoJSONData } from "../utils/gauges"
 //Hooks
 import { useContext, useState, useEffect, useRef } from "react";
 //Libraries

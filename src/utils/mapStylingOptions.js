@@ -19,9 +19,8 @@ export const primaryMapStyles =  [{
     "featureType": "road",
     "elementType": "geometry",
     "stylers": [
-        {
-            "weight": .35,
-        }
+        { color: '#333333' },
+        { weight: .15 }
     ]
 },
 {
