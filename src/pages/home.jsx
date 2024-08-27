@@ -4,6 +4,8 @@ import HomeMap from "../components/dynamicMap";
 import HomeGaugesTable from "../components/homeGaugeTable";
 //Hooks
 import { useState, useEffect, useRef } from "react";
+//Polyfill
+import ResizeObserver from "resize-observer-polyfill";
 //Styles
 import styles from "./home.module.scss"
 
