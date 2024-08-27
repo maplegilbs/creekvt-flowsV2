@@ -141,7 +141,8 @@
             background-size: contain;
             z-index: 2;
             width: 100%;
-            aspect-ratio: 600 / 338;
+            // aspect-ratio: 600 / 338; removed for backwards compatability with older safari
+            padding-top: 56.3%;
             opacity: .5;
         }
 
