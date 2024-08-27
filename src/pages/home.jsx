@@ -2,10 +2,8 @@
 import Slider_Toggler from "../components/toggler";
 import HomeMap from "../components/dynamicMap";
 import HomeGaugesTable from "../components/homeGaugeTable";
-//Contexts
-import { RiverDataWithGaugeInfoContext } from "../pages/innerLayout";
 //Hooks
-import { useContext, useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 //Styles
 import styles from "./home.module.scss"
 
