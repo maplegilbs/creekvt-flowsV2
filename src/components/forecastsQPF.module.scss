@@ -20,10 +20,11 @@
 
         .primary__img {
             background-image: url("https://www.weather.gov/images/nerfc/ops/qpf_total_a.png");
-            width: 70%;
+            // width: 70%;
+            // aspect-ratio: 1.3;
+            padding-top: 77%;
             max-height: 50vh;
             width: auto;
-            aspect-ratio: 1.3;
             background-position: center;
             background-repeat: no-repeat;
             background-size: contain;
@@ -62,7 +63,8 @@
             position: relative;
             padding: 3px;
             width: 80%;
-            aspect-ratio: 1.3;
+            // aspect-ratio: 1.3;
+            padding-top: calc(74%* .8); //using padding approach for backwards compatability
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center;
