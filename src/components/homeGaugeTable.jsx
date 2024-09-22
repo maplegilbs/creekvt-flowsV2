@@ -63,7 +63,7 @@ export default function HomeGaugesTable() {
                         </thead>
                         <tbody>
                             {mergedRiverData &&
-                                sortByRunning(mergedRiverData).map(filterGauges).length > 0 ? sortByRunning(mergedRiverData).map(filterGauges) : <><tr><br/></tr><tr><td colSpan={20}>No Rivers Currently Running</td></tr> </>
+                                sortByRunning(mergedRiverData).map(filterGauges).length > 0 ? sortByRunning(mergedRiverData).map(filterGauges) : <><tr><td colSpan={20}>&nbsp;</td></tr><tr><td colSpan={20}>No Rivers Currently Running</td></tr></>
                             }
                         </tbody>
                     </table>
