@@ -1,5 +1,6 @@
 {
-  "name": "flowsv2",
+  "name": "flows",
+  "homepage": "/flows",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

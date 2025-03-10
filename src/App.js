@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     errorElement: <ErrorElement />,
     children: [{
-      path: "/flowsV2/",
+      path: "/flows/",
       element: <InnerLayout />,
       children: [
         {
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
       ]
     }]
   },
-  { basename: "/flowsV2" }
+  { basename: "/flows" }
 ])
 
 function App() {
