@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarCheck, faCalendarXmark } from "@fortawesome/free-solid-svg-icons";
 //Styles
 import styles from "./camContainer.module.scss";
 
@@ -27,7 +28,7 @@ export default function CamContainer({ camName, camsInfo }) {
     const [imageURLS, setImageURLS] = useState([])
     const [overlayOpacity, setOverlayOpacity] = useState(.5);
     const [overlayURL, setOverlayURL] = useState('')
-
+    let isCurrent = false;
 
     useEffect(() => {
         let matchedCam = camsInfo.find(cam => cam.riverName === camName)
@@ -39,6 +40,15 @@ export default function CamContainer({ camName, camsInfo }) {
             setStatus('failure')
         }
     }, [])
+
+    if (imageURLS.length > 0) {
+        let lastImgDateAdjustedToMidnight= new Date(`${imageURLS[imageURLS.length - 1].slice(-14, -4)}T00:00:00`)
+        let now = new Date()
+        let  nowAdjustedToMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        if ( nowAdjustedToMidnight - lastImgDateAdjustedToMidnight < 172800000) { isCurrent = true }
+        else {isCurrent = false}
+
+    }
 
     useEffect(() => {
         async function fetchImageURLS() {
@@ -63,7 +73,7 @@ export default function CamContainer({ camName, camsInfo }) {
             }
             {(status === 'success' && camInfo) &&
                 <>
-                    <h4 onClick={() => setIsDisplayed(prev => !prev)}>{camInfo.riverName}&nbsp;<FontAwesomeIcon icon={faChevronRight} rotation={isDisplayed ? 90 : 0} /></h4>
+                    <h4 onClick={() => setIsDisplayed(prev => !prev)}>{isCurrent? <FontAwesomeIcon icon={faCalendarCheck} size="xs" style={{color: "#227722", transform: "translateY(-40%)"}} /> : <FontAwesomeIcon icon={faCalendarXmark} size="xs" style={{color: "grey", transform: "translateY(-40%)"}} />}&nbsp;{camInfo.riverName}&nbsp;<FontAwesomeIcon icon={faChevronRight} rotation={isDisplayed ? 90 : 0} /></h4>
                     <div className={`${styles["cam__container"]} ${isDisplayed ? styles["displayed"] : ""}`}>
                         <h5>{camInfo.location}</h5>
                         <div className={`${styles["overlay-controls__container"]}`}>

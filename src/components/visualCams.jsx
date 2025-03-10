@@ -7,6 +7,8 @@ import { useContext } from 'react'
 import { useState, useEffect } from 'react'
 //Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCalendarCheck, faCalendarXmark } from "@fortawesome/free-solid-svg-icons";
+
 //Styles
 import styles from './visualCams.module.scss'
 
@@ -40,8 +42,16 @@ export default function VisualCams() {
                     <br /><br />
                     Issues with these images? Contact us at <a href="mailto:gopaddling@creekvt.com">gopaddling@creekvt.com</a>
                 </p>
+                <div className={`${styles["icon-legend__container"]}`}>
+                    <div className={`${styles["icon-legend"]}`}>
+                        <FontAwesomeIcon icon={faCalendarCheck} style={{ color: "#227722" }} /> <p>: Camera images current (from within the past two days)</p>
+                    </div>
+                    <div className={`${styles["icon-legend"]}`}>
+                        <FontAwesomeIcon icon={faCalendarXmark} style={{ color: "grey" }} /> <p>: Camera images stale (older than two days)</p>
+                    </div>
+                </div>
                 {camsInfo &&
-                    <>{camsInfo.sort((cam1, cam2) => cam1.riverName > cam2.riverName? 1 : -1).map(cam => <CamContainer key={cam.riverName} camsInfo={camsInfo} camName={cam.riverName} />)}                </>
+                    <>{camsInfo.sort((cam1, cam2) => cam1.riverName > cam2.riverName ? 1 : -1).map(cam => <CamContainer key={cam.riverName} camsInfo={camsInfo} camName={cam.riverName} />)}                </>
                 }
             </div>
         </div>

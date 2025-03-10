@@ -2,7 +2,7 @@
 
 .component__container {
     @include gv.componentContainerTheme;
-    
+
     hr {
         @include gv.sectionHRTheme;
         width: 50%;
@@ -15,7 +15,7 @@
         border-radius: 5px;
         padding: 1rem 0 2rem 0;
 
-        
+
         .section__header {
             @include gv.innerSectionHeaderTheme;
             text-transform: uppercase;
@@ -26,12 +26,35 @@
 
     }
 
+    p,
+    .icon-legend__container {
+        font-family: gv.$primary_headers;
+    }
+
     p {
         padding: 8px;
-        font-family: gv.$primary_headers;
         font-size: .65rem;
         font-weight: 600;
         line-height: 1rem;
+
+    }
+
+    .icon-legend__container {
+        margin: 0 30px 30px 30px;
+        padding-bottom: 5px;
+        display: flex;
+        flex-direction: column;
+        border-bottom: 2px solid black;
+    }
+
+    .icon-legend {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        p {
+            margin: 0;
+        }
     }
 }
 
