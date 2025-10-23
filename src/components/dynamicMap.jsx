@@ -57,10 +57,10 @@ function MapComponent({ featureOpts }) {
                     if (foundRiver) { river.setProperty("Level status", foundRiver.levelStatus) }
                 })
                 baseRiversDataLayer.setStyle(function (feature) {
-                    if (["running", "too high"].includes(feature.Eg["Level status"])) {
+                    if (["running", "too high"].includes(feature.Dg["Level status"])) {
                         return { strokeColor: '#000000', strokeWeight: 7.5, zIndex: 0 }
                     }
-                    if ((feature.Eg["Level status"] === "too low" || !feature.Eg["Level status"])) {
+                    if ((feature.Dg["Level status"] === "too low" || !feature.Dg["Level status"])) {
                         return { strokeColor: '#000000', strokeWeight: 4.5, zIndex: 0 }
                     }
                 })
@@ -82,13 +82,13 @@ function MapComponent({ featureOpts }) {
                     if (foundRiver) { river.setProperty("Level status", foundRiver.levelStatus) }
                 })
                 overlayRiversDataLayer.setStyle(function (feature) {
-                    if (feature.Eg["Level status"] === "running") {
+                    if (feature.Dg["Level status"] === "running") {
                         return { strokeColor: '#00bb33', strokeWeight: 4.5, zIndex: 2 }
                     }
-                    else if (feature.Eg["Level status"] === "too high") {
+                    else if (feature.Dg["Level status"] === "too high") {
                         return { strokeColor: '#ff0033', strokeWeight: 3.5, zIndex: 2 }
                     }
-                    else if (feature.Eg["Level status"] === "too low") {
+                    else if (feature.Dg["Level status"] === "too low") {
                         return { strokeColor: '#cc8855', strokeWeight: 1.5, zIndex: 2 }
                     }
                     else {
@@ -123,7 +123,7 @@ function MapComponent({ featureOpts }) {
                 camsDataLayer.addGeoJson(camsJSON)
 
                 camsDataLayer.setStyle(feature => {
-                    if (feature.Eg.type === 'cam') {
+                    if (feature.Dg.type === 'cam') {
                         return {
                             icon: {
                                 url: "https://creekvt.com/FlowsPageAssets/Images/Icons/CameraCircleIconBlue100x100.png",
